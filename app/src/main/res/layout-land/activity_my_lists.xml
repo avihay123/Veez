@@ -1,0 +1,88 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/My_List"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MyListsActivity"
+    android:orientation="vertical"
+    android:weightSum="29" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#ffea00"
+        android:layout_weight="7" >
+
+        <Button
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/b_first_menu"
+            android:background="@drawable/menu"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_alignParentLeft="true"
+            android:onClick="onClick"/>
+
+        <Button
+            android:layout_width="25dp"
+            android:layout_height="50dp"
+            android:id="@+id/b_second_menu"
+            android:background="@drawable/menu_list"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_alignParentRight="true"
+            android:onClick="onClick" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/iv_logo"
+            android:src="@drawable/logo_small"
+            android:layout_marginBottom="8dp"
+            android:layout_centerHorizontal="true"
+            android:layout_alignTop="@+id/b_first_menu" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_weight="3"
+        android:background="#20414f"
+        android:orientation="horizontal"
+        android:weightSum="7" >
+
+        <EditText
+            android:layout_width="200dp"
+            android:layout_height="fill_parent"
+            android:id="@+id/et_search"
+            android:textColor="#ffffff"
+            android:layout_marginLeft="130dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"
+            android:layout_weight="6"
+            android:layout_gravity="center"
+            android:background="@drawable/search" />
+
+        <Button
+            android:id="@+id/b_add_list"
+            android:layout_weight="1"
+            android:layout_width="25dp"
+            android:layout_height="33dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="70dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/add"
+            android:onClick="onClick" />
+
+    </LinearLayout>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="19"
+        android:id="@+id/lv_my_list">
+    </ListView>
+
+</LinearLayout>
