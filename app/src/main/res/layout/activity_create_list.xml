@@ -202,20 +202,22 @@
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Private"
+                android:text=" Private"
+                android:button="@drawable/check_box_privacy_design"
                 android:textColor="#505153"
                 android:textSize="25sp"
                 android:id="@+id/cb_private"
-                android:layout_marginRight="5dp"/>
+                android:layout_marginRight="6dp"/>
 
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Public"
+                android:text=" Public"
+                android:button="@drawable/check_box_privacy_design"
                 android:textColor="#505153"
                 android:textSize="25sp"
                 android:id="@+id/cb_public"
-                android:layout_marginLeft="5dp"/>
+                android:layout_marginLeft="6dp"/>
 
         </LinearLayout>
 

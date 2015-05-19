@@ -7,10 +7,10 @@
     android:weightSum="9" >
 
     <TextView
-        android:layout_width="65dp"
-        android:layout_height="65dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/tv_num_likes"
-        android:background="@drawable/likes_y"
+        android:background="@drawable/likes_y_s"
         android:layout_weight="0"
         android:text="0"
         android:textColor="#5c5959"
