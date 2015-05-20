@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@drawable/line"
     android:weightSum="9" >
 
@@ -26,8 +26,9 @@
         android:layout_height="fill_parent"
         android:orientation="vertical"
         android:layout_weight="5"
-        android:layout_gravity="start"
-        android:layout_marginLeft="10dp"
+        android:layout_gravity="center"
+        android:gravity="start"
+        android:layout_marginLeft="15dp"
         android:weightSum="5">
 
         <TextView
@@ -38,7 +39,7 @@
             android:textColor="#272c3b"
             android:textSize="35sp"
             android:text="List Name"
-            android:gravity="center"/>
+            android:gravity="bottom"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -48,7 +49,7 @@
             android:textColor="#4d4f52"
             android:textSize="20sp"
             android:text="Only you"
-            android:gravity="center"/>
+            android:gravity="top"/>
 
     </LinearLayout>
 
@@ -57,6 +58,7 @@
         android:layout_height="fill_parent"
         android:orientation="vertical"
         android:layout_weight="4"
+        android:layout_marginBottom="5dp"
         android:weightSum="2">
 
         <LinearLayout
