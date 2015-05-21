@@ -21,7 +21,7 @@
             android:background="@drawable/menu"
             android:layout_marginTop="15dp"
             android:layout_marginLeft="15dp"
-            android:layout_alignParentLeft="true"
+            android:layout_marginStart="15dp"
             android:onClick="onClick"/>
 
         <Button
@@ -40,7 +40,9 @@
             android:background="@drawable/menu_list"
             android:layout_marginTop="15dp"
             android:layout_marginRight="15dp"
+            android:layout_marginEnd="15dp"
             android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:onClick="onClick" />
 
         <TextView
@@ -100,6 +102,7 @@
             android:layout_width="55dp"
             android:layout_height="20dp"
             android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="3dp"
             android:src="@drawable/tags"
@@ -112,6 +115,7 @@
             android:layout_marginTop="3dp"
             android:layout_marginBottom="3dp"
             android:layout_marginLeft="3dp"
+            android:layout_marginStart="3dp"
             android:background="@drawable/add_small"
             android:layout_weight="2"
             android:onClick="onClick" />
@@ -131,6 +135,7 @@
             android:layout_width="100dp"
             android:layout_height="25dp"
             android:layout_marginLeft="17dp"
+            android:layout_marginStart="17dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="3dp"
             android:src="@drawable/manager"
@@ -141,6 +146,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/tv_manager"
             android:layout_marginLeft="17dp"
+            android:layout_marginStart="17dp"
             android:text="@string/you"
             android:textColor="#505153"
             android:textSize="22sp"
@@ -161,6 +167,7 @@
             android:layout_width="100dp"
             android:layout_height="25dp"
             android:layout_marginLeft="17dp"
+            android:layout_marginStart="17dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="3dp"
             android:src="@drawable/deadline"
@@ -171,6 +178,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/tv_deadline"
             android:layout_marginLeft="17dp"
+            android:layout_marginStart="17dp"
             android:text="@string/date"
             android:textColor="#505153"
             android:textSize="22sp"
@@ -190,6 +198,7 @@
             android:layout_width="110dp"
             android:layout_height="25dp"
             android:layout_marginLeft="6dp"
+            android:layout_marginStart="6dp"
             android:layout_marginTop="7dp"
             android:layout_marginBottom="5dp"
             android:src="@drawable/privacy"/>
@@ -207,7 +216,8 @@
                 android:textColor="#505153"
                 android:textSize="25sp"
                 android:id="@+id/cb_private"
-                android:layout_marginRight="6dp"/>
+                android:layout_marginRight="6dp"
+                android:layout_marginEnd="6dp"                />
 
             <CheckBox
                 android:layout_width="wrap_content"
@@ -217,7 +227,8 @@
                 android:textColor="#505153"
                 android:textSize="25sp"
                 android:id="@+id/cb_public"
-                android:layout_marginLeft="6dp"/>
+                android:layout_marginLeft="6dp"
+                android:layout_marginStart="6dp"                />
 
         </LinearLayout>
 
@@ -241,7 +252,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:background="#ffffff">
     </LinearLayout>
 
 </LinearLayout>
