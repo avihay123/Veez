@@ -6,8 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".CreateListActivity"
     android:orientation="vertical"
-    android:background="#ffffff"
-    android:weightSum="44" >
+    android:weightSum="44"
+    android:background="#ffffff" >
 
     <RelativeLayout
         android:layout_width="match_parent"
