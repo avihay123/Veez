@@ -3,7 +3,7 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/line">
+    android:background="@drawable/line_small">
 
     <TextView
         android:layout_width="wrap_content"
@@ -11,7 +11,7 @@
         android:id="@+id/tv_num_likes"
         android:background="@drawable/likes"
         android:layout_weight="0"
-        android:text="0"
+        android:text="@string/zero"
         android:textColor="#ffffff"
         android:textSize="25sp"
         android:layout_gravity="center"
@@ -26,7 +26,7 @@
             android:id="@+id/tv_list_name"
             android:textColor="#272c3b"
             android:textSize="35sp"
-            android:text="List Name"
+            android:text="@string/list_name"
             android:layout_marginLeft="20dp"
             android:layout_gravity="center"
             android:gravity="center"/>

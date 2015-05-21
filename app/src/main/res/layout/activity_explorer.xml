@@ -68,7 +68,7 @@
             android:textSize="35sp"
             android:textColor="#f0f0f1"
             android:layout_marginTop="5dp"
-            android:text="Explorer"/>
+            android:text="@string/explorer"/>
 
         <EditText
             android:layout_width="240dp"
@@ -89,7 +89,7 @@
             <TextView
                 android:layout_width="73dp"
                 android:layout_height="33dp"
-                android:text="New Text"
+                android:text="@string/hash_tag"
                 android:textColor="#20414f"
                 android:gravity="center"
                 android:background="@drawable/hashtag"
@@ -100,7 +100,7 @@
             <TextView
                 android:layout_width="73dp"
                 android:layout_height="33dp"
-                android:text="New Text"
+                android:text="@string/hash_tag"
                 android:textColor="#20414f"
                 android:gravity="center"
                 android:background="@drawable/hashtag"
@@ -111,7 +111,7 @@
             <TextView
                 android:layout_width="73dp"
                 android:layout_height="33dp"
-                android:text="New Text"
+                android:text="@string/hash_tag"
                 android:textColor="#20414f"
                 android:gravity="center"
                 android:background="@drawable/hashtag"
@@ -130,7 +130,7 @@
             <TextView
                 android:layout_width="73dp"
                 android:layout_height="33dp"
-                android:text="New Text"
+                android:text="@string/hash_tag"
                 android:textColor="#20414f"
                 android:gravity="center"
                 android:background="@drawable/hashtag"
@@ -141,7 +141,7 @@
             <TextView
                 android:layout_width="73dp"
                 android:layout_height="33dp"
-                android:text="New Text"
+                android:text="@string/hash_tag"
                 android:textColor="#20414f"
                 android:gravity="center"
                 android:background="@drawable/hashtag"
@@ -152,7 +152,7 @@
             <TextView
                 android:layout_width="73dp"
                 android:layout_height="33dp"
-                android:text="New Text"
+                android:text="@string/hash_tag"
                 android:textColor="#20414f"
                 android:gravity="center"
                 android:background="@drawable/hashtag"
@@ -172,7 +172,7 @@
             <TextView
                 android:layout_width="73dp"
                 android:layout_height="33dp"
-                android:text="New Text"
+                android:text="@string/hash_tag"
                 android:textColor="#20414f"
                 android:gravity="center"
                 android:background="@drawable/hashtag"
@@ -183,7 +183,7 @@
             <TextView
                 android:layout_width="73dp"
                 android:layout_height="33dp"
-                android:text="New Text"
+                android:text="@string/hash_tag"
                 android:textColor="#20414f"
                 android:gravity="center"
                 android:background="@drawable/hashtag"
@@ -194,7 +194,7 @@
             <TextView
                 android:layout_width="73dp"
                 android:layout_height="33dp"
-                android:text="New Text"
+                android:text="@string/hash_tag"
                 android:textColor="#20414f"
                 android:gravity="center"
                 android:background="@drawable/hashtag"
@@ -203,7 +203,6 @@
                 android:id="@+id/tv_tag9" />
 
         </TableRow>
-
 
     </LinearLayout>
 

@@ -1,4 +1,19 @@
 <resources>
+
     <string name="app_name">Veez</string>
+    <string name="new_list">New List</string>
+    <string name="you">You</string>
+    <string name="date">25/05/2015</string>
+    <string name="private_list">" Private"</string>
+    <string name="public_list">" Public"</string>
+    <string name="explorer">Explorer</string>
+    <string name="hash_tag">hash_tag</string>
+    <string name="zero">0</string>
+    <string name="slash">/</string>
+    <string name="list_name">List Name</string>
+    <string name="item_name">" item name"</string>
+    <string name="only_you">Only you</string>
+    <string name="number_days">12 Days</string>
     <string name="action_settings">Setting</string>
+
 </resources>

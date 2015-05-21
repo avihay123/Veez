@@ -48,7 +48,7 @@
                 android:id="@+id/tv_list_name"
                 android:fontFamily="Myriad Hebrew"
                 android:textSize="30sp"
-                android:text="New List"
+                android:text="@string/new_list"
                 android:singleLine="false"
                 android:textStyle="bold"
                 android:visibility="visible"
@@ -74,7 +74,7 @@
                     android:fontFamily="Myriad Hebrew"
                     android:textSize="25sp"
                     android:textStyle="bold"
-                    android:text="0" />
+                    android:text="@string/zero" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -82,7 +82,7 @@
                     android:fontFamily="Myriad Hebrew"
                     android:textSize="25sp"
                     android:textStyle="bold"
-                    android:text="/" />
+                    android:text="@string/slash" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -91,7 +91,7 @@
                     android:fontFamily="Myriad Hebrew"
                     android:textSize="25sp"
                     android:textStyle="bold"
-                    android:text="10" />
+                    android:text="@string/zero" />
 
                 </LinearLayout>
 
@@ -104,7 +104,7 @@
             android:fontFamily="Myriad Hebrew"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:text="0"
+            android:text="@string/zero"
             android:gravity="center"
             android:id="@+id/tv_likes"
             android:background="@drawable/likes_w"

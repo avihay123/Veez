@@ -49,7 +49,7 @@
             android:id="@+id/tv_list_name"
             android:fontFamily="Myriad Hebrew"
             android:textSize="30sp"
-            android:text="New List"
+            android:text="@string/new_list"
             android:singleLine="false"
             android:textStyle="bold"
             android:layout_below="@+id/b_add_image"
@@ -136,7 +136,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/tv_manager"
             android:layout_marginLeft="17dp"
-            android:text="You"
+            android:text="@string/you"
             android:textColor="#505153"
             android:textSize="22sp" />
 
@@ -163,7 +163,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/tv_deadline"
             android:layout_marginLeft="17dp"
-            android:text="25/05/2015"
+            android:text="@string/date"
             android:textColor="#505153"
             android:textSize="22sp"/>
 
@@ -190,7 +190,7 @@
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" Private"
+                android:text="@string/private_list"
                 android:button="@drawable/check_box_privacy_design"
                 android:textColor="#505153"
                 android:textSize="25sp"
@@ -200,7 +200,7 @@
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" Public"
+                android:text="@string/public_list"
                 android:button="@drawable/check_box_privacy_design"
                 android:textColor="#505153"
                 android:textSize="25sp"
