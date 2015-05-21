@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- dimens for activity_create-list & activity_list_info -->
     <dimen name="add_friend_button_width">90dp</dimen>
     <dimen name="add_friend_button_margin">5dp</dimen>
     <dimen name="list_name_size">50sp</dimen>
@@ -29,6 +30,7 @@
     <dimen name="privacy_margin">15dp</dimen>
     <dimen name="check_box_privacy_size">32sp</dimen>
 
+    <!-- dimens for activity_explorer -->
     <dimen name="explorer_width">370dp</dimen>
     <dimen name="logo_explorer_width">315dp</dimen>
     <dimen name="logo_explorer_height">75dp</dimen>
@@ -41,16 +43,45 @@
     <dimen name="explorer_w1">9</dimen>
     <dimen name="explorer_w2">12</dimen>
 
+    <!-- dimens for activity_list -->
     <dimen name="vee_list_width">65dp</dimen>
     <dimen name="vee_list_height">65dp</dimen>
     <dimen name="count_vee_size">45sp</dimen>
     <dimen name="likes_list_width">77dp</dimen>
     <dimen name="likes_list_height">72dp</dimen>
     <dimen name="likes_size">30sp</dimen>
-    <dimen name="search_bar_height">4dp</dimen>
+    <dimen name="search_bar_height">6dp</dimen>
     <dimen name="search_size">230dp</dimen>
     <dimen name="count_vee_margin">20dp</dimen>
     <dimen name="add_list_button_width">17dp</dimen>
     <dimen name="add_list_button_height">55dp</dimen>
+
+    <!-- dimens for activity_login -->
+    <dimen name="logo_width">300dp</dimen>
+    <dimen name="logo_height">255dp</dimen>
+    <dimen name="login_width">540dp</dimen>
+    <dimen name="login_height">135dp</dimen>
+
+    <!-- dimens for activity_my_lists -->
+    <dimen name="logo_my_lists_width">200dp</dimen>
+    <dimen name="logo_my_lists_height">175dp</dimen>
+    <dimen name="add_list_width">37dp</dimen>
+
+    <!-- dimens for list_view_element -->
+    <dimen name="item_name_size">35sp</dimen>
+    <dimen name="button_width">65dp</dimen>
+    <dimen name="button_height">65dp</dimen>
+    <dimen name="button_margin1">12dp</dimen>
+    <dimen name="button_margin2">8dp</dimen>
+
+    <!-- dimens for list_view -->
+    <dimen name="name_list_size">35sp</dimen>
+    <dimen name="likes_view_size">27sp</dimen>
+    <dimen name="title_list_size">37sp</dimen>
+    <dimen name="subtitle_list_size">23sp</dimen>
+    <dimen name="count_veez_size">33sp</dimen>
+    <dimen name="deadline_size">26sp</dimen>
+    <dimen name="image_width">40dp</dimen>
+    <dimen name="image_height">40dp</dimen>
 
 </resources>

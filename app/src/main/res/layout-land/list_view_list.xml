@@ -3,7 +3,7 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/line_small"
+    android:background="@drawable/line"
     android:weightSum="9" >
 
     <TextView
@@ -14,10 +14,11 @@
         android:layout_weight="0"
         android:text="@string/zero"
         android:textColor="#5c5959"
-        android:textSize="20sp"
+        android:textSize="@dimen/likes_view_size"
         android:layout_gravity="center"
         android:gravity="center"
         android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
         android:layout_marginBottom="2dp"
         android:layout_marginTop="2dp"/>
 
@@ -28,6 +29,7 @@
         android:layout_weight="5"
         android:layout_gravity="start"
         android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         android:weightSum="5">
 
         <TextView
@@ -36,7 +38,7 @@
             android:id="@+id/tv_list_name"
             android:layout_weight="3"
             android:textColor="#272c3b"
-            android:textSize="35sp"
+            android:textSize="@dimen/title_list_size"
             android:text="@string/list_name"
             android:gravity="bottom"/>
 
@@ -46,7 +48,7 @@
             android:id="@+id/tv_list_friends"
             android:layout_weight="2"
             android:textColor="#4d4f52"
-            android:textSize="20sp"
+            android:textSize="@dimen/subtitle_list_size"
             android:text="@string/only_you"
             android:gravity="top"/>
 
@@ -69,8 +71,8 @@
             android:layout_weight="1">
 
             <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="@dimen/image_width"
+                android:layout_height="@dimen/image_height"
                 android:src="@drawable/v2"/>
 
             <TextView
@@ -79,7 +81,7 @@
                 android:id="@+id/tv_curr_items"
                 android:textColor="#4d4f52"
                 android:layout_marginLeft="5dp"
-                android:textSize="35sp"
+                android:textSize="@dimen/count_veez_size"
                 android:text="@string/zero"
                 android:gravity="center"/>
 
@@ -87,7 +89,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#4d4f52"
-                android:textSize="35sp"
+                android:textSize="@dimen/count_veez_size"
                 android:text="@string/slash"
                 android:gravity="center"/>
 
@@ -96,7 +98,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/tv_total_items"
                 android:textColor="#4d4f52"
-                android:textSize="35sp"
+                android:textSize="@dimen/count_veez_size"
                 android:text="@string/zero"
                 android:gravity="center"/>
 
@@ -111,16 +113,16 @@
             android:layout_weight="1">
 
             <ImageView
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="@dimen/image_width"
+                android:layout_height="@dimen/image_height"
                 android:id="@+id/im_lock"
                 android:src="@drawable/lock"
                 android:layout_marginRight="5dp"
                 android:visibility="visible" />
 
             <ImageView
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="@dimen/image_width"
+                android:layout_height="@dimen/image_height"
                 android:id="@+id/im_deadline"
                 android:src="@drawable/time"/>
 
@@ -130,7 +132,7 @@
                 android:id="@+id/tv_deadline"
                 android:textColor="#4d4f52"
                 android:layout_marginLeft="5dp"
-                android:textSize="25sp"
+                android:textSize="@dimen/deadline_size"
                 android:text="@string/number_days"
                 android:gravity="center"/>
 

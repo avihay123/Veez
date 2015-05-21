@@ -14,8 +14,8 @@
         android:layout_weight="7" >
 
         <Button
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/menu_width"
+            android:layout_height="@dimen/menu_height"
             android:id="@+id/b_first_menu"
             android:background="@drawable/menu"
             android:layout_marginTop="15dp"
@@ -24,8 +24,8 @@
             android:onClick="onClick"/>
 
         <Button
-            android:layout_width="25dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/menu2_width"
+            android:layout_height="@dimen/menu2_height"
             android:id="@+id/b_second_menu"
             android:background="@drawable/menu_list"
             android:layout_marginTop="15dp"
@@ -36,12 +36,12 @@
             android:onClick="onClick" />
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/logo_my_lists_width"
+            android:layout_height="@dimen/logo_my_lists_height"
             android:id="@+id/iv_logo"
-            android:src="@drawable/logo_small"
+            android:src="@drawable/logo"
             android:layout_marginBottom="15dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             android:layout_centerHorizontal="true"
             android:layout_alignTop="@+id/b_first_menu" />
 
@@ -56,7 +56,7 @@
         android:weightSum="7" >
 
         <EditText
-            android:layout_width="220dp"
+            android:layout_width="@dimen/search_size"
             android:layout_height="fill_parent"
             android:id="@+id/et_search"
             android:textColor="#ffffff"
@@ -70,7 +70,7 @@
         <Button
             android:id="@+id/b_add_list"
             android:layout_weight="1"
-            android:layout_width="45dp"
+            android:layout_width="@dimen/add_list_width"
             android:layout_height="fill_parent"
             android:layout_marginTop="3dp"
             android:layout_marginBottom="3dp"
