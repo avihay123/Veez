@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="add_friend_button_width">90dp</dimen>
+    <dimen name="add_friend_button_margin">5dp</dimen>
+    <dimen name="list_name_size">50sp</dimen>
+    <dimen name="list_name_margin_top">18dp</dimen>
+    <dimen name="menu_width">60dp</dimen>
+    <dimen name="menu_height">60dp</dimen>
+    <dimen name="menu2_width">35dp</dimen>
+    <dimen name="menu2_height">60dp</dimen>
+    <dimen name="add_image_width">90dp</dimen>
+    <dimen name="add_image_height">75dp</dimen>
+    <dimen name="tags_width">65dp</dimen>
+    <dimen name="tags_height">30dp</dimen>
+    <dimen name="tags_margin_left">20dp</dimen>
+    <dimen name="tags_margin">6dp</dimen>
+    <dimen name="add_tag_width">60dp</dimen>
+    <dimen name="add_tag_height">35dp</dimen>
+    <dimen name="add_tag_height_land">44dp</dimen>
+    <dimen name="add_tag_margin">7dp</dimen>
+    <dimen name="title_width">125dp</dimen>
+    <dimen name="title_height">40dp</dimen>
+    <dimen name="title_margin_left">20dp</dimen>
+    <dimen name="title_margin">5dp</dimen>
+    <dimen name="subtitle_size">28sp</dimen>
+    <dimen name="privacy_width">120dp</dimen>
+    <dimen name="privacy_height">33dp</dimen>
+    <dimen name="privacy_margin">15dp</dimen>
+    <dimen name="check_box_privacy_size">32sp</dimen>
+
+    <dimen name="explorer_width">370dp</dimen>
+    <dimen name="logo_explorer_width">315dp</dimen>
+    <dimen name="logo_explorer_height">75dp</dimen>
+    <dimen name="explorer_size">45sp</dimen>
+    <dimen name="et_explorer_width">290dp</dimen>
+    <dimen name="et_explorer_height">45dp</dimen>
+    <dimen name="tag_explorer_height">40dp</dimen>
+    <dimen name="tag_explorer_margin">5dp</dimen>
+    <dimen name="tag_explorer_size">18dp</dimen>
+    <dimen name="explorer_w1">9</dimen>
+    <dimen name="explorer_w2">12</dimen>
+
+    <dimen name="vee_list_width">65dp</dimen>
+    <dimen name="vee_list_height">65dp</dimen>
+    <dimen name="count_vee_size">45sp</dimen>
+    <dimen name="likes_list_width">77dp</dimen>
+    <dimen name="likes_list_height">72dp</dimen>
+    <dimen name="likes_size">30sp</dimen>
+    <dimen name="search_bar_height">4dp</dimen>
+    <dimen name="search_size">230dp</dimen>
+    <dimen name="count_vee_margin">20dp</dimen>
+    <dimen name="add_list_button_width">17dp</dimen>
+    <dimen name="add_list_button_height">55dp</dimen>
+
+</resources>

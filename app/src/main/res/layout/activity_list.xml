@@ -15,8 +15,8 @@
         android:layout_weight="10" >
 
         <Button
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/menu_width"
+            android:layout_height="@dimen/menu_height"
             android:id="@+id/b_first_menu"
             android:background="@drawable/menu"
             android:layout_marginTop="15dp"
@@ -25,8 +25,8 @@
             android:onClick="onClick"/>
 
         <Button
-            android:layout_width="25dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/menu2_width"
+            android:layout_height="@dimen/menu2_height"
             android:id="@+id/b_second_menu"
             android:background="@drawable/menu_list"
             android:layout_marginTop="15dp"
@@ -49,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/tv_list_name"
                 android:fontFamily="Myriad Hebrew"
-                android:textSize="30sp"
+                android:textSize="@dimen/list_name_size"
                 android:text="@string/new_list"
                 android:singleLine="false"
                 android:textStyle="bold"
@@ -63,8 +63,8 @@
                 android:layout_width="wrap_content" >
 
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="@dimen/vee_list_width"
+                    android:layout_height="@dimen/vee_list_height"
                     android:id="@+id/im_vee"
                     android:background="@drawable/v1"
                     android:layout_marginRight="5dp"
@@ -75,7 +75,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/tv_curr_items"
                     android:fontFamily="Myriad Hebrew"
-                    android:textSize="25sp"
+                    android:textSize="@dimen/count_vee_size"
                     android:textStyle="bold"
                     android:text="@string/zero" />
 
@@ -83,7 +83,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="Myriad Hebrew"
-                    android:textSize="25sp"
+                    android:textSize="@dimen/count_vee_size"
                     android:textStyle="bold"
                     android:text="@string/slash" />
 
@@ -92,7 +92,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/tv_total_items"
                     android:fontFamily="Myriad Hebrew"
-                    android:textSize="25sp"
+                    android:textSize="@dimen/count_vee_size"
                     android:textStyle="bold"
                     android:text="@string/zero" />
 
@@ -102,10 +102,10 @@
         </LinearLayout>
 
         <TextView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/likes_list_width"
+            android:layout_height="@dimen/likes_list_height"
             android:fontFamily="Myriad Hebrew"
-            android:textSize="20sp"
+            android:textSize="@dimen/likes_size"
             android:textStyle="bold"
             android:text="@string/zero"
             android:gravity="center"
@@ -119,14 +119,14 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_height="@dimen/search_bar_height"
         android:layout_weight="2"
         android:background="#20414f"
         android:orientation="horizontal"
         android:weightSum="7" >
 
         <EditText
-            android:layout_width="220dp"
+            android:layout_width="@dimen/search_size"
             android:layout_height="fill_parent"
             android:id="@+id/et_search"
             android:textColor="#ffffff"
