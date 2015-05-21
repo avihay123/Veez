@@ -20,7 +20,7 @@
             android:background="@drawable/menu"
             android:layout_marginTop="15dp"
             android:layout_marginLeft="15dp"
-            android:layout_alignParentLeft="true"
+            android:layout_marginStart="15dp"
             android:onClick="onClick"/>
 
         <Button
@@ -30,7 +30,9 @@
             android:background="@drawable/menu_list"
             android:layout_marginTop="15dp"
             android:layout_marginRight="15dp"
+            android:layout_marginEnd="15dp"
             android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:onClick="onClick" />
 
         <ImageView
@@ -58,6 +60,7 @@
             android:id="@+id/et_search"
             android:textColor="#ffffff"
             android:layout_marginLeft="130dp"
+            android:layout_marginStart="130dp"
             android:layout_marginTop="6dp"
             android:layout_marginBottom="6dp"
             android:layout_weight="6"
@@ -72,7 +75,9 @@
             android:layout_marginTop="2dp"
             android:layout_marginBottom="2dp"
             android:layout_marginLeft="70dp"
+            android:layout_marginStart="70dp"
             android:layout_marginRight="20dp"
+            android:layout_marginEnd="20dp"
             android:background="@drawable/add"
             android:onClick="onClick" />
 

@@ -20,6 +20,7 @@
             android:id="@+id/b_first_menu"
             android:background="@drawable/menu"
             android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="2dp"
             android:onClick="onClick"/>
 
@@ -39,7 +40,8 @@
                     android:layout_height="50dp"
                     android:id="@+id/im_vee"
                     android:background="@drawable/v1"
-                    android:layout_marginRight="5dp"/>
+                    android:layout_marginRight="5dp"
+                    android:layout_marginEnd="5dp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -79,6 +81,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_marginTop="2dp" />
 
         <TextView
@@ -123,11 +126,13 @@
             android:id="@+id/et_search"
             android:textColor="#ffffff"
             android:layout_marginLeft="130dp"
+            android:layout_marginStart="130dp"
             android:layout_marginTop="6dp"
             android:layout_marginBottom="6dp"
             android:layout_weight="6"
             android:layout_gravity="center"
-            android:background="@drawable/search" />
+            android:background="@drawable/search"
+            android:inputType="text"/>
 
         <Button
             android:id="@+id/b_add_list"
@@ -137,7 +142,9 @@
             android:layout_marginTop="2dp"
             android:layout_marginBottom="2dp"
             android:layout_marginLeft="70dp"
+            android:layout_marginStart="70dp"
             android:layout_marginRight="20dp"
+            android:layout_marginEnd="20dp"
             android:background="@drawable/add"
             android:onClick="onClick" />
 

@@ -18,6 +18,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
         android:layout_marginBottom="2dp"
         android:layout_marginTop="2dp"/>
 
@@ -29,6 +30,7 @@
         android:layout_gravity="center"
         android:gravity="start"
         android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
         android:weightSum="5">
 
         <TextView
@@ -80,6 +82,7 @@
                 android:id="@+id/tv_curr_items"
                 android:textColor="#4d4f52"
                 android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:textSize="35sp"
                 android:text="@string/zero"
                 android:gravity="center"/>
@@ -117,6 +120,7 @@
                 android:id="@+id/im_lock"
                 android:src="@drawable/lock"
                 android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp"
                 android:visibility="visible" />
 
             <ImageView
@@ -131,6 +135,7 @@
                 android:id="@+id/tv_deadline"
                 android:textColor="#4d4f52"
                 android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:textSize="20sp"
                 android:text="@string/number_days"
                 android:gravity="center"/>

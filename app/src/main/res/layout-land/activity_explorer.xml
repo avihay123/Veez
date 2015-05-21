@@ -20,7 +20,8 @@
             android:id="@+id/b_first_menu"
             android:background="@drawable/menu"
             android:onClick="onClick"
-            android:layout_marginLeft="10dp"/>
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"/>
 
         <ImageView
             android:layout_width="289dp"
@@ -41,7 +42,8 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginRight="5dp"/>
+            android:layout_marginRight="5dp"
+            android:layout_marginEnd="5dp"/>
 
     </RelativeLayout>
 
@@ -75,7 +77,8 @@
                 android:id="@+id/et_search"
                 android:textColor="#ffffff"
                 android:layout_gravity="center"
-                android:background="@drawable/search" />
+                android:background="@drawable/search"
+                android:inputType="text"/>
 
             <TableRow
                 android:layout_width="wrap_content"
