@@ -33,6 +33,16 @@
             android:label="activity_my_lists" >
         </activity>
 
+        <activity
+            android:name=".CreateListActivity"
+            android:label="activity_my_lists" >
+        </activity>
+
+        <activity
+            android:name=".ListInfoActivity"
+            android:label="activity_my_lists" >
+        </activity>
+
     </application>
 
 </manifest>
