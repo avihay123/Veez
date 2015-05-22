@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <integer name="explorer_w1">7</integer>
+    <integer name="explorer_w2">14</integer>
+
+</resources>

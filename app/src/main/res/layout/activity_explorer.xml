@@ -57,7 +57,7 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight="@dimen/explorer_w1"
+        android:layout_weight="@integer/explorer_w1"
         android:background="#20414f"
         android:orientation="vertical"
         android:layout_gravity="center"
@@ -222,7 +222,7 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="@dimen/explorer_w2"
+        android:layout_weight="@integer/explorer_w2"
         android:id="@+id/lv_my_list">
     </ListView>
 
