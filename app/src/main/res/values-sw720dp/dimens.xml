@@ -40,8 +40,6 @@
     <dimen name="tag_explorer_height">44dp</dimen>
     <dimen name="tag_explorer_margin">7dp</dimen>
     <dimen name="tag_explorer_size">24dp</dimen>
-    <dimen name="explorer_w1">7</dimen>
-    <dimen name="explorer_w2">14</dimen>
 
     <!-- dimens for activity_list -->
     <dimen name="vee_list_width">85dp</dimen>
