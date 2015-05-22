@@ -31,7 +31,7 @@
     <dimen name="check_box_privacy_size">39sp</dimen>
 
     <!-- dimens for activity_explorer -->
-    <dimen name="explorer_width">440dp</dimen>
+    <dimen name="explorer_width">470dp</dimen>
     <dimen name="logo_explorer_width">340dp</dimen>
     <dimen name="logo_explorer_height">95dp</dimen>
     <dimen name="explorer_size">55sp</dimen>
@@ -76,7 +76,7 @@
 
     <!-- dimens for list_view -->
     <dimen name="name_list_size">40sp</dimen>
-    <dimen name="likes_view_size">29sp</dimen>
+    <dimen name="likes_view_size">30sp</dimen>
     <dimen name="title_list_size">39sp</dimen>
     <dimen name="subtitle_list_size">25sp</dimen>
     <dimen name="count_veez_size">36sp</dimen>
