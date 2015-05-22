@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/tv_list_name"
             android:fontFamily="Myriad Hebrew"
-            android:textSize="@dimen/list_name_size"
+            android:textSize="30sp"
             android:text="@string/new_list"
             android:singleLine="false"
             android:textStyle="bold"
