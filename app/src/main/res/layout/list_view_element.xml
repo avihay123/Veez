@@ -15,7 +15,7 @@
         android:fontFamily="Myriad Hebrew"
         android:textColor="#1c3547"
         android:text="@string/item_name"
-        android:textSize="30sp"
+        android:textSize="@dimen/item_name_size"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
@@ -30,26 +30,26 @@
         android:layout_weight="4">
 
         <Button
-            android:layout_width="55dp"
-            android:layout_height="55dp"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_height"
             android:layout_gravity="center"
             android:gravity="start"
             android:onClick="onClick"
             android:id="@+id/b_info"
             android:background="@drawable/info_small"
-            android:layout_marginRight="5dp"
-            android:layout_marginEnd="5dp"/>
+            android:layout_marginRight="@dimen/button_margin2"
+            android:layout_marginEnd="@dimen/button_margin2"/>
 
         <Button
-            android:layout_width="55dp"
-            android:layout_height="55dp"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_height"
             android:layout_gravity="center"
             android:gravity="end"
             android:id="@+id/b_friend"
-            android:layout_marginLeft="5dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginLeft="@dimen/button_margin2"
+            android:layout_marginStart="@dimen/button_margin2"
+            android:layout_marginRight="@dimen/button_margin1"
+            android:layout_marginEnd="@dimen/button_margin1"
             android:background="@drawable/friends_small"/>
 
         </LinearLayout>

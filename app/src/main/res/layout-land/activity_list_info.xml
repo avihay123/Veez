@@ -16,8 +16,8 @@
         android:layout_weight="14" >
 
         <Button
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/menu_width"
+            android:layout_height="@dimen/menu_height"
             android:id="@+id/b_first_menu"
             android:background="@drawable/menu"
             android:layout_marginTop="15dp"
@@ -26,8 +26,8 @@
             android:onClick="onClick"/>
 
         <Button
-            android:layout_width="55dp"
-            android:layout_height="45dp"
+            android:layout_width="@dimen/add_image_width"
+            android:layout_height="@dimen/add_image_height"
             android:id="@+id/b_add_image"
             android:background="@drawable/add_image"
             android:onClick="onClick"
@@ -35,8 +35,8 @@
             android:layout_centerHorizontal="true"/>
 
         <Button
-            android:layout_width="25dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/menu2_width"
+            android:layout_height="@dimen/menu2_height"
             android:id="@+id/b_second_menu"
             android:background="@drawable/menu_list"
             android:layout_marginTop="15dp"
@@ -51,13 +51,13 @@
             android:layout_height="wrap_content"
             android:id="@+id/tv_list_name"
             android:fontFamily="Myriad Hebrew"
-            android:textSize="30sp"
+            android:textSize="@dimen/list_name_size"
             android:text="@string/list_name"
             android:singleLine="false"
             android:textStyle="bold"
             android:layout_below="@+id/b_add_image"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="@dimen/list_name_margin_top"/>
 
     </RelativeLayout>
 
@@ -79,10 +79,12 @@
 
         <Button
             android:id="@+id/b_add_friend"
-            android:layout_width="60dp"
+            android:layout_width="@dimen/add_friend_button_width"
             android:layout_height="fill_parent"
-            android:layout_marginTop="3dp"
-            android:layout_marginBottom="3dp"
+            android:layout_marginTop="@dimen/add_friend_button_margin"
+            android:layout_marginBottom="@dimen/add_friend_button_margin"
+            android:layout_marginRight="@dimen/add_friend_button_margin"
+            android:layout_marginEnd="@dimen/add_friend_button_margin"
             android:background="@drawable/add"
             android:layout_weight="1"
             android:gravity="end"
@@ -99,22 +101,22 @@
         android:layout_weight="6">
 
         <ImageView
-            android:layout_width="55dp"
-            android:layout_height="25dp"
-            android:layout_marginLeft="17dp"
-            android:layout_marginStart="17dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="3dp"
+            android:layout_width="@dimen/tags_width"
+            android:layout_height="@dimen/title_height"
+            android:layout_marginLeft="@dimen/tags_margin_left"
+            android:layout_marginStart="@dimen/tags_margin_left"
+            android:layout_marginTop="@dimen/tags_margin"
+            android:layout_marginBottom="@dimen/tags_margin"
             android:src="@drawable/tags"/>
 
         <Button
             android:id="@+id/b_add_tag"
-            android:layout_width="40dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="3dp"
-            android:layout_marginBottom="3dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginStart="5dp"
+            android:layout_width="@dimen/add_tag_width"
+            android:layout_height="@dimen/add_tag_height_land"
+            android:layout_marginTop="@dimen/add_tag_margin"
+            android:layout_marginBottom="@dimen/add_tag_margin"
+            android:layout_marginLeft="@dimen/add_tag_margin"
+            android:layout_marginStart="@dimen/add_tag_margin"
             android:background="@drawable/add_small"
             android:onClick="onClick" />
 
@@ -129,23 +131,23 @@
         android:layout_weight="4">
 
         <ImageView
-            android:layout_width="100dp"
-            android:layout_height="25dp"
-            android:layout_marginLeft="17dp"
-            android:layout_marginStart="17dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="3dp"
+            android:layout_width="@dimen/title_width"
+            android:layout_height="@dimen/title_height"
+            android:layout_marginLeft="@dimen/title_margin_left"
+            android:layout_marginStart="@dimen/title_margin_left"
+            android:layout_marginTop="@dimen/title_margin"
+            android:layout_marginBottom="@dimen/title_margin"
             android:src="@drawable/manager"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tv_manager"
-            android:layout_marginLeft="17dp"
-            android:layout_marginStart="17dp"
+            android:layout_marginLeft="@dimen/title_margin_left"
+            android:layout_marginStart="@dimen/title_margin_left"
             android:text="@string/you"
             android:textColor="#505153"
-            android:textSize="22sp" />
+            android:textSize="@dimen/subtitle_size" />
 
     </LinearLayout>
 
@@ -158,23 +160,23 @@
         android:layout_weight="4">
 
         <ImageView
-            android:layout_width="100dp"
-            android:layout_height="25dp"
-            android:layout_marginLeft="17dp"
-            android:layout_marginStart="17dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="3dp"
+            android:layout_width="@dimen/title_width"
+            android:layout_height="@dimen/title_height"
+            android:layout_marginLeft="@dimen/title_margin_left"
+            android:layout_marginStart="@dimen/title_margin_left"
+            android:layout_marginTop="@dimen/title_margin"
+            android:layout_marginBottom="@dimen/title_margin"
             android:src="@drawable/deadline"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tv_deadline"
-            android:layout_marginLeft="17dp"
-            android:layout_marginStart="17dp"
+            android:layout_marginLeft="@dimen/title_margin_left"
+            android:layout_marginStart="@dimen/title_margin_left"
             android:text="@string/date"
             android:textColor="#505153"
-            android:textSize="22sp"/>
+            android:textSize="@dimen/subtitle_size"/>
 
     </LinearLayout>
 
@@ -187,10 +189,12 @@
         android:layout_weight="5">
 
         <ImageView
-            android:layout_width="110dp"
-            android:layout_height="25dp"
-            android:layout_marginLeft="6dp"
-            android:layout_marginStart="6dp"
+            android:layout_width="@dimen/privacy_width"
+            android:layout_height="@dimen/privacy_height"
+            android:layout_marginLeft="@dimen/privacy_margin"
+            android:layout_marginStart="@dimen/privacy_margin"
+            android:layout_marginRight="5dp"
+            android:layout_marginEnd="5dp"
             android:src="@drawable/privacy"/>
 
         <LinearLayout
@@ -203,10 +207,10 @@
                 android:text="@string/private_list"
                 android:button="@drawable/check_box_privacy_design"
                 android:textColor="#505153"
-                android:textSize="25sp"
+                android:textSize="@dimen/check_box_privacy_size"
                 android:id="@+id/cb_private"
-                android:layout_marginRight="5dp"
-                android:layout_marginEnd="5dp"/>
+                android:layout_marginRight="7dp"
+                android:layout_marginEnd="7dp"/>
 
             <CheckBox
                 android:layout_width="wrap_content"
@@ -214,10 +218,10 @@
                 android:text="@string/public_list"
                 android:button="@drawable/check_box_privacy_design"
                 android:textColor="#505153"
-                android:textSize="25sp"
+                android:textSize="@dimen/check_box_privacy_size"
                 android:id="@+id/cb_public"
-                android:layout_marginLeft="5dp"
-                android:layout_marginStart="5dp"/>
+                android:layout_marginLeft="7dp"
+                android:layout_marginStart="7dp"/>
 
         </LinearLayout>
 

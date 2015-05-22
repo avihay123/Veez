@@ -1,5 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
+<resources>
 
+    <!-- dimens for activity_create-list & activity_list_info -->
+    <dimen name="add_friend_button_width">125dp</dimen>
+    <dimen name="add_friend_button_margin">7dp</dimen>
+    <dimen name="list_name_size">70sp</dimen>
+    <dimen name="list_name_margin_top">25dp</dimen>
+    <dimen name="menu_width">70dp</dimen>
+    <dimen name="menu_height">70dp</dimen>
+    <dimen name="menu2_width">45dp</dimen>
+    <dimen name="menu2_height">70dp</dimen>
+    <dimen name="add_image_width">110dp</dimen>
+    <dimen name="add_image_height">90dp</dimen>
+    <dimen name="tags_width">75dp</dimen>
+    <dimen name="tags_height">40dp</dimen>
+    <dimen name="tags_margin_left">25dp</dimen>
+    <dimen name="tags_margin">7dp</dimen>
+    <dimen name="add_tag_width">80dp</dimen>
+    <dimen name="add_tag_height">35dp</dimen>
+    <dimen name="add_tag_height_land">54dp</dimen>
+    <dimen name="add_tag_margin">7dp</dimen>
+    <dimen name="title_width">140dp</dimen>
+    <dimen name="title_height">45dp</dimen>
+    <dimen name="title_margin_left">22dp</dimen>
+    <dimen name="title_margin">6dp</dimen>
+    <dimen name="subtitle_size">34sp</dimen>
+    <dimen name="privacy_width">145dp</dimen>
+    <dimen name="privacy_height">40dp</dimen>
+    <dimen name="privacy_margin">17dp</dimen>
+    <dimen name="check_box_privacy_size">39sp</dimen>
 
+    <!-- dimens for activity_explorer -->
+    <dimen name="explorer_width">440dp</dimen>
+    <dimen name="logo_explorer_width">340dp</dimen>
+    <dimen name="logo_explorer_height">95dp</dimen>
+    <dimen name="explorer_size">55sp</dimen>
+    <dimen name="et_explorer_width">320dp</dimen>
+    <dimen name="et_explorer_height">50dp</dimen>
+    <dimen name="tag_explorer_height">44dp</dimen>
+    <dimen name="tag_explorer_margin">7dp</dimen>
+    <dimen name="tag_explorer_size">24dp</dimen>
+    <dimen name="explorer_w1">7</dimen>
+    <dimen name="explorer_w2">14</dimen>
 
-<resources></resources>
+    <!-- dimens for activity_list -->
+    <dimen name="vee_list_width">85dp</dimen>
+    <dimen name="vee_list_height">85dp</dimen>
+    <dimen name="count_vee_size">55sp</dimen>
+    <dimen name="likes_list_width">107dp</dimen>
+    <dimen name="likes_list_height">97dp</dimen>
+    <dimen name="likes_size">40sp</dimen>
+    <dimen name="search_bar_height">6dp</dimen>
+    <dimen name="search_size">240dp</dimen>
+    <dimen name="count_vee_margin">35dp</dimen>
+    <dimen name="add_list_button_width">4dp</dimen>
+    <dimen name="add_list_button_height">75dp</dimen>
+
+    <!-- dimens for activity_login -->
+    <dimen name="logo_width">390dp</dimen>
+    <dimen name="logo_height">330dp</dimen>
+    <dimen name="login_width">710dp</dimen>
+    <dimen name="login_height">190dp</dimen>
+
+    <!-- dimens for activity_my_lists -->
+    <dimen name="logo_my_lists_width">240dp</dimen>
+    <dimen name="logo_my_lists_height">220dp</dimen>
+    <dimen name="add_list_width">39dp</dimen>
+
+    <!-- dimens for list_view_element -->
+    <dimen name="item_name_size">40sp</dimen>
+    <dimen name="button_width">75dp</dimen>
+    <dimen name="button_height">75dp</dimen>
+    <dimen name="button_margin1">15dp</dimen>
+    <dimen name="button_margin2">10dp</dimen>
+
+    <!-- dimens for list_view -->
+    <dimen name="name_list_size">40sp</dimen>
+    <dimen name="likes_view_size">29sp</dimen>
+    <dimen name="title_list_size">39sp</dimen>
+    <dimen name="subtitle_list_size">25sp</dimen>
+    <dimen name="count_veez_size">36sp</dimen>
+    <dimen name="deadline_size">33sp</dimen>
+    <dimen name="image_width">40dp</dimen>
+    <dimen name="image_height">40dp</dimen>
+
+</resources>

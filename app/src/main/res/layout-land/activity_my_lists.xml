@@ -14,8 +14,8 @@
         android:layout_weight="7" >
 
         <Button
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/menu_width"
+            android:layout_height="@dimen/menu_height"
             android:id="@+id/b_first_menu"
             android:background="@drawable/menu"
             android:layout_marginTop="15dp"
@@ -24,8 +24,8 @@
             android:onClick="onClick"/>
 
         <Button
-            android:layout_width="25dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/menu2_width"
+            android:layout_height="@dimen/menu2_height"
             android:id="@+id/b_second_menu"
             android:background="@drawable/menu_list"
             android:layout_marginTop="15dp"
@@ -48,14 +48,14 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_height="@dimen/search_bar_height"
         android:layout_weight="3"
         android:background="#20414f"
         android:orientation="horizontal"
         android:weightSum="7" >
 
         <EditText
-            android:layout_width="200dp"
+            android:layout_width="@dimen/search_size"
             android:layout_height="fill_parent"
             android:id="@+id/et_search"
             android:textColor="#ffffff"
@@ -70,8 +70,8 @@
         <Button
             android:id="@+id/b_add_list"
             android:layout_weight="1"
-            android:layout_width="25dp"
-            android:layout_height="33dp"
+            android:layout_width="@dimen/add_list_button_width"
+            android:layout_height="@dimen/add_list_button_height"
             android:layout_marginTop="2dp"
             android:layout_marginBottom="2dp"
             android:layout_marginLeft="70dp"
