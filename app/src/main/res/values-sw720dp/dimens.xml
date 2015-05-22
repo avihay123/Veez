@@ -82,4 +82,13 @@
     <dimen name="image_width">40dp</dimen>
     <dimen name="image_height">40dp</dimen>
 
+    <!-- dimens for add_item -->
+    <dimen name="item_size">40sp</dimen>
+    <dimen name="info_size">40sp</dimen>
+    <dimen name="et_item_height">65dp</dimen>
+    <dimen name="et_info_height">195dp</dimen>
+    <dimen name="add_item_margin">35dp</dimen>
+    <dimen name="add_button_width">80dp</dimen>
+    <dimen name="add_button_height">80dp</dimen>
+
 </resources>

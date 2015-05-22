@@ -15,5 +15,7 @@
     <string name="only_you">Only you</string>
     <string name="number_days">12 Days</string>
     <string name="action_settings">Setting</string>
+    <string name="item">Item:</string>
+    <string name="info">Info:</string>
 
 </resources>
