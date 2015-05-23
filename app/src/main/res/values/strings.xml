@@ -17,5 +17,9 @@
     <string name="action_settings">Setting</string>
     <string name="item">Item:</string>
     <string name="info">Info:</string>
+    <string name="facebook_app_id">837568299669031</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="hello_world">Hello world!</string>
 
 </resources>
