@@ -58,7 +58,6 @@ public class LoginActivity extends Activity {
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                Toast.makeText(getApplicationContext(), "1", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(LoginActivity.this, MyListsActivity.class);
                 startActivity(intent);
                 finish();
@@ -80,7 +79,6 @@ public class LoginActivity extends Activity {
 
     private void updateWithToken(AccessToken currentAccessToken) {
         if (currentAccessToken != null) {
-            Toast.makeText(getApplicationContext(), "2", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(LoginActivity.this, MyListsActivity.class);
             startActivity(intent);
             finish();
