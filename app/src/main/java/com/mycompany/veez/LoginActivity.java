@@ -29,14 +29,21 @@ public class LoginActivity extends Activity {
     //    private Button b_login;
     private LoginButton loginButton;
     private CallbackManager callbackManager;
-    ProfileTracker profileTracker;
-    AccessTokenTracker accessTokenTracker;
+    private ProfileTracker profileTracker;
+    private AccessTokenTracker accessTokenTracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         FacebookSdk.sdkInitialize(getApplicationContext());
+
+        //TODO for debug--------------------------------------------------------------------
+
+        Intent intent = new Intent(getApplicationContext(), MyListsActivity.class);
+        startActivity(intent);
+        finish();
+        //------------------------------------------------------------------------------------
 
 
         accessTokenTracker = new AccessTokenTracker() {
@@ -58,7 +65,7 @@ public class LoginActivity extends Activity {
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                Intent intent = new Intent(LoginActivity.this, MyListsActivity.class);
+                Intent intent = new Intent(getApplicationContext(), MyListsActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -79,7 +86,7 @@ public class LoginActivity extends Activity {
 
     private void updateWithToken(AccessToken currentAccessToken) {
         if (currentAccessToken != null) {
-            Intent intent = new Intent(LoginActivity.this, MyListsActivity.class);
+            Intent intent = new Intent(getApplicationContext(), MyListsActivity.class);
             startActivity(intent);
             finish();
         }
