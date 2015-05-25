@@ -16,18 +16,12 @@
         android:layout_width="@dimen/logo_width"
         android:layout_height="@dimen/logo_height"
         android:src="@drawable/logo"
-        android:layout_marginBottom="10dp"/>
-
-    <!--<com.facebook.login.widget.LoginButton-->
-        <!--android:id="@+id/login_button"-->
-        <!--android:layout_width="@dimen/login_width"-->
-        <!--android:layout_height="@dimen/login_height"-->
-        <!--/>-->
+        android:layout_marginBottom="20dp"/>
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/login_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/login_width"
+        android:layout_height="@dimen/login_height"
         android:layout_gravity="center_horizontal"/>
 
 </LinearLayout>

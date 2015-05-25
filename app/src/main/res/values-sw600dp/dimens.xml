@@ -91,4 +91,7 @@
     <dimen name="add_button_width">70dp</dimen>
     <dimen name="add_button_height">70dp</dimen>
 
+    <!-- dimens for item_info -->
+    <dimen name="et_item_info_height">110dp</dimen>
+
 </resources>
