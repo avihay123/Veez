@@ -19,7 +19,6 @@
     <string name="info">Info:</string>
     <string name="facebook_app_id">837568299669031</string>
     <string name="title_activity_main">MainActivity</string>
-
-    <string name="hello_world">Hello world!</string>
+    <string name="new_info">New Info:</string>
 
 </resources>

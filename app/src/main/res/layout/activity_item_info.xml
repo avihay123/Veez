@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ItemInfo"
+    tools:context=".ItemInfoActivity"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -11,65 +14,54 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
+        android:gravity="center"
         android:layout_marginBottom="@dimen/add_item_margin">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/item"
-            android:textSize="@dimen/item_size"
+            android:id="@+id/tv_item_info"
+            android:textSize="@dimen/info_size"
+            android:background="@drawable/edit_text_item"
             android:textColor="#464545"
-            android:layout_marginLeft="20dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginEnd="5dp"
-            android:gravity="center" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/et_item_height"
-            android:id="@+id/et_item"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginEnd="10dp"
-            android:background="@drawable/edit_text_item"/>
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_gravity="start" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
         android:layout_marginBottom="20dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/info"
+            android:text="@string/new_info"
             android:textSize="@dimen/info_size"
-            android:textColor="#464545"
-            android:layout_marginLeft="20dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginRight="7dp"
-            android:layout_marginEnd="7dp"
-            android:layout_gravity="start" />
+            android:textColor="#464545" />
 
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="@dimen/et_info_height"
             android:id="@+id/et_info"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginEnd="10dp"
-            android:background="@drawable/edit_text_info" />
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginEnd="15dp"
+            android:background="@drawable/edit_text_item" />
 
     </LinearLayout>
 
     <Button
         android:layout_width="@dimen/add_button_width"
         android:layout_height="@dimen/add_button_height"
-        android:id="@+id/b_add_item"
+        android:id="@+id/b_add_info"
         android:layout_gravity="center"
         android:gravity="center"
         android:layout_marginBottom="10dp"
