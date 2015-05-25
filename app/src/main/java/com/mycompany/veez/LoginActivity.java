@@ -2,9 +2,13 @@ package com.mycompany.veez;
 
 import android.app.Activity;
 import android.content.Intent;
+
+import android.content.Intent;
 import android.os.Bundle;
+
 import android.view.Menu;
 import android.view.MenuItem;
+
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
@@ -37,9 +41,9 @@ public class LoginActivity extends Activity {
 
         //TODO for debug--------------------------------------------------------------------
 
-        //Intent intent = new Intent(getApplicationContext(), MyListsActivity.class);
-        //startActivity(intent);
-        //finish();
+        Intent intent = new Intent(getApplicationContext(), MyListsActivity.class);
+        startActivity(intent);
+        finish();
         //------------------------------------------------------------------------------------
 
 
