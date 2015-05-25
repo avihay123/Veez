@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ItemInfo"
+    tools:context=".ItemInfoActivity"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="#ffffff">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:layout_marginBottom="@dimen/add_item_margin">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/et_item_info_height"
+            android:id="@+id/tv_item_info"
+            android:textSize="@dimen/info_size"
+            android:background="@drawable/edit_text_item"
+            android:textColor="#464545"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_gravity="start" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginBottom="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/new_info"
+            android:textSize="@dimen/info_size"
+            android:textColor="#464545" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/et_item_info_height"
+            android:id="@+id/et_info"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginEnd="15dp"
+            android:background="@drawable/edit_text_item" />
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="@dimen/add_button_width"
+        android:layout_height="@dimen/add_button_height"
+        android:id="@+id/b_add_info"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/add_small"/>
+
+</LinearLayout>
