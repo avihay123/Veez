@@ -52,8 +52,6 @@ public class MyListsActivity extends Activity implements View.OnClickListener {
 
         lv_my_lists = (ListView) findViewById(R.id.lv_my_lists);
 
-
-
     }
 
 
@@ -61,9 +59,6 @@ public class MyListsActivity extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         int viewId = v.getId();
         if (viewId == R.id.b_first_menu) {
-            //TODO
-        }
-        if (viewId == R.id.b_second_menu) {
             //TODO
         }
         if (viewId == R.id.b_add_list) {
