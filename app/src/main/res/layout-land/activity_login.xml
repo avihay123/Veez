@@ -16,13 +16,12 @@
         android:layout_width="@dimen/logo_width"
         android:layout_height="@dimen/logo_height"
         android:src="@drawable/logo"
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginBottom="20dp"/>
 
-    <Button
-        android:id="@+id/b_login"
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/login_button"
+        android:layout_gravity="center_horizontal"
         android:layout_width="@dimen/login_width"
-        android:layout_height="@dimen/login_height"
-        android:background="@drawable/login"
-        android:onClick="onClick" />
+        android:layout_height="@dimen/login_height" />
 
 </LinearLayout>
