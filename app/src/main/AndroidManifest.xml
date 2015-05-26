@@ -28,18 +28,22 @@
             android:name=".ListActivity"
             android:label="title_activity_list" >
         </activity>
+
         <activity
             android:name=".ExplorerActivity"
             android:label="activity_explorer" >
         </activity>
+
         <activity
             android:name=".MyListsActivity"
             android:label="activity_my_lists" >
         </activity>
+
         <activity
             android:name=".CreateListActivity"
             android:label="activity_my_lists" >
         </activity>
+
         <activity
             android:name=".ListInfoActivity"
             android:label="activity_my_lists" >
@@ -52,3 +56,4 @@
     </application>
 
 </manifest>
+
