@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,8 +30,10 @@ public class ExplorerActivity extends ActionBarActivity implements View.OnClickL
     private ActionBarDrawerToggle mDrawerToggle;
 
     private ListView lv_lists;
+    private TextView tv_explorer;
     private AutoCompleteTextView ac_search;
     private String[] searchTags = new String[5];
+    private int tagsNum = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +53,11 @@ public class ExplorerActivity extends ActionBarActivity implements View.OnClickL
         b_first_menu = (Button) findViewById(R.id.b_first_menu);
         b_first_menu.setOnClickListener(this);
 
+        tv_explorer = (TextView) findViewById(R.id.tv_explorer);
+
         lv_lists = (ListView) findViewById(R.id.lv_explorer_lists);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, TAGS);
 
         ac_search = (AutoCompleteTextView) findViewById(R.id.ac_search);
@@ -63,15 +68,45 @@ public class ExplorerActivity extends ActionBarActivity implements View.OnClickL
         ac_search.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (tagsNum > 5) {
+                    Log.d("EXPLORER", "NOP");
+                    return;
+                }
+                searchTags[tagsNum] = (String) ((TextView)view).getText();
+                Log.d("EXPLORER", searchTags[tagsNum]);
+                tagsNum++;
+                ac_search.setText("");
+                tv_explorer.setText(newHeadline(searchTags, tagsNum));
+                tv_explorer.setTextSize(35 - 5 * tagsNum);
+                if (tagsNum == 5){
+                    ac_search.setEnabled(false);
+                    ac_search.setText("5 tags maximum");
+                    Log.d("EXPLORER", "reached limit");
+                }
 
             }
         });
 
     }
 
+    private static String newHeadline(String[] tags, int tagsNum){
+        String headline = "";
+        headline += tags[0];
+        for (int i = 1; i < tagsNum; i++){
+            headline += " + " + tags[i];
+        }
+        return headline;
+    }
+
     private static final String[] TAGS = new String[] {
             "BBQ", "Road Trip", "Camping", "Shopping", "Beach", "Sleep Over",
-            "Books", "Songs", "TV Series", "Movies", "Holidays",
+            "Books", "Songs", "TV Series", "Movies", "Holidays", "Action Movies",
+
+
+            //stupid tags to have a tag for every letter
+            "Dogs", "Entertainment", "Fonts", "Groupon Deals",
+            "IMDB Top 10 Weekly", //checks a long tag too
+
             //TODO for debug
             "BBQ2",
             "BBQ3",
@@ -95,7 +130,7 @@ public class ExplorerActivity extends ActionBarActivity implements View.OnClickL
 
     private void addDrawerItems() {
 
-        ArrayList<String> values = new ArrayList<String>();
+        ArrayList<String> values = new ArrayList<>();
         values.add("");
         values.add("Name");
         values.add("My Lists");

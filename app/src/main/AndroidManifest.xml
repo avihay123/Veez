@@ -32,6 +32,11 @@
         <activity
             android:name=".ExplorerActivity"
             android:label="activity_explorer" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <activity
@@ -47,11 +52,7 @@
         <activity
             android:name=".ListInfoActivity"
             android:label="activity_my_lists" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 
