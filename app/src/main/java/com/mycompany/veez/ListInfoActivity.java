@@ -220,6 +220,7 @@ public class ListInfoActivity extends ActionBarActivity implements View.OnClickL
 
             Intent intent = new Intent(getApplicationContext(), MyListsActivity.class);
             startActivity(intent);
+            finish();
         }
     }
 

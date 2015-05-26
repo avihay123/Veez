@@ -27,16 +27,17 @@
         <activity
             android:name=".ListActivity"
             android:label="title_activity_list" >
-        </activity>
 
-        <activity
-            android:name=".ExplorerActivity"
-            android:label="activity_explorer" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ExplorerActivity"
+            android:label="activity_explorer" >
         </activity>
 
         <activity
@@ -52,7 +53,6 @@
         <activity
             android:name=".ListInfoActivity"
             android:label="activity_my_lists" >
-
         </activity>
     </application>
 
