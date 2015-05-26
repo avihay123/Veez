@@ -24,7 +24,8 @@
     <dimen name="title_height">25dp</dimen>
     <dimen name="title_margin_left">17dp</dimen>
     <dimen name="title_margin">5dp</dimen>
-    <dimen name="subtitle_size">22sp</dimen>
+    <dimen name="subtitle_size">21sp</dimen>
+    <dimen name="subtitle_margin">-6dp</dimen>
     <dimen name="privacy_width">110dp</dimen>
     <dimen name="privacy_height">25dp</dimen>
     <dimen name="privacy_margin">6dp</dimen>
