@@ -137,7 +137,7 @@ public class MyListsActivity extends ActionBarActivity implements View.OnClickLi
         mDrawerToggle.setDrawerIndicatorEnabled(true);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
     }
-
+    
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -152,6 +152,7 @@ public class MyListsActivity extends ActionBarActivity implements View.OnClickLi
     }
 
     /* ------------------------------------------------- */
+
 
     @Override
     public void onClick(View v) {
