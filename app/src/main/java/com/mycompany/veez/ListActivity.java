@@ -25,7 +25,7 @@ import android.content.res.Configuration;
 import java.util.ArrayList;
 import android.widget.TextView;
 
-public class ListActivity extends Activity implements View.OnClickListener {
+public class ListActivity extends ActionBarActivity implements View.OnClickListener {
 
     private Button b_first_menu;
     private Button b_second_menu;
@@ -97,7 +97,7 @@ public class ListActivity extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         int viewId = v.getId();
         if (viewId == R.id.b_first_menu) {
-            //TODO
+            mDrawerLayout.openDrawer(Gravity.START);
         }
         if (viewId == R.id.b_second_menu) {
             //TODO
@@ -106,20 +106,12 @@ public class ListActivity extends Activity implements View.OnClickListener {
         if (viewId == R.id.b_add_item) {
             addItem();
         }
-//
-//        if (viewId == R.id.b_add_tag) {
-//            //TODO
-//        }
-//
-//        if (viewId == R.id.b_leave_list) {
-//            //TODO delete the list from the user
-//
 //            Intent intent = new Intent(getApplicationContext(), MyListsActivity.class);
 //            startActivity(intent);
 //            finish();
 //        }
     }
-    /* ----------------- Menu function ------------------- */
+    /* ----------------- Menu functions ------------------- */
 
     private void addDrawerItems() {
 
@@ -191,14 +183,6 @@ public class ListActivity extends Activity implements View.OnClickListener {
     }
 
     /* ------------------------------------------------- */
-
-    @Override
-    public void onClick(View v) {
-        int viewId = v.getId();
-        if (viewId == R.id.b_first_menu) {
-            mDrawerLayout.openDrawer(Gravity.START);
-        }
-    }
 
     private class MyAdapter extends BaseAdapter {
 
