@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -25,6 +27,10 @@ public class ExplorerActivity extends ActionBarActivity implements View.OnClickL
     private ListView mDrawerList;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
+
+    private ListView lv_lists;
+    private AutoCompleteTextView ac_search;
+    private String[] searchTags = new String[5];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +50,46 @@ public class ExplorerActivity extends ActionBarActivity implements View.OnClickL
         b_first_menu = (Button) findViewById(R.id.b_first_menu);
         b_first_menu.setOnClickListener(this);
 
+        lv_lists = (ListView) findViewById(R.id.lv_explorer_lists);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, TAGS);
+
+        ac_search = (AutoCompleteTextView) findViewById(R.id.ac_search);
+
+        ac_search.setAdapter(adapter);
+        ac_search.setThreshold(1);
+
+        ac_search.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
+
     }
+
+    private static final String[] TAGS = new String[] {
+            "BBQ", "Road Trip", "Camping", "Shopping", "Beach", "Sleep Over",
+            "Books", "Songs", "TV Series", "Movies", "Holidays",
+            //TODO for debug
+            "BBQ2",
+            "BBQ3",
+            "BBQ4",
+            "BBQ5",
+            "BBQ6",
+            "BBQ7",
+            "BBQ9",
+            "BBQ8"
+            /*
+            TODO:
+            - Add more tags!
+                preferably have more tags than you can see at once all starting
+                with same letter to show at presentation.
+            - Move tags to resources!
+            - Maybe allow new tags by users, requires storing tags on DB.
+             */
+    };
 
     /* ----------------- Menu function ------------------- */
 

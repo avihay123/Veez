@@ -6,16 +6,15 @@
     tools:context=".ListActivity"
     android:orientation="vertical"
     android:background="#ffffff"
-    android:weightSum="29" >
+    android:weightSum="29">
 
-    <android.support.v4.widget.DrawerLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <!-- The first child in the layout is for the main Activity UI-->
+        <!-- The first child in the layout is for the main Activity UI-->
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
             tools:ignore="contentDescription"
@@ -23,13 +22,13 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:background="#ffffff"
-            android:weightSum="29" >
+            android:weightSum="29">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:background="@drawable/cover"
-                android:layout_weight="10" >
+                android:layout_weight="10">
 
                 <Button
                     android:layout_width="@dimen/menu_width"
@@ -39,7 +38,7 @@
                     android:layout_marginTop="15dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginStart="15dp"
-                    android:onClick="onClick"/>
+                    android:onClick="onClick" />
 
                 <Button
                     android:layout_width="@dimen/menu2_width"
@@ -77,7 +76,7 @@
                         android:orientation="horizontal"
                         android:gravity="center"
                         android:layout_height="wrap_content"
-                        android:layout_width="wrap_content" >
+                        android:layout_width="wrap_content">
 
                         <ImageView
                             android:layout_width="@dimen/vee_list_width"
@@ -85,7 +84,7 @@
                             android:id="@+id/im_vee"
                             android:background="@drawable/v1"
                             android:layout_marginRight="5dp"
-                            android:layout_marginEnd="5dp"/>
+                            android:layout_marginEnd="5dp" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -93,8 +92,7 @@
                             android:id="@+id/tv_curr_items"
                             android:fontFamily="Myriad Hebrew"
                             android:textSize="@dimen/count_vee_size"
-                            android:textStyle="bold"
-                            android:text="@string/zero" />
+                            android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -110,11 +108,19 @@
                             android:id="@+id/tv_total_items"
                             android:fontFamily="Myriad Hebrew"
                             android:textSize="@dimen/count_vee_size"
-                            android:textStyle="bold"
-                            android:text="@string/zero" />
+                            android:textStyle="bold" />
 
-                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
 
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/search_bar_height"
+                    android:layout_weight="2"
+                    android:background="#20414f"
+                    android:orientation="horizontal"
+                    android:weightSum="7">
 
                 </LinearLayout>
 
@@ -140,12 +146,12 @@
                 android:layout_weight="2"
                 android:background="#20414f"
                 android:orientation="horizontal"
-                android:weightSum="7" >
+                android:weightSum="7">
 
-                <EditText
+                <AutoCompleteTextView
                     android:layout_width="@dimen/search_size"
                     android:layout_height="fill_parent"
-                    android:id="@+id/et_search"
+                    android:id="@+id/ac_search_item"
                     android:textColor="#ffffff"
                     android:layout_marginLeft="70dp"
                     android:layout_marginStart="70dp"
@@ -174,8 +180,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="17"
-                android:id="@+id/lv_list_items">
-            </ListView>
+                android:id="@+id/lv_list_items"></ListView>
         </LinearLayout>
         <!-- Side navigation drawer UI -->
         <ListView
@@ -183,7 +188,7 @@
             android:layout_width="200dp"
             android:layout_height="match_parent"
             android:layout_gravity="left|start"
-            android:background="#ffffff"/>
+            android:background="#ffffff" />
 
     </android.support.v4.widget.DrawerLayout>
 
