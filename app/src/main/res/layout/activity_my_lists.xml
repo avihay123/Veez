@@ -3,8 +3,8 @@
     android:id="@+id/My_List"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MyListsActivity"
     android:orientation="vertical"
+    tools:context=".MyListsActivity"
     android:weightSum="29" >
 
     <android.support.v4.widget.DrawerLayout
