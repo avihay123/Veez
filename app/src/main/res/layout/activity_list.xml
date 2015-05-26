@@ -76,8 +76,7 @@
                     android:id="@+id/tv_curr_items"
                     android:fontFamily="Myriad Hebrew"
                     android:textSize="@dimen/count_vee_size"
-                    android:textStyle="bold"
-                    android:text="@string/zero" />
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -93,8 +92,7 @@
                     android:id="@+id/tv_total_items"
                     android:fontFamily="Myriad Hebrew"
                     android:textSize="@dimen/count_vee_size"
-                    android:textStyle="bold"
-                    android:text="@string/zero" />
+                    android:textStyle="bold"/>
 
                 </LinearLayout>
 
@@ -125,10 +123,10 @@
         android:orientation="horizontal"
         android:weightSum="7" >
 
-        <EditText
+        <AutoCompleteTextView
             android:layout_width="@dimen/search_size"
             android:layout_height="fill_parent"
-            android:id="@+id/et_search"
+            android:id="@+id/ac_search_item"
             android:textColor="#ffffff"
             android:layout_marginLeft="70dp"
             android:layout_marginStart="70dp"

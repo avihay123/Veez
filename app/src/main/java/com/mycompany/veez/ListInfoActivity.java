@@ -131,6 +131,7 @@ public class ListInfoActivity extends Activity implements View.OnClickListener {
 
             Intent intent = new Intent(getApplicationContext(), MyListsActivity.class);
             startActivity(intent);
+            finish();
         }
 
     }
