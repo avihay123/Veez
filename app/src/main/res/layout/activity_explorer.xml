@@ -76,10 +76,10 @@
                     android:layout_marginTop="5dp"
                     android:text="@string/explorer"/>
 
-                <EditText
+                <AutoCompleteTextView
                     android:layout_width="@dimen/et_explorer_width"
                     android:layout_height="@dimen/et_explorer_height"
-                    android:id="@+id/et_search"
+                    android:id="@+id/ac_search"
                     android:textColor="#ffffff"
                     android:layout_gravity="center"
                     android:layout_marginTop="6dp"
@@ -226,7 +226,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="@integer/explorer_w2"
-                android:id="@+id/lv_my_list">
+                android:id="@+id/lv_explorer_lists">
             </ListView>
         </LinearLayout>
 
