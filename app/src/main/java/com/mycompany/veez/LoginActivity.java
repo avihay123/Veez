@@ -40,7 +40,7 @@ public class LoginActivity extends Activity {
 
         //TODO for debug--------------------------------------------------------------------
 
-        Intent intent = new Intent(getApplicationContext(), MyListsActivity.class);
+        Intent intent = new Intent(getApplicationContext(), CreateListActivity.class);
         startActivity(intent);
         finish();
         //------------------------------------------------------------------------------------
