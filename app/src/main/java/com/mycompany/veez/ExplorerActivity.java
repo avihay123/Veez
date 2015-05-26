@@ -68,10 +68,6 @@ public class ExplorerActivity extends ActionBarActivity implements View.OnClickL
         ac_search.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (tagsNum > 5) {
-                    Log.d("EXPLORER", "NOP");
-                    return;
-                }
                 searchTags[tagsNum] = (String) ((TextView)view).getText();
                 Log.d("EXPLORER", searchTags[tagsNum]);
                 tagsNum++;
