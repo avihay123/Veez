@@ -129,7 +129,7 @@ public class ListInfoActivity extends Activity implements View.OnClickListener {
         if (viewId == R.id.b_leave_list) {
             //TODO delete the list from the user
 
-            Intent intent = new Intent(getApplicationContext(), CreateListActivity.class);
+            Intent intent = new Intent(getApplicationContext(), MyListsActivity.class);
             startActivity(intent);
         }
 

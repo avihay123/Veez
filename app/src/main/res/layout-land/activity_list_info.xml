@@ -168,10 +168,11 @@
             android:layout_marginBottom="@dimen/title_margin"
             android:src="@drawable/deadline"/>
 
-        <TextView
+        <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_deadline"
+            android:id="@+id/et_deadline"
+            android:focusable="false"
             android:layout_marginLeft="@dimen/title_margin_left"
             android:layout_marginStart="@dimen/title_margin_left"
             android:text="@string/date"
@@ -230,7 +231,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:id="@+id/b_create_list"
+        android:id="@+id/b_leave_list"
         android:background="@drawable/leave_list_land"
         android:layout_weight="4"
         android:onClick="onClick" />
