@@ -25,7 +25,7 @@
             tools:context=".ListInfoActivity"
             android:orientation="vertical"
             android:background="#ffffff"
-            android:weightSum="44" >
+            android:weightSum="45" >
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -146,7 +146,7 @@
                 android:orientation="horizontal"
                 android:background="@drawable/line"
                 android:gravity="center_vertical"
-                android:layout_weight="4">
+                android:layout_weight="4.5">
 
                 <ImageView
                     android:layout_width="@dimen/title_width"
@@ -175,7 +175,7 @@
                 android:orientation="horizontal"
                 android:background="@drawable/line"
                 android:gravity="center_vertical"
-                android:layout_weight="4">
+                android:layout_weight="4.5">
 
                 <ImageView
                     android:layout_width="@dimen/title_width"
@@ -193,8 +193,10 @@
                     android:focusable="false"
                     android:layout_marginLeft="@dimen/title_margin_left"
                     android:layout_marginStart="@dimen/title_margin_left"
+                    android:layout_marginTop="@dimen/subtitle_margin"
                     android:text="@string/date"
                     android:textColor="#505153"
+                    android:layout_gravity="bottom"
                     android:textSize="@dimen/subtitle_size"/>
 
             </LinearLayout>
