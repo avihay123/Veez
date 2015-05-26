@@ -8,253 +8,282 @@
     android:background="#ffffff"
     android:weightSum="44" >
 
-    <RelativeLayout
+    <android.support.v4.widget.DrawerLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@drawable/cover"
-        android:layout_weight="10" >
+        android:layout_height="match_parent">
 
-        <Button
-            android:layout_width="@dimen/menu_width"
-            android:layout_height="@dimen/menu_height"
-            android:id="@+id/b_first_menu"
-            android:background="@drawable/menu"
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginStart="15dp"
-            android:onClick="onClick"/>
+        <!-- The first child in the layout is for the main Activity UI-->
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".ListInfoActivity"
+            android:orientation="vertical"
+            android:background="#ffffff"
+            android:weightSum="44" >
 
-        <Button
-            android:layout_width="@dimen/add_image_width"
-            android:layout_height="@dimen/add_image_height"
-            android:id="@+id/b_add_image"
-            android:background="@drawable/add_image"
-            android:onClick="onClick"
-            android:layout_alignTop="@+id/b_first_menu"
-            android:layout_centerHorizontal="true"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@drawable/cover"
+                android:layout_weight="10" >
 
-        <Button
-            android:layout_width="@dimen/menu2_width"
-            android:layout_height="@dimen/menu2_height"
-            android:id="@+id/b_second_menu"
-            android:background="@drawable/menu_list"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginEnd="15dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:onClick="onClick" />
+                <Button
+                    android:layout_width="@dimen/menu_width"
+                    android:layout_height="@dimen/menu_height"
+                    android:id="@+id/b_first_menu"
+                    android:background="@drawable/menu"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginStart="15dp"
+                    android:onClick="onClick"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_list_name"
-            android:fontFamily="Myriad Hebrew"
-            android:textSize="@dimen/list_name_size"
-            android:text="@string/list_name"
-            android:singleLine="false"
-            android:textStyle="bold"
-            android:layout_below="@+id/b_add_image"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/list_name_margin_top"/>
+                <Button
+                    android:layout_width="@dimen/add_image_width"
+                    android:layout_height="@dimen/add_image_height"
+                    android:id="@+id/b_add_image"
+                    android:background="@drawable/add_image"
+                    android:onClick="onClick"
+                    android:layout_alignTop="@+id/b_first_menu"
+                    android:layout_centerHorizontal="true"/>
 
-    </RelativeLayout>
+                <Button
+                    android:layout_width="@dimen/menu2_width"
+                    android:layout_height="@dimen/menu2_height"
+                    android:id="@+id/b_second_menu"
+                    android:background="@drawable/menu_list"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:onClick="onClick" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
-        android:background="@drawable/lines"
-        android:layout_weight="4"
-        android:weightSum="7">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_list_name"
+                    android:fontFamily="Myriad Hebrew"
+                    android:textSize="@dimen/list_name_size"
+                    android:text="@string/list_name"
+                    android:singleLine="false"
+                    android:textStyle="bold"
+                    android:layout_below="@+id/b_add_image"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/list_name_margin_top"/>
 
-        <HorizontalScrollView
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:id="@+id/sv_friends"
-            android:layout_weight="6" >
+            </RelativeLayout>
 
-        </HorizontalScrollView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                android:background="@drawable/lines"
+                android:layout_weight="4"
+                android:weightSum="7">
 
-        <Button
-            android:id="@+id/b_add_friend"
-            android:layout_width="@dimen/add_friend_button_width"
-            android:layout_height="fill_parent"
-            android:layout_marginTop="@dimen/add_friend_button_margin"
-            android:layout_marginBottom="@dimen/add_friend_button_margin"
-            android:layout_marginRight="3dp"
-            android:background="@drawable/add"
-            android:layout_weight="1"
-            android:gravity="end"
-            android:onClick="onClick" />
+                <HorizontalScrollView
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:id="@+id/sv_friends"
+                    android:layout_weight="6" >
 
-    </LinearLayout>
+                </HorizontalScrollView>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        android:background="@drawable/line"
-        android:gravity="center_vertical"
-        android:layout_weight="6"
-        android:weightSum="3">
+                <Button
+                    android:id="@+id/b_add_friend"
+                    android:layout_width="@dimen/add_friend_button_width"
+                    android:layout_height="fill_parent"
+                    android:layout_marginTop="@dimen/add_friend_button_margin"
+                    android:layout_marginBottom="@dimen/add_friend_button_margin"
+                    android:layout_marginRight="3dp"
+                    android:background="@drawable/add"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:onClick="onClick" />
 
-        <ImageView
-            android:layout_width="@dimen/tags_width"
-            android:layout_height="@dimen/tags_height"
-            android:layout_marginLeft="@dimen/tags_margin_left"
-            android:layout_marginStart="@dimen/tags_margin_left"
-            android:layout_marginTop="@dimen/tags_margin"
-            android:layout_marginBottom="@dimen/tags_margin"
-            android:src="@drawable/tags"
-            android:layout_weight="1" />
+            </LinearLayout>
 
-        <Button
-            android:id="@+id/b_add_tag"
-            android:layout_width="@dimen/add_tag_width"
-            android:layout_height="@dimen/add_tag_height"
-            android:layout_marginTop="@dimen/add_tag_margin"
-            android:layout_marginBottom="@dimen/add_tag_margin"
-            android:layout_marginLeft="@dimen/add_tag_margin"
-            android:layout_marginStart="@dimen/add_tag_margin"
-            android:background="@drawable/add_small"
-            android:layout_weight="2"
-            android:onClick="onClick" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                android:background="@drawable/line"
+                android:gravity="center_vertical"
+                android:layout_weight="6"
+                android:weightSum="3">
 
-    </LinearLayout>
+                <ImageView
+                    android:layout_width="@dimen/tags_width"
+                    android:layout_height="@dimen/tags_height"
+                    android:layout_marginLeft="@dimen/tags_margin_left"
+                    android:layout_marginStart="@dimen/tags_margin_left"
+                    android:layout_marginTop="@dimen/tags_margin"
+                    android:layout_marginBottom="@dimen/tags_margin"
+                    android:src="@drawable/tags"
+                    android:layout_weight="1" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        android:background="@drawable/line"
-        android:gravity="center_vertical"
-        android:layout_weight="5"
-        android:weightSum="3">
+                <Button
+                    android:id="@+id/b_add_tag"
+                    android:layout_width="@dimen/add_tag_width"
+                    android:layout_height="@dimen/add_tag_height"
+                    android:layout_marginTop="@dimen/add_tag_margin"
+                    android:layout_marginBottom="@dimen/add_tag_margin"
+                    android:layout_marginLeft="@dimen/add_tag_margin"
+                    android:layout_marginStart="@dimen/add_tag_margin"
+                    android:background="@drawable/add_small"
+                    android:layout_weight="2"
+                    android:onClick="onClick" />
 
-        <ImageView
-            android:layout_width="@dimen/title_width"
-            android:layout_height="@dimen/title_height"
-            android:layout_marginLeft="@dimen/title_margin_left"
-            android:layout_marginStart="@dimen/title_margin_left"
-            android:layout_marginTop="@dimen/title_margin"
-            android:layout_marginBottom="@dimen/title_margin"
-            android:src="@drawable/manager"
-            android:layout_weight="2" />
+            </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_manager"
-            android:layout_marginLeft="@dimen/title_margin_left"
-            android:layout_marginStart="@dimen/title_margin_left"
-            android:text="@string/you"
-            android:textColor="#505153"
-            android:textSize="@dimen/subtitle_size"
-            android:layout_weight="1" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                android:background="@drawable/line"
+                android:gravity="center_vertical"
+                android:layout_weight="5"
+                android:weightSum="3">
 
-    </LinearLayout>
+                <ImageView
+                    android:layout_width="@dimen/title_width"
+                    android:layout_height="@dimen/title_height"
+                    android:layout_marginLeft="@dimen/title_margin_left"
+                    android:layout_marginStart="@dimen/title_margin_left"
+                    android:layout_marginTop="@dimen/title_margin"
+                    android:layout_marginBottom="@dimen/title_margin"
+                    android:src="@drawable/manager"
+                    android:layout_weight="2" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        android:background="@drawable/line"
-        android:gravity="center_vertical"
-        android:layout_weight="5"
-        android:weightSum="3">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_manager"
+                    android:layout_marginLeft="@dimen/title_margin_left"
+                    android:layout_marginStart="@dimen/title_margin_left"
+                    android:text="@string/you"
+                    android:textColor="#505153"
+                    android:textSize="@dimen/subtitle_size"
+                    android:layout_weight="1" />
 
-        <ImageView
-            android:layout_width="@dimen/title_width"
-            android:layout_height="@dimen/title_height"
-            android:layout_marginLeft="@dimen/title_margin_left"
-            android:layout_marginStart="@dimen/title_margin_left"
-            android:layout_marginTop="@dimen/title_margin"
-            android:layout_marginBottom="@dimen/title_margin"
-            android:src="@drawable/deadline"
-            android:layout_weight="2" />
+            </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_deadline"
-            android:layout_marginLeft="@dimen/title_margin_left"
-            android:layout_marginStart="@dimen/title_margin_left"
-            android:text="@string/date"
-            android:textColor="#505153"
-            android:textSize="@dimen/subtitle_size"
-            android:layout_weight="1" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                android:background="@drawable/line"
+                android:gravity="center_vertical"
+                android:layout_weight="5"
+                android:weightSum="3">
 
-    </LinearLayout>
+                <ImageView
+                    android:layout_width="@dimen/title_width"
+                    android:layout_height="@dimen/title_height"
+                    android:layout_marginLeft="@dimen/title_margin_left"
+                    android:layout_marginStart="@dimen/title_margin_left"
+                    android:layout_marginTop="@dimen/title_margin"
+                    android:layout_marginBottom="@dimen/title_margin"
+                    android:src="@drawable/deadline"
+                    android:layout_weight="2" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        android:gravity="center_vertical"
-        android:background="@drawable/line"
-        android:layout_weight="6">
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/et_deadline"
+                    android:focusable="false"
+                    android:layout_marginLeft="@dimen/title_margin_left"
+                    android:layout_marginStart="@dimen/title_margin_left"
+                    android:text="@string/date"
+                    android:textColor="#505153"
+                    android:textSize="@dimen/subtitle_size"
+                    android:layout_weight="1" />
 
-        <ImageView
-            android:layout_width="@dimen/privacy_width"
-            android:layout_height="@dimen/privacy_height"
-            android:layout_marginLeft="@dimen/privacy_margin"
-            android:layout_marginStart="@dimen/privacy_margin"
-            android:layout_marginTop="@dimen/privacy_margin"
-            android:layout_marginBottom="@dimen/privacy_margin"
-            android:src="@drawable/privacy"/>
+            </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="45dp"
-            android:layout_gravity="center" >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                android:background="@drawable/line"
+                android:layout_weight="6">
 
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/private_list"
-                android:button="@drawable/check_box_privacy_design"
-                android:textColor="#505153"
-                android:textSize="@dimen/check_box_privacy_size"
-                android:id="@+id/cb_private"
-                android:layout_marginRight="6dp"
-                android:layout_marginEnd="6dp" />
+                <ImageView
+                    android:layout_width="@dimen/privacy_width"
+                    android:layout_height="@dimen/privacy_height"
+                    android:layout_marginLeft="@dimen/privacy_margin"
+                    android:layout_marginStart="@dimen/privacy_margin"
+                    android:layout_marginTop="@dimen/privacy_margin"
+                    android:layout_marginBottom="@dimen/privacy_margin"
+                    android:src="@drawable/privacy"/>
 
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/public_list"
-                android:button="@drawable/check_box_privacy_design"
-                android:textColor="#505153"
-                android:textSize="@dimen/check_box_privacy_size"
-                android:id="@+id/cb_public"
-                android:layout_marginLeft="6dp"
-                android:layout_marginStart="6dp" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center" >
 
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/private_list"
+                        android:button="@drawable/check_box_privacy_design"
+                        android:textColor="#505153"
+                        android:textSize="@dimen/check_box_privacy_size"
+                        android:id="@+id/cb_private"
+                        android:layout_marginRight="6dp"
+                        android:layout_marginEnd="6dp" />
+
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/public_list"
+                        android:button="@drawable/check_box_privacy_design"
+                        android:textColor="#505153"
+                        android:textSize="@dimen/check_box_privacy_size"
+                        android:id="@+id/cb_public"
+                        android:layout_marginLeft="6dp"
+                        android:layout_marginStart="6dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@drawable/line"
+                android:layout_weight="3">
+            </LinearLayout>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:id="@+id/b_leave_list"
+                android:background="@drawable/leave_list"
+                android:layout_weight="4"
+                android:onClick="onClick" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="#ffffff">
+            </LinearLayout>
         </LinearLayout>
 
-    </LinearLayout>
+        <!-- Side navigation drawer UI -->
+        <ListView
+            android:id="@+id/lv_navList"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="left|start"
+            android:background="#ffffff"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@drawable/line"
-        android:layout_weight="3">
-    </LinearLayout>
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:id="@+id/b_leave_list"
-        android:background="@drawable/leave_list"
-        android:layout_weight="4"
-        android:onClick="onClick" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="#ffffff">
-    </LinearLayout>
+    </android.support.v4.widget.DrawerLayout>
 
 </LinearLayout>
