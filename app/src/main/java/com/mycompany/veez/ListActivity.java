@@ -43,8 +43,14 @@ public class ListActivity extends Activity implements View.OnClickListener {
         //TextView code
         tv_curr_items = (TextView) findViewById(R.id.tv_curr_items);
         tv_curr_items.setText(currentItmes.toString());
+
         tv_total_items = (TextView) findViewById(R.id.tv_total_items);
         tv_total_items.setText(TotalItems.toString());
+
+        tv_likes = (TextView) findViewById(R.id.tv_likes);
+
+        lv_list_items = (ListView) findViewById(R.id.lv_list_items);
+
 
     }
 
