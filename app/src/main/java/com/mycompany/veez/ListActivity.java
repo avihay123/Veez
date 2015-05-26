@@ -66,6 +66,7 @@ public class ListActivity extends ActionBarActivity implements View.OnClickListe
         b_first_menu = (Button) findViewById(R.id.b_first_menu);
         b_first_menu.setOnClickListener(this);
 
+        
         b_second_menu = (Button) findViewById(R.id.b_second_menu);
         b_second_menu.setOnClickListener(this);
 
