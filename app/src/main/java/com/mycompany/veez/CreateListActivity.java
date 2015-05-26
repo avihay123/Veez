@@ -1,5 +1,6 @@
 package com.mycompany.veez;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.content.Context;
 import android.content.Intent;
@@ -12,15 +13,31 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.widget.TextView;
 import android.content.res.Configuration;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class CreateListActivity extends ActionBarActivity implements View.OnClickListener {
 
     private Button b_first_menu;
+    private Button b_add_image;
+    private Button b_add_friend;
+    private Button b_add_tag;
+    private EditText et_deadline;
+    private CheckBox cb_private;
+    private CheckBox cb_public;
+    private Button b_create_list;
+    private Calendar myCalendar;
 
     private ListView mDrawerList;
     private DrawerLayout mDrawerLayout;
@@ -32,7 +49,6 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
         setContentView(R.layout.activity_create_list);
 
         /* -------------- Side Menu ---------------- */
-
         mDrawerList = (ListView)findViewById(R.id.lv_navList);
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
         addDrawerItems();
@@ -40,11 +56,62 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
         getSupportActionBar().hide();
 
         /* -----------------------------------------*/
-
         b_first_menu = (Button) findViewById(R.id.b_first_menu);
         b_first_menu.setOnClickListener(this);
 
+        b_add_image = (Button) findViewById(R.id.b_add_image);
+        b_add_image.setOnClickListener(this);
+
+        b_add_friend = (Button) findViewById(R.id.b_add_friend);
+        b_add_friend.setOnClickListener(this);
+
+        b_add_tag = (Button) findViewById(R.id.b_add_tag);
+        b_add_tag.setOnClickListener(this);
+
+        b_create_list = (Button) findViewById(R.id.b_create_list);
+        b_create_list.setOnClickListener(this);
+
+        /* -------------- Deadline ---------------- */
+        et_deadline = (EditText) findViewById(R.id.et_deadline);
+        myCalendar = Calendar.getInstance();
+
+        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateLabel();
+            }
+        };
+
+        et_deadline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(CreateListActivity.this, date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+        /* -------------- CheckBoxes ---------------- */
+        cb_private = (CheckBox) findViewById(R.id.cb_private);
+        cb_public = (CheckBox) findViewById(R.id.cb_public);
+
+        cb_private.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                cb_public.setChecked(!isChecked);
+            }
+        });
+
+        cb_public.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                cb_private.setChecked(!isChecked);
+            }
+        });
     }
+
     /* ----------------- Menu function ------------------- */
 
     private void addDrawerItems() {
@@ -124,6 +191,26 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
         if (viewId == R.id.b_first_menu) {
             mDrawerLayout.openDrawer(Gravity.START);
         }
+        else if (viewId == R.id.b_add_image) {
+            //TODO
+        }
+        else if (viewId == R.id.b_add_friend) {
+            //TODO next build
+        }
+        else if (viewId == R.id.b_add_tag) {
+            //TODO
+        }
+        else if (viewId == R.id.b_leave_list) {
+            //TODO delete the list from the user
+            Intent intent = new Intent(getApplicationContext(), MyListsActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    private void updateLabel() {
+        String myFormat = "MM/dd/yy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        et_deadline.setText(sdf.format(myCalendar.getTime()));
     }
 
     private class MyAdapter extends BaseAdapter {
