@@ -20,6 +20,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.widget.TextView;
 import android.content.res.Configuration;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ExplorerActivity extends ActionBarActivity implements View.OnClickListener {
 
@@ -34,6 +35,7 @@ public class ExplorerActivity extends ActionBarActivity implements View.OnClickL
     private AutoCompleteTextView ac_search;
     private String[] searchTags = new String[5];
     private int tagsNum = 0;
+    private List<VeezList> allLists;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
