@@ -30,7 +30,9 @@
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
         <activity
+            android:windowSoftInputMode="adjustResize"
             android:name=".ListActivity"
             android:label="title_activity_list" >
 
@@ -44,6 +46,7 @@
         <activity
             android:name=".MyListsActivity"
             android:label="activity_my_lists" >
+
         </activity>
 
         <activity

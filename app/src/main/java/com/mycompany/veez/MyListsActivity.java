@@ -11,12 +11,15 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.content.res.Configuration;
 import java.util.ArrayList;
@@ -38,6 +41,28 @@ public class MyListsActivity extends ActionBarActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_lists);
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
+
+        //TODO- NICE TO HAVE
+        /* -------------- Keyboard Handling---------------- */
+
+        final View l_activityRootView = findViewById(R.id.l_main_layout);
+        final View l_activityHeaderView = findViewById(R.id.l_header_layout);
+        l_activityRootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                int heightDiff = l_activityRootView.getRootView().getHeight() - l_activityRootView.getHeight();
+                if (heightDiff > 200) { // if more than 200 pixels, its probably a keyboard...
+                   l_activityHeaderView.setVisibility(View.GONE);
+                }
+                else{
+                    l_activityHeaderView.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
 
         /* -------------- Side Menu ---------------- */
 
