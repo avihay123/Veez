@@ -3,6 +3,10 @@ package com.mycompany.veez;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
@@ -14,16 +18,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.view.View;
-import android.view.WindowManager;
-import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.widget.TextView;
 import android.content.res.Configuration;
 import java.util.ArrayList;
-import android.widget.TextView;
 
 public class ListActivity extends ActionBarActivity implements View.OnClickListener {
 
@@ -47,6 +47,25 @@ public class ListActivity extends ActionBarActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
+        //buttons code------------------------------------------------------------------------------
+        b_first_menu = (Button) findViewById(R.id.b_first_menu);
+        b_first_menu.setOnClickListener(this);
+
+        b_second_menu = (Button) findViewById(R.id.b_second_menu);
+        b_second_menu.setOnClickListener(this);
+
+        b_add_item = (Button) findViewById(R.id.b_add_item);
+        b_add_item.setOnClickListener(this);
+
+        //TextView code
+        tv_curr_items = (TextView) findViewById(R.id.tv_curr_items);
+        tv_curr_items.setText(currentItmes.toString());
+        tv_total_items = (TextView) findViewById(R.id.tv_total_items);
+        tv_total_items.setText(TotalItems.toString());
+
+
         /* -------------- Side Menu ---------------- */
 
         mDrawerList = (ListView)findViewById(R.id.lv_navList);
@@ -59,32 +78,6 @@ public class ListActivity extends ActionBarActivity implements View.OnClickListe
 
         b_first_menu = (Button) findViewById(R.id.b_first_menu);
         b_first_menu.setOnClickListener(this);
-
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-
-        //buttons code------------------------------------------------------------------------------
-        b_first_menu = (Button) findViewById(R.id.b_first_menu);
-        b_first_menu.setOnClickListener(this);
-
-        
-        b_second_menu = (Button) findViewById(R.id.b_second_menu);
-        b_second_menu.setOnClickListener(this);
-
-        b_add_item = (Button) findViewById(R.id.b_add_item);
-        b_add_item.setOnClickListener(this);
-
-        //TextView code
-        tv_curr_items = (TextView) findViewById(R.id.tv_curr_items);
-        tv_curr_items.setText(currentItmes.toString());
-
-        tv_total_items = (TextView) findViewById(R.id.tv_total_items);
-        tv_total_items.setText(TotalItems.toString());
-
-        tv_likes = (TextView) findViewById(R.id.tv_likes);
-
-        lv_list_items = (ListView) findViewById(R.id.lv_list_items);
-
-
     }
 
     private void addItem() {
@@ -98,7 +91,7 @@ public class ListActivity extends ActionBarActivity implements View.OnClickListe
     public void onClick(View v) {
         int viewId = v.getId();
         if (viewId == R.id.b_first_menu) {
-            mDrawerLayout.openDrawer(Gravity.START);
+            //TODO
         }
         if (viewId == R.id.b_second_menu) {
             //TODO
@@ -107,12 +100,20 @@ public class ListActivity extends ActionBarActivity implements View.OnClickListe
         if (viewId == R.id.b_add_item) {
             addItem();
         }
+//
+//        if (viewId == R.id.b_add_tag) {
+//            //TODO
+//        }
+//
+//        if (viewId == R.id.b_leave_list) {
+//            //TODO delete the list from the user
+//
 //            Intent intent = new Intent(getApplicationContext(), MyListsActivity.class);
 //            startActivity(intent);
 //            finish();
 //        }
     }
-    /* ----------------- Menu functions ------------------- */
+    /* ----------------- Menu function ------------------- */
 
     private void addDrawerItems() {
 

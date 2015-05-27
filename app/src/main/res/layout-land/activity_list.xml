@@ -52,6 +52,10 @@
                     android:layout_alignParentBottom="true"
                     android:layout_alignRight="@+id/tv_list_name"
                     android:layout_alignEnd="@+id/tv_list_name">
+                    android:id="@+id/tv_curr_items"
+                    android:fontFamily="Myriad Hebrew"
+                    android:textSize="@dimen/count_vee_size"
+                    android:textStyle="bold" />
 
                         <ImageView
                             android:layout_width="@dimen/vee_list_width"
@@ -67,7 +71,8 @@
                             android:id="@+id/tv_curr_items"
                             android:fontFamily="Myriad Hebrew"
                             android:textSize="@dimen/count_vee_size"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:text="@string/zero" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -83,7 +88,8 @@
                             android:id="@+id/tv_total_items"
                             android:fontFamily="Myriad Hebrew"
                             android:textSize="@dimen/count_vee_size"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:text="@string/zero"/>
 
                 </LinearLayout>
 
@@ -117,6 +123,8 @@
                     android:layout_width="@dimen/likes_list_width"
                     android:layout_height="@dimen/likes_list_height"
                     android:fontFamily="Myriad Hebrew"
+                    android:textSize="@dimen/count_vee_size"
+                    android:textStyle="bold"/>
                     android:textSize="@dimen/likes_size"
                     android:textStyle="bold"
                     android:text="@string/zero"
@@ -139,10 +147,10 @@
                 android:orientation="horizontal"
                 android:weightSum="7" >
 
-                <AutoCompleteTextView
+                <EditText
                     android:layout_width="@dimen/search_size"
                     android:layout_height="fill_parent"
-                    android:id="@+id/ac_search_item"
+                    android:id="@+id/et_search"
                     android:textColor="#ffffff"
                     android:layout_marginLeft="130dp"
                     android:layout_marginStart="130dp"
@@ -154,7 +162,7 @@
                     android:inputType="text"/>
 
                 <Button
-                    android:id="@+id/b_add_item"
+                    android:id="@+id/b_add_list"
                     android:layout_weight="1"
                     android:layout_width="@dimen/add_list_button_width"
                     android:layout_height="@dimen/add_list_button_height"
@@ -176,6 +184,19 @@
                 android:id="@+id/lv_list_items">
             </ListView>
 
+        <AutoCompleteTextView
+            android:layout_width="@dimen/search_size"
+            android:layout_height="fill_parent"
+            android:id="@+id/ac_search_item"
+            android:textColor="#ffffff"
+            android:layout_marginLeft="130dp"
+            android:layout_marginStart="130dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"
+            android:layout_weight="6"
+            android:layout_gravity="center"
+            android:background="@drawable/search"
+            android:inputType="text"/>
         </LinearLayout>
 
         <!-- Side navigation drawer UI -->

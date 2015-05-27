@@ -52,11 +52,8 @@ public class MyListsActivity extends ActionBarActivity implements View.OnClickLi
         b_first_menu = (Button) findViewById(R.id.b_first_menu);
         b_first_menu.setOnClickListener(this);
 
-        b_second_menu = (Button) findViewById(R.id.b_second_menu);
-        b_second_menu.setOnClickListener(this);
-
         b_add_list = (Button) findViewById(R.id.b_add_list);
-        b_second_menu.setOnClickListener(this);
+        b_add_list.setOnClickListener(this);
 
         et_search = (EditText) findViewById(R.id.et_search);
         et_search.addTextChangedListener(new TextWatcher() {
@@ -159,9 +156,6 @@ public class MyListsActivity extends ActionBarActivity implements View.OnClickLi
         int viewId = v.getId();
         if (viewId == R.id.b_first_menu) {
             mDrawerLayout.openDrawer(Gravity.START);
-        }
-        if (viewId == R.id.b_second_menu) {
-            //TODO
         }
         if (viewId == R.id.b_add_list) {
             Intent intent = new Intent(getApplicationContext(), CreateListActivity.class);

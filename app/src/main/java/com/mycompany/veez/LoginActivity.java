@@ -39,10 +39,10 @@ public class LoginActivity extends Activity {
         FacebookSdk.sdkInitialize(getApplicationContext());
 
         //TODO for debug--------------------------------------------------------------------
-
-        Intent intent = new Intent(getApplicationContext(), MyListsActivity.class);
-        startActivity(intent);
-        finish();
+//
+//        Intent intent = new Intent(getApplicationContext(), MyListsActivity.class);
+//        startActivity(intent);
+//        finish();
         //------------------------------------------------------------------------------------
 
 
