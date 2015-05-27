@@ -110,9 +110,10 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
                 cb_private.setChecked(!isChecked);
             }
         });
-    }
 
-    /* ----------------- Menu function ------------------- */
+        cb_public.setChecked(true);
+    }
+    /* ----------------- Menu functions ------------------- */
 
     private void addDrawerItems() {
 
