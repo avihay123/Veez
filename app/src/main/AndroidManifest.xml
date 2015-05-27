@@ -8,6 +8,7 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/icon"
+        android:name=".MyApplication"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <meta-data
@@ -17,6 +18,9 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/app_name" >
+
+
+
         </activity>
 
         <activity
@@ -24,33 +28,30 @@
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
         <activity
-            android:windowSoftInputMode="adjustResize"
             android:name=".ListActivity"
             android:label="title_activity_list" >
+
         </activity>
 
         <activity
             android:name=".ExplorerActivity"
             android:label="activity_explorer" >
-
-        </activity>
-
-        <activity
-            android:name=".MyListsActivity"
-            android:label="activity_my_lists" >
-
-        </activity>
-
-        <activity
-            android:name=".CreateListActivity"
-            android:label="activity_my_lists" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".MyListsActivity"
+            android:label="activity_my_lists" >
+        </activity>
+
+        <activity
+            android:name=".CreateListActivity"
+            android:label="activity_my_lists" >
         </activity>
 
         <activity
