@@ -3,10 +3,12 @@
     package="com.mycompany.veez" >
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/icon"
+        android:name=".MyApplication"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <meta-data
@@ -17,11 +19,7 @@
             android:name=".LoginActivity"
             android:label="@string/app_name" >
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
         </activity>
 
@@ -39,6 +37,11 @@
         <activity
             android:name=".ExplorerActivity"
             android:label="activity_explorer" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <activity
