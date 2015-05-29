@@ -231,22 +231,22 @@
                     <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/private_list"
+                        android:text="@string/public_list"
+                        android:id="@+id/cb_public"
                         android:button="@drawable/check_box_privacy_design"
                         android:textColor="#505153"
                         android:textSize="@dimen/check_box_privacy_size"
-                        android:id="@+id/cb_private"
                         android:layout_marginRight="6dp"
                         android:layout_marginEnd="6dp"/>
 
                     <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/public_list"
+                        android:text="@string/private_list"
+                        android:id="@+id/cb_private"
                         android:button="@drawable/check_box_privacy_design"
                         android:textColor="#505153"
                         android:textSize="@dimen/check_box_privacy_size"
-                        android:id="@+id/cb_public"
                         android:layout_marginLeft="6dp"
                         android:layout_marginStart="6dp"/>
 

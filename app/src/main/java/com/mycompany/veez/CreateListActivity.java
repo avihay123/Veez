@@ -55,7 +55,7 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
         setupDrawer();
         getSupportActionBar().hide();
 
-        /* -----------------------------------------*/
+        /* -------------------Buttons----------------------*/
         b_first_menu = (Button) findViewById(R.id.b_first_menu);
         b_first_menu.setOnClickListener(this);
 
@@ -110,9 +110,10 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
                 cb_private.setChecked(!isChecked);
             }
         });
-    }
 
-    /* ----------------- Menu function ------------------- */
+        cb_public.setChecked(true);
+    }
+    /* ----------------- Menu functions ------------------- */
 
     private void addDrawerItems() {
 

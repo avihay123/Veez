@@ -50,18 +50,6 @@
                     android:layout_alignTop="@+id/b_first_menu"
                     android:layout_centerHorizontal="true"/>
 
-                <Button
-                    android:layout_width="@dimen/menu2_width"
-                    android:layout_height="@dimen/menu2_height"
-                    android:id="@+id/b_second_menu"
-                    android:background="@drawable/menu_list"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true"
-                    android:onClick="onClick" />
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -223,22 +211,22 @@
                     <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/private_list"
+                        android:text="@string/public_list"
+                        android:id="@+id/cb_public"
                         android:button="@drawable/check_box_privacy_design"
                         android:textColor="#505153"
                         android:textSize="@dimen/check_box_privacy_size"
-                        android:id="@+id/cb_private"
                         android:layout_marginRight="6dp"
                         android:layout_marginEnd="6dp"/>
 
                     <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/public_list"
+                        android:text="@string/private_list"
+                        android:id="@+id/cb_private"
                         android:button="@drawable/check_box_privacy_design"
                         android:textColor="#505153"
                         android:textSize="@dimen/check_box_privacy_size"
-                        android:id="@+id/cb_public"
                         android:layout_marginLeft="6dp"
                         android:layout_marginStart="6dp"/>
 

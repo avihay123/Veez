@@ -11,12 +11,15 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.content.res.Configuration;
 import java.util.ArrayList;
@@ -39,6 +42,28 @@ public class MyListsActivity extends ActionBarActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_lists);
 
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
+
+        //TODO- NICE TO HAVE
+        /* -------------- Keyboard Handling---------------- */
+
+        final View l_activityRootView = findViewById(R.id.l_main_layout);
+        final View l_activityHeaderView = findViewById(R.id.l_header_layout);
+        l_activityRootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                int heightDiff = l_activityRootView.getRootView().getHeight() - l_activityRootView.getHeight();
+                if (heightDiff > 200) { // if more than 200 pixels, its probably a keyboard...
+                   l_activityHeaderView.setVisibility(View.GONE);
+                }
+                else{
+                    l_activityHeaderView.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+
         /* -------------- Side Menu ---------------- */
 
         mDrawerList = (ListView)findViewById(R.id.lv_navList);
@@ -52,11 +77,8 @@ public class MyListsActivity extends ActionBarActivity implements View.OnClickLi
         b_first_menu = (Button) findViewById(R.id.b_first_menu);
         b_first_menu.setOnClickListener(this);
 
-        b_second_menu = (Button) findViewById(R.id.b_second_menu);
-        b_second_menu.setOnClickListener(this);
-
         b_add_list = (Button) findViewById(R.id.b_add_list);
-        b_second_menu.setOnClickListener(this);
+        b_add_list.setOnClickListener(this);
 
         et_search = (EditText) findViewById(R.id.et_search);
         et_search.addTextChangedListener(new TextWatcher() {
@@ -97,23 +119,23 @@ public class MyListsActivity extends ActionBarActivity implements View.OnClickLi
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                   if (position == 0) {
-                       // move to profile_layout
-                   }
-                   else if (position == 1) {
-                       // move to profile_layout
-                   }
-                   else if (position == 2) {
-                       Intent intent = new Intent(getApplicationContext(), MyListsActivity.class);
-                       startActivity(intent);
-                   }
-                   else if (position == 3) {
-                       Intent intent = new Intent(getApplicationContext(), ExplorerActivity.class);
-                       startActivity(intent);
-                   }
-                   else if (position == 4) {
-                       // move to friends_layout
-                   }
+                if (position == 0) {
+                    // move to profile_layout
+                }
+                else if (position == 1) {
+                    // move to profile_layout
+                }
+                else if (position == 2) {
+                    Intent intent = new Intent(getApplicationContext(), MyListsActivity.class);
+                    startActivity(intent);
+                }
+                else if (position == 3) {
+                    Intent intent = new Intent(getApplicationContext(), ExplorerActivity.class);
+                    startActivity(intent);
+                }
+                else if (position == 4) {
+                    // move to friends_layout
+                }
             }
         });
     }
@@ -137,7 +159,7 @@ public class MyListsActivity extends ActionBarActivity implements View.OnClickLi
         mDrawerToggle.setDrawerIndicatorEnabled(true);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
     }
-    
+
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -159,9 +181,6 @@ public class MyListsActivity extends ActionBarActivity implements View.OnClickLi
         int viewId = v.getId();
         if (viewId == R.id.b_first_menu) {
             mDrawerLayout.openDrawer(Gravity.START);
-        }
-        if (viewId == R.id.b_second_menu) {
-            //TODO
         }
         if (viewId == R.id.b_add_list) {
             Intent intent = new Intent(getApplicationContext(), CreateListActivity.class);

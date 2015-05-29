@@ -5,18 +5,27 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.widget.TextView;
 import android.content.res.Configuration;
+
+import com.parse.Parse;
+import com.parse.ParseObject;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class ExplorerActivity extends ActionBarActivity implements View.OnClickListener {
 
@@ -26,10 +35,19 @@ public class ExplorerActivity extends ActionBarActivity implements View.OnClickL
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
 
+    private ListView lv_lists;
+    private TextView tv_explorer;
+    private AutoCompleteTextView ac_search;
+    private String[] searchTags = new String[5];
+    private int tagsNum = 0;
+    private List<VeezList> allLists;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_explorer);
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         /* -------------- Side Menu ---------------- */
 
@@ -44,13 +62,80 @@ public class ExplorerActivity extends ActionBarActivity implements View.OnClickL
         b_first_menu = (Button) findViewById(R.id.b_first_menu);
         b_first_menu.setOnClickListener(this);
 
+        tv_explorer = (TextView) findViewById(R.id.tv_explorer);
+
+        lv_lists = (ListView) findViewById(R.id.lv_explorer_lists);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_list_item_1, TAGS);
+
+        ac_search = (AutoCompleteTextView) findViewById(R.id.ac_search);
+
+        ac_search.setAdapter(adapter);
+        ac_search.setThreshold(1);
+
+        ac_search.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                searchTags[tagsNum] = (String) ((TextView)view).getText();
+                Log.d("EXPLORER", searchTags[tagsNum]);
+                tagsNum++;
+                ac_search.setText("");
+                tv_explorer.setText(newHeadline(searchTags, tagsNum));
+                tv_explorer.setTextSize(35 - 5 * tagsNum);
+                if (tagsNum == 5){
+                    ac_search.setEnabled(false);
+                    ac_search.setText("5 tags maximum");
+                    Log.d("EXPLORER", "reached limit");
+                }
+
+            }
+        });
+
     }
+
+    private static String newHeadline(String[] tags, int tagsNum){
+        String headline = "";
+        headline += tags[0];
+        for (int i = 1; i < tagsNum; i++){
+            headline += " + " + tags[i];
+        }
+        return headline;
+    }
+
+    private static final String[] TAGS = new String[] {
+            "BBQ", "Road Trip", "Camping", "Shopping", "Beach", "Sleep Over",
+            "Books", "Songs", "TV Series", "Movies", "Holidays", "Action Movies",
+
+
+            //stupid tags to have a tag for every letter
+            "Dogs", "Entertainment", "Fonts", "Groupon Deals",
+            "IMDB Top 10 Weekly", //checks a long tag too
+
+            //TODO for debug
+            "BBQ2",
+            "BBQ3",
+            "BBQ4",
+            "BBQ5",
+            "BBQ6",
+            "BBQ7",
+            "BBQ9",
+            "BBQ8"
+            /*
+            TODO:
+            - Add more tags!
+                preferably have more tags than you can see at once all starting
+                with same letter to show at presentation.
+            - Move tags to resources!
+            - Maybe allow new tags by users, requires storing tags on DB.
+             */
+    };
 
     /* ----------------- Menu function ------------------- */
 
     private void addDrawerItems() {
 
-        ArrayList<String> values = new ArrayList<String>();
+        ArrayList<String> values = new ArrayList<>();
         values.add("");
         values.add("Name");
         values.add("My Lists");

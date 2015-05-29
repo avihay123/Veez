@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <!-- The first child in the layout is for the main Activity UI-->
+        <!-- The first child in the layout is for the main Activity UI-->
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
@@ -55,19 +55,6 @@
                     android:layout_alignBottom="@+id/b_second_menu"
                     android:layout_centerHorizontal="true" />
 
-                <Button
-                    android:layout_width="@dimen/menu2_width"
-                    android:layout_height="@dimen/menu2_height"
-                    android:id="@+id/b_second_menu"
-                    android:background="@drawable/menu_list"
-                    android:layout_gravity="end"
-                    android:onClick="onClick"
-                    android:layout_alignTop="@+id/b_first_menu"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginEnd="10dp"/>
-
             </RelativeLayout>
 
             <LinearLayout
@@ -81,6 +68,7 @@
                 android:weightSum="7" >
 
                 <TextView
+                    android:id="@+id/tv_explorer"
                     android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -89,10 +77,10 @@
                     android:layout_marginTop="5dp"
                     android:text="@string/explorer"/>
 
-                <EditText
+                <AutoCompleteTextView
                     android:layout_width="@dimen/et_explorer_width"
                     android:layout_height="@dimen/et_explorer_height"
-                    android:id="@+id/et_search"
+                    android:id="@+id/ac_search"
                     android:textColor="#ffffff"
                     android:layout_gravity="center"
                     android:layout_marginTop="6dp"
@@ -239,7 +227,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="@integer/explorer_w2"
-                android:id="@+id/lv_my_list">
+                android:id="@+id/lv_explorer_lists">
             </ListView>
         </LinearLayout>
 
