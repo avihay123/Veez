@@ -11,6 +11,8 @@ import com.parse.ParseObject;
  */
 public class MyApplication extends Application{
 
+    private VeezUser user = new VeezUser();
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -25,5 +27,9 @@ public class MyApplication extends Application{
         testObject.saveInBackground();
         Log.d("PARSE2", "SuccessBOB");
 
+    }
+
+    public VeezUser getUser() {
+        return user;
     }
 }

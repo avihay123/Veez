@@ -7,6 +7,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,12 +18,14 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.content.res.Configuration;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class MyListsActivity extends ActionBarActivity implements View.OnClickListener {
@@ -72,13 +75,15 @@ public class MyListsActivity extends ActionBarActivity implements View.OnClickLi
         setupDrawer();
         getSupportActionBar().hide();
 
-        /* -----------------------------------------*/
+        /* ------------------ Buttons ----------------*/
 
         b_first_menu = (Button) findViewById(R.id.b_first_menu);
         b_first_menu.setOnClickListener(this);
 
         b_add_list = (Button) findViewById(R.id.b_add_list);
         b_add_list.setOnClickListener(this);
+
+        /* ----------- AutoComplete Search ----------------*/
 
         et_search = (EditText) findViewById(R.id.et_search);
         et_search.addTextChangedListener(new TextWatcher() {
@@ -99,12 +104,172 @@ public class MyListsActivity extends ActionBarActivity implements View.OnClickLi
         });
 
 
-
+        /* ----------- listView -------------------------------------*/
+        //----------------------------for debug -----------------------
         lv_my_lists = (ListView) findViewById(R.id.lv_my_lists);
+        List<VeezItem> items= new ArrayList<VeezItem>();
+        List<VeezList> lists= new ArrayList<VeezList>();
+        items.add(new VeezItem(("a")));
+        lists.add(new VeezList(0,0,items,true,"abc"));
+        items.add(new VeezItem(("b")));
+        lists.add(new VeezList(1,100,items,false,"ab"));
+        lists.add(new VeezList(1,100,items,false,"ab1"));
+        lists.add(new VeezList(1,100,items,false,"ab2"));
+        lists.add(new VeezList(1,100,items,false,"ab3"));
+        lists.add(new VeezList(1,100,items,false,"ab4"));
+        lists.add(new VeezList(1,100,items,false,"ab5"));
+        lists.add(new VeezList(1,100,items,false,"ab6"));
+        MyAdapter adapter = new MyAdapter(lists);
+
+        //in real 
+     //   MyAdapter adapter = new MyAdapter(((MyApplication)getApplicationContext()).getUser().getLists());
+        lv_my_lists.setAdapter(adapter);
 
     }
 
+
+    //----------------------- on click ----------------------------
+
+    @Override
+    public void onClick(View v) {
+        int viewId = v.getId();
+        if (viewId == R.id.b_first_menu) {
+            mDrawerLayout.openDrawer(Gravity.START);
+        }
+        if (viewId == R.id.b_add_list) {
+            Intent intent = new Intent(getApplicationContext(), CreateListActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    //----------------------- List ----------------------------
+
+    private class MyAdapter extends BaseAdapter {
+
+        private List<VeezList> myList;
+
+        public MyAdapter(List<VeezList> aList) {
+            myList = aList;
+        }
+
+        @Override
+        public int getCount() {
+            return myList.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return myList.get(position);
+        }
+
+        //TODO return
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            View view;
+            ViewHolder viewHolder;
+
+            Log.d("MY_TAG", "Position: " + position);
+
+            if (convertView == null) {
+                LayoutInflater li = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                view = li.inflate(R.layout.list_view_list, null);
+
+                viewHolder = new ViewHolder();
+                viewHolder.tv_num_likes = (TextView) view.findViewById(R.id.tv_num_likes);
+                viewHolder.tv_list_name = (TextView) view.findViewById(R.id.tv_list_name);
+                viewHolder.tv_curr_items = (TextView) view.findViewById(R.id.tv_curr_items);
+                viewHolder.tv_total_items = (TextView) view.findViewById(R.id.tv_total_items);
+                viewHolder.iv_lock = (ImageView) view.findViewById(R.id.im_lock);
+
+                view.setTag(viewHolder);
+            } else {
+                view = convertView;
+
+                viewHolder = (ViewHolder) view.getTag();
+            }
+
+            // Put the content in the view
+            viewHolder.tv_num_likes.setText(String.valueOf((myList.get(position)).getLikesCount()));
+            viewHolder.tv_list_name.setText((myList.get(position)).getName());
+            viewHolder.tv_curr_items.setText(String.valueOf((myList.get(position)).getNumOfItemsMarkedWithVee()));
+            viewHolder.tv_total_items.setText(String.valueOf((myList.get(position)).getNumOfItems()));
+
+            //viewHolder.myImage.setImageResource(imageId.get(position));
+            if((myList.get(position)).isPublic())
+                viewHolder.iv_lock.setVisibility(View.GONE);
+            else
+                viewHolder.iv_lock.setVisibility(View.VISIBLE);
+            return view;
+        }
+
+        //TODO next build add the field tv_list_friends
+        //TODO handle the deadline
+        private class ViewHolder {
+            TextView tv_num_likes;
+            TextView tv_list_name;
+            ImageView iv_lock;
+            TextView tv_curr_items;
+            TextView tv_total_items;
+        }
+    }
+
     /* ----------------- Menu function ------------------- */
+
+    private class MyAdapter2 extends BaseAdapter {
+
+        private ArrayList<String> myList;
+
+        public MyAdapter2(ArrayList<String> aList) {
+            myList = aList;
+        }
+
+        @Override
+        public int getCount() {
+            return myList.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return myList.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(final int position, View convertView, ViewGroup parent) {
+
+            View view;
+            ViewHolder viewHolder;
+
+            if (convertView == null) {
+                LayoutInflater li = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                view = li.inflate(R.layout.my_simple_list_item1, null);
+
+                viewHolder = new ViewHolder();
+                viewHolder.myText = (TextView) view.findViewById(android.R.id.text1);
+                view.setTag(viewHolder);
+            } else {
+                view = convertView;
+                viewHolder = (ViewHolder) view.getTag();
+            }
+
+            viewHolder.myText.setText(myList.get(position));
+            return view;
+        }
+
+        private class ViewHolder {
+            TextView myText;
+        }
+    }
 
     private void addDrawerItems() {
 
@@ -115,7 +280,7 @@ public class MyListsActivity extends ActionBarActivity implements View.OnClickLi
         values.add("Explorer");
         values.add("Friends");
 
-        MyAdapter adapter = new MyAdapter(values);
+        MyAdapter2 adapter = new MyAdapter2(values);
         mDrawerList.setAdapter(adapter);
 
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -173,70 +338,5 @@ public class MyListsActivity extends ActionBarActivity implements View.OnClickLi
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         mDrawerToggle.onConfigurationChanged(newConfig);
-    }
-
-    /* ------------------------------------------------- */
-
-
-    @Override
-    public void onClick(View v) {
-        int viewId = v.getId();
-        if (viewId == R.id.b_first_menu) {
-            mDrawerLayout.openDrawer(Gravity.START);
-        }
-        if (viewId == R.id.b_add_list) {
-            Intent intent = new Intent(getApplicationContext(), CreateListActivity.class);
-            startActivity(intent);
-        }
-    }
-
-    private class MyAdapter extends BaseAdapter {
-
-        private ArrayList<String> myList;
-
-        public MyAdapter(ArrayList<String> aList) {
-            myList = aList;
-        }
-
-        @Override
-        public int getCount() {
-            return myList.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return myList.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return 0;
-        }
-
-        @Override
-        public View getView(final int position, View convertView, ViewGroup parent) {
-
-            View view;
-            ViewHolder viewHolder;
-
-            if (convertView == null) {
-                LayoutInflater li = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                view = li.inflate(R.layout.my_simple_list_item1, null);
-
-                viewHolder = new ViewHolder();
-                viewHolder.myText = (TextView) view.findViewById(android.R.id.text1);
-                view.setTag(viewHolder);
-            } else {
-                view = convertView;
-                viewHolder = (ViewHolder) view.getTag();
-            }
-
-            viewHolder.myText.setText(myList.get(position));
-            return view;
-        }
-
-        private class ViewHolder {
-            TextView myText;
-        }
     }
 }
