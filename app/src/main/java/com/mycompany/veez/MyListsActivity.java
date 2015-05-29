@@ -98,6 +98,8 @@ public class MyListsActivity extends ActionBarActivity implements View.OnClickLi
             }
         });
 
+
+
         lv_my_lists = (ListView) findViewById(R.id.lv_my_lists);
 
     }

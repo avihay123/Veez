@@ -21,9 +21,9 @@ public class MyApplication extends Application{
         Parse.initialize(this, "acTRo6rNllCZChixQ72wphccXrJn1CGK7hHcKmEw", "fQdlWHh24YkNtohMmoMxtoN67BdS2iIMBtbjlUHy");
 
         ParseObject testObject = new ParseObject("TestObject");
-//        testObject.put("foo", "Bob");
-//        testObject.saveInBackground();
-//        Log.d("PARSE", "SuccessBOB");
+        testObject.put("foo2", "Bob2");
+        testObject.saveInBackground();
+        Log.d("PARSE2", "SuccessBOB");
 
     }
 }
