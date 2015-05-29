@@ -19,7 +19,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.content.res.Configuration;
 import java.util.ArrayList;
