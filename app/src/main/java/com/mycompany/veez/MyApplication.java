@@ -19,6 +19,7 @@ public class MyApplication extends Application{
 
         // Enable Local Datastore.
         Parse.enableLocalDatastore(this);
+
         Parse.initialize(this, "acTRo6rNllCZChixQ72wphccXrJn1CGK7hHcKmEw", "fQdlWHh24YkNtohMmoMxtoN67BdS2iIMBtbjlUHy");
 
         //Enable facebook authentication
