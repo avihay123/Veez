@@ -2,34 +2,21 @@ package com.mycompany.veez;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
-
-import android.os.StrictMode;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-
 import android.widget.ImageView;
-import android.widget.Toast;
-
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookContentProvider;
-import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
-
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.ProfileTracker;
 import com.facebook.appevents.AppEventsLogger;
-
-
-import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.parse.LogInCallback;
 import com.parse.ParseFacebookUtils;
@@ -38,14 +25,11 @@ import com.parse.SaveCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.security.Permissions;
-import java.text.ParseException;
 import java.util.Arrays;
-import java.util.Iterator;
+
 
 
 public class LoginActivity extends Activity {
@@ -65,10 +49,6 @@ public class LoginActivity extends Activity {
 
         iv_logo = (ImageView) findViewById(R.id.iv_logo);
 
-        //TODO terrible idea remove this later
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
-
         accessTokenTracker = new AccessTokenTracker() {
             @Override
             protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
@@ -79,24 +59,17 @@ public class LoginActivity extends Activity {
                     GraphRequest fbRequest = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
                         @Override
                         public void onCompleted(JSONObject jsonObject, GraphResponse graphResponse) {
-                            try{
-                                user.put("name", jsonObject.getString("name"));
-                                Log.d("PB", user.get("name").toString());
-                                Iterator<?> keys = jsonObject.keys();
-                                while (keys.hasNext()){
-                                    String key = (String) keys.next();
-                                    Log.d("PBKeys", key + " : " + jsonObject.getString(key));
-                                }
-                                Bitmap bitmap = getFacebookProfilePicture(jsonObject.getString("id"));
-                                iv_logo.setImageBitmap(bitmap);
-                            }catch (JSONException e){
-                                Log.d("PB", "Exception thrown when trying to deserialize facebook request");
+                            try {
+                                new BackgroundProfilePictureFetcher().execute(jsonObject.getString("id"));
+                            } catch (JSONException e) {
+                                Log.d("PB","error at parsing the json object");
+                                e.printStackTrace();
                             }
                         }
                     });
                     fbRequest.executeAsync();
                 }
-//                updateWithToken(currentAccessToken);
+                updateWithToken(currentAccessToken);
             }
         };
 
@@ -220,6 +193,41 @@ public class LoginActivity extends Activity {
         }
 
         return bitmap;
+    }
+
+
+    private class BackgroundProfilePictureFetcher extends AsyncTask<String, Void, Bitmap> {
+
+        @Override
+        protected Bitmap doInBackground(String... params) {
+            String userID = params[0];
+            URL imageURL = null;
+            try {
+                imageURL = new URL("https://graph.facebook.com/" + userID + "/picture?type=large");
+                Log.d("PBPic", "url created");
+            } catch (MalformedURLException e) {
+                Log.d("PB", "exception thrown while trying to create url of profile picture");
+                e.printStackTrace();
+                return null;
+            }
+            Bitmap bitmap = null;
+            try {
+                bitmap = BitmapFactory.decodeStream(imageURL.openConnection().getInputStream());
+                Log.d("PBPic", "bitmap created");
+            } catch (IOException e) {
+                Log.d("PB", "exception thrown while trying to decode data stream from url of profile picture");
+                e.printStackTrace();
+            } catch (android.os.NetworkOnMainThreadException e){
+                Log.d("PB", "i'm executin async, why is this thrown??"); //TODO
+            }
+
+            return bitmap;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap){
+            iv_logo.setImageBitmap(bitmap);
+        }
     }
 }
 
