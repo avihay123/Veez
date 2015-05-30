@@ -26,10 +26,5 @@ public class MyApplication extends Application{
         ParseFacebookUtils.initialize(getApplicationContext());
 
 
-//        ParseObject testObject = new ParseObject("TestObject");
-//        testObject.put("foo", "Bob");
-//        testObject.saveInBackground();
-//        Log.d("PARSE", "SuccessBOB");
-
     }
 }
