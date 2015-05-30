@@ -14,10 +14,6 @@ public class VeezList {
     private int likesCount;
     private int numOfItemsMarkedWithVee;
 
-    public String getName() {
-        return name;
-    }
-
     //for debug
     public VeezList(int numOfItemsMarkedWithVee, int likesCount, List<VeezItem> items, boolean isPublic, String name) {
         this.numOfItemsMarkedWithVee = numOfItemsMarkedWithVee;
@@ -25,6 +21,10 @@ public class VeezList {
         this.items = items;
         this.isPublic = isPublic;
         this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public boolean isPublic() {

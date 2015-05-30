@@ -60,10 +60,10 @@
                 android:orientation="horizontal"
                 android:weightSum="7" >
 
-                <EditText
+                <AutoCompleteTextView
                     android:layout_width="@dimen/search_size"
                     android:layout_height="fill_parent"
-                    android:id="@+id/et_search"
+                    android:id="@+id/ac_search_list"
                     android:textColor="#ffffff"
                     android:layout_marginLeft="70dp"
                     android:layout_marginStart="70dp"

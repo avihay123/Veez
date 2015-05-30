@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,9 +33,8 @@ import java.util.List;
 public class MyListsActivity extends ActionBarActivity implements View.OnClickListener {
 
     private Button b_first_menu;
-    private Button b_second_menu;
     private Button b_add_list;
-    private EditText et_search;
+    private AutoCompleteTextView ac_search_list;
     private ListView lv_my_lists;
 
     private ListView mDrawerList;
@@ -83,27 +84,6 @@ public class MyListsActivity extends ActionBarActivity implements View.OnClickLi
         b_add_list = (Button) findViewById(R.id.b_add_list);
         b_add_list.setOnClickListener(this);
 
-        /* ----------- AutoComplete Search ----------------*/
-
-        et_search = (EditText) findViewById(R.id.et_search);
-        et_search.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-
         /* ----------- listView -------------------------------------*/
         //----------------------------for debug -----------------------
         lv_my_lists = (ListView) findViewById(R.id.lv_my_lists);
@@ -121,10 +101,29 @@ public class MyListsActivity extends ActionBarActivity implements View.OnClickLi
         lists.add(new VeezList(1,100,items,false,"ab6"));
         MyAdapter adapter = new MyAdapter(lists);
 
-        //in real 
+        //reaplace to this in case of true use
      //   MyAdapter adapter = new MyAdapter(((MyApplication)getApplicationContext()).getUser().getLists());
         lv_my_lists.setAdapter(adapter);
 
+        /* ----------- AutoComplete Search ----------------*/
+
+        ArrayAdapter<String> adapterAutoComplete = new ArrayAdapter<>(this,
+                android.R.layout.simple_list_item_1, getListsName(lists));
+
+        ac_search_list = (AutoCompleteTextView) findViewById(R.id.ac_search_list);
+        ac_search_list.setAdapter(adapterAutoComplete);
+        ac_search_list.setThreshold(1);
+    }
+
+    //TODO the parameter is only for debug
+    String[] getListsName(List<VeezList> myLists){
+        List<String> res= new ArrayList<String>();
+
+       // List<VeezList> myLists= ((MyApplication)getApplicationContext()).getUser().getLists();
+        for(VeezList list : myLists)
+            res.add(0,list.getName());
+        String[] $ = new String[res.size()];
+        return res.toArray($);
     }
 
 
@@ -219,7 +218,7 @@ public class MyListsActivity extends ActionBarActivity implements View.OnClickLi
         }
     }
 
-    /* ----------------- Menu function ------------------- */
+    /* ----------------- Menu functions ------------------- */
 
     private class MyAdapter2 extends BaseAdapter {
 
