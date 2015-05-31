@@ -20,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.widget.TextView;
@@ -33,7 +34,7 @@ import java.util.List;
 
 public class ExplorerActivity extends ActionBarActivity
         implements View.OnClickListener, NavigationDrawerCallbacks {
-
+    
     private Button b_first_menu;
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
@@ -66,33 +67,34 @@ public class ExplorerActivity extends ActionBarActivity
         mNavigationDrawerFragment.setUserData("John Doe", "13 active lists",
                 BitmapFactory.decodeResource(getResources(), R.drawable.avatar));
         mNavigationDrawerFragment.closeDrawer();
-        /* -----------------------------------------*/
+
+        /* ------------------- Buttons ----------------------*/
 
         b_first_menu = (Button) findViewById(R.id.b_first_menu);
         b_first_menu.setOnClickListener(this);
 
+        /* ------------------- Auto Compelte ----------------------*/
+
         tv_explorer = (TextView) findViewById(R.id.tv_explorer);
 
-        lv_lists = (ListView) findViewById(R.id.lv_explorer_lists);
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+        ArrayAdapter<String> adapterAutoComplete = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, TAGS);
 
         ac_search = (AutoCompleteTextView) findViewById(R.id.ac_search);
 
-        ac_search.setAdapter(adapter);
+        ac_search.setAdapter(adapterAutoComplete);
         ac_search.setThreshold(1);
 
         ac_search.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                searchTags[tagsNum] = (String) ((TextView)view).getText();
+                searchTags[tagsNum] = (String) ((TextView) view).getText();
                 Log.d("EXPLORER", searchTags[tagsNum]);
                 tagsNum++;
                 ac_search.setText("");
                 tv_explorer.setText(newHeadline(searchTags, tagsNum));
                 tv_explorer.setTextSize(35 - 5 * tagsNum);
-                if (tagsNum == 5){
+                if (tagsNum == 5) {
                     ac_search.setEnabled(false);
                     ac_search.setText("5 tags maximum");
                     Log.d("EXPLORER", "reached limit");
@@ -101,18 +103,110 @@ public class ExplorerActivity extends ActionBarActivity
             }
         });
 
+        /* ------------------- Lists ----------------------*/
+        lv_lists = (ListView) findViewById(R.id.lv_explorer_lists);
+        List<VeezItem> items= new ArrayList<VeezItem>();
+        List<VeezListExplorer> lists= new ArrayList<VeezListExplorer>();
+        items.add(new VeezItem(("a")));
+        lists.add(new VeezListExplorer(0,items,"abc"));
+        items.add(new VeezItem(("b")));
+        lists.add(new VeezListExplorer(1,items,"ab"));
+        lists.add(new VeezListExplorer(1,items,"b1"));
+        lists.add(new VeezListExplorer(1,items,"b2"));
+        lists.add(new VeezListExplorer(1,items,"b3"));
+        lists.add(new VeezListExplorer(1,items,"b4"));
+        lists.add(new VeezListExplorer(1,items,"b5"));
+        //TODO get the lists from the server
+        MyAdapter adapter = new MyAdapter(lists);
+        lv_lists.setAdapter(adapter);
     }
 
-    private static String newHeadline(String[] tags, int tagsNum){
+    /* --------------------------On Click ----------------------- */
+
+    @Override
+    public void onClick(View v) {
+        int viewId = v.getId();
+        if (viewId == R.id.b_first_menu) {
+            mNavigationDrawerFragment.openDrawer();
+        }
+    }
+
+
+
+    //----------------------- List ----------------------------
+
+    private class MyAdapter extends BaseAdapter {
+
+        private List<VeezListExplorer> myList;
+
+        public MyAdapter(List<VeezListExplorer> aList) {
+            myList = aList;
+        }
+
+        @Override
+        public int getCount() {
+            return myList.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return myList.get(position);
+        }
+
+        //TODO return
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            View view;
+            ViewHolder viewHolder;
+
+            Log.d("MY_TAG", "Position: " + position);
+
+            if (convertView == null) {
+                LayoutInflater li = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                view = li.inflate(R.layout.list_view_explorer, null);
+
+                viewHolder = new ViewHolder();
+                viewHolder.tv_num_likes = (TextView) view.findViewById(R.id.tv_num_likes);
+                viewHolder.tv_list_name = (TextView) view.findViewById(R.id.tv_list_name);
+                viewHolder.b_add_to_my_lists = (Button) view.findViewById(R.id.b_add_to_my_lists);
+                view.setTag(viewHolder);
+
+            } else {
+                view = convertView;
+                viewHolder = (ViewHolder) view.getTag();
+            }
+
+            // Put the content in the view
+            viewHolder.tv_num_likes.setText(String.valueOf((myList.get(position)).getLikesCount()));
+            viewHolder.tv_list_name.setText((myList.get(position)).getName());
+
+            return view;
+        }
+
+        private class ViewHolder {
+            TextView tv_num_likes;
+            TextView tv_list_name;
+            Button b_add_to_my_lists;
+        }
+    }
+
+    /* --------------------------Auto Complete ----------------------- */
+    private static String newHeadline(String[] tags, int tagsNum) {
         String headline = "";
         headline += tags[0];
-        for (int i = 1; i < tagsNum; i++){
+        for (int i = 1; i < tagsNum; i++) {
             headline += " + " + tags[i];
         }
         return headline;
     }
 
-    private static final String[] TAGS = new String[] {
+    private static final String[] TAGS = new String[]{
             "BBQ", "Road Trip", "Camping", "Shopping", "Beach", "Sleep Over",
             "Books", "Songs", "TV Series", "Movies", "Holidays", "Action Movies",
 
@@ -140,7 +234,7 @@ public class ExplorerActivity extends ActionBarActivity
              */
     };
 
-    /* ----------------- Menu function ------------------- */
+    /* ----------------- Menu functions ------------------- */
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         Intent intent;
@@ -189,15 +283,6 @@ public class ExplorerActivity extends ActionBarActivity
 
         return super.onOptionsItemSelected(item);
     }
-
-    /* ------------------------------------------------- */
-
-    @Override
-    public void onClick(View v) {
-        int viewId = v.getId();
-        if (viewId == R.id.b_first_menu) {
-            mNavigationDrawerFragment.openDrawer();
-        }
-    }
+    
 
 }

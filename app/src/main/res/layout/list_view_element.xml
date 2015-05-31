@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:button="@drawable/check_box_item_design"
-        android:id="@+id/checkbox_item"
+        android:id="@+id/cb_item_vee"
         android:layout_gravity="center"
         android:fontFamily="Myriad Hebrew"
         android:textColor="#1c3547"

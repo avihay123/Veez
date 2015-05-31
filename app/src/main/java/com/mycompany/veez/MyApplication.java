@@ -3,7 +3,9 @@ package com.mycompany.veez;
 import android.app.Application;
 import android.util.Log;
 
+import com.facebook.FacebookSdk;
 import com.parse.Parse;
+import com.parse.ParseFacebookUtils;
 import com.parse.ParseObject;
 
 /**
@@ -20,10 +22,10 @@ public class MyApplication extends Application{
 
         Parse.initialize(this, "acTRo6rNllCZChixQ72wphccXrJn1CGK7hHcKmEw", "fQdlWHh24YkNtohMmoMxtoN67BdS2iIMBtbjlUHy");
 
-        ParseObject testObject = new ParseObject("TestObject");
-//        testObject.put("foo", "Bob");
-//        testObject.saveInBackground();
-//        Log.d("PARSE", "SuccessBOB");
+        //Enable facebook authentication
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        ParseFacebookUtils.initialize(getApplicationContext());
+
 
     }
 }

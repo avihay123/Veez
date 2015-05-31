@@ -12,7 +12,7 @@
     android:paddingTop="50dp" >
 
     <ImageView
-        android:id="@+id/im_logo"
+        android:id="@+id/iv_logo"
         android:layout_width="@dimen/logo_width"
         android:layout_height="@dimen/logo_height"
         android:src="@drawable/logo"

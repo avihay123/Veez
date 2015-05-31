@@ -86,7 +86,7 @@ public class ListInfoActivity extends ActionBarActivity
         b_leave_list = (Button) findViewById(R.id.b_leave_list);
         b_leave_list.setOnClickListener(this);
 
-        //deadline code------------------------------------------------------------------------------
+        //------------------------------ Deadline code ---------
         et_deadline = (EditText) findViewById(R.id.et_deadline);
 
         myCalendar = Calendar.getInstance();
@@ -217,8 +217,8 @@ public class ListInfoActivity extends ActionBarActivity
 
     private void updateLabel() {
 
-        String myFormat = "MM/dd/yy"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        String myFormat = "dd/MM/yy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat);
 
         et_deadline.setText(sdf.format(myCalendar.getTime()));
     }
