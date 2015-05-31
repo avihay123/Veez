@@ -20,7 +20,17 @@
     <string name="facebook_app_id">837568299669031</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="new_info">New Info:</string>
-    <string name="drawer_open">Open navigation drawer</string>
-    <string name="drawer_close">Close navigation drawer</string>
+    <string name="my_lists_menu">My Lists</string>
+    <string name="explorer_menu">Explorer</string>
+    <string name="friends_menu">Friends</string>
+
+    <string name="drawer_open">Menu opened</string>
+    <string name="drawer_close">Menu closed</string>
+    <string name="settings">Settings</string>
+    <string name="myaccount">My Account</string>
+    <string name="stats">Stats</string>
+    <string name="search">Search</string>
+    <string name="action_search">Search</string>
+    <string name="action_filter">Filter</string>
 
 </resources>

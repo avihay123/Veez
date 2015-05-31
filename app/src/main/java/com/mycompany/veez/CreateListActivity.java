@@ -1,13 +1,17 @@
 package com.mycompany.veez;
 
 import android.app.DatePickerDialog;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -27,7 +31,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class CreateListActivity extends ActionBarActivity implements View.OnClickListener {
+import com.mycompany.veez.NavigationDrawerCallbacks;
+import com.mycompany.veez.NavigationDrawerFragment;
+import com.mycompany.veez.StatsFragment;
+
+public class CreateListActivity extends ActionBarActivity
+        implements View.OnClickListener, NavigationDrawerCallbacks {
 
     private Button b_first_menu;
     private Button b_add_image;
@@ -39,9 +48,8 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
     private Button b_create_list;
     private Calendar myCalendar;
 
-    private ListView mDrawerList;
-    private DrawerLayout mDrawerLayout;
-    private ActionBarDrawerToggle mDrawerToggle;
+    private NavigationDrawerFragment mNavigationDrawerFragment;
+    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,12 +57,18 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
         setContentView(R.layout.activity_create_list);
 
         /* -------------- Side Menu ---------------- */
-        mDrawerList = (ListView)findViewById(R.id.lv_navList);
-        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
-        addDrawerItems();
-        setupDrawer();
-        getSupportActionBar().hide();
+        mToolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
+        setSupportActionBar(mToolbar);
 
+        mNavigationDrawerFragment = (NavigationDrawerFragment)
+                getFragmentManager().findFragmentById(R.id.fragment_drawer);
+
+        //Set up the drawer.
+        mNavigationDrawerFragment.setup(R.id.fragment_drawer, (DrawerLayout) findViewById(R.id.drawer), mToolbar);
+        // populate the navigation drawer
+        mNavigationDrawerFragment.setUserData("John Doe", "13 active lists",
+                BitmapFactory.decodeResource(getResources(), R.drawable.avatar));
+        mNavigationDrawerFragment.closeDrawer();
         /* -------------------Buttons----------------------*/
         b_first_menu = (Button) findViewById(R.id.b_first_menu);
         b_first_menu.setOnClickListener(this);
@@ -115,73 +129,55 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
     }
     /* ----------------- Menu functions ------------------- */
 
-    private void addDrawerItems() {
-
-        ArrayList<String> values = new ArrayList<String>();
-        values.add("");
-        values.add("Name");
-        values.add("My Lists");
-        values.add("Explorer");
-        values.add("Friends");
-
-        MyAdapter adapter = new MyAdapter(values);
-        mDrawerList.setAdapter(adapter);
-
-        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0) {
-                    // move to profile_layout
-                }
-                else if (position == 1) {
-                    // move to profile_layout
-                }
-                else if (position == 2) {
-                    Intent intent = new Intent(getApplicationContext(), MyListsActivity.class);
-                    startActivity(intent);
-                }
-                else if (position == 3) {
-                    Intent intent = new Intent(getApplicationContext(), ExplorerActivity.class);
-                    startActivity(intent);
-                }
-                else if (position == 4) {
-                    // move to friends_layout
-                }
-            }
-        });
-    }
-
-    private void setupDrawer() {
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
-
-            /** Called when a drawer has settled in a completely open state. */
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-
-            /** Called when a drawer has settled in a completely closed state. */
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-        };
-
-        mDrawerToggle.setDrawerIndicatorEnabled(true);
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
+    @Override
+    public void onNavigationDrawerItemSelected(int position) {
+        Intent intent;
+        switch (position) {
+            case 0: // my lists //
+                intent = new Intent(getApplicationContext(), MyListsActivity.class);
+                startActivity(intent);
+                break;
+            case 1: // explorer //
+                intent = new Intent(getApplicationContext(), ExplorerActivity.class);
+                startActivity(intent);
+                break;
+            case 2: // friends //
+                break;
+        }
     }
 
     @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        // Sync the toggle state after onRestoreInstanceState has occurred.
-        mDrawerToggle.syncState();
+    public void onBackPressed() {
+        if (mNavigationDrawerFragment.isDrawerOpen())
+            mNavigationDrawerFragment.closeDrawer();
+        else
+            super.onBackPressed();
     }
 
+
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        mDrawerToggle.onConfigurationChanged(newConfig);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (!mNavigationDrawerFragment.isDrawerOpen()) {
+            // Only show items in the action bar relevant to this screen
+            // if the drawer is not showing. Otherwise, let the drawer
+            // decide what to show in the action bar.
+            getMenuInflater().inflate(R.menu.main, menu);
+            return true;
+        }
+        return super.onCreateOptionsMenu(menu);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+
+
+        return super.onOptionsItemSelected(item);
     }
 
     /* ------------------------------------------------- */
@@ -190,7 +186,7 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
     public void onClick(View v) {
         int viewId = v.getId();
         if (viewId == R.id.b_first_menu) {
-            mDrawerLayout.openDrawer(Gravity.START);
+            mNavigationDrawerFragment.openDrawer();
         }
         else if (viewId == R.id.b_add_image) {
             //TODO
@@ -214,53 +210,4 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
         et_deadline.setText(sdf.format(myCalendar.getTime()));
     }
 
-    private class MyAdapter extends BaseAdapter {
-
-        private ArrayList<String> myList;
-
-        public MyAdapter(ArrayList<String> aList) {
-            myList = aList;
-        }
-
-        @Override
-        public int getCount() {
-            return myList.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return myList.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return 0;
-        }
-
-        @Override
-        public View getView(final int position, View convertView, ViewGroup parent) {
-
-            View view;
-            ViewHolder viewHolder;
-
-            if (convertView == null) {
-                LayoutInflater li = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                view = li.inflate(R.layout.my_simple_list_item1, null);
-
-                viewHolder = new ViewHolder();
-                viewHolder.myText = (TextView) view.findViewById(android.R.id.text1);
-                view.setTag(viewHolder);
-            } else {
-                view = convertView;
-                viewHolder = (ViewHolder) view.getTag();
-            }
-
-            viewHolder.myText.setText(myList.get(position));
-            return view;
-        }
-
-        private class ViewHolder {
-            TextView myText;
-        }
-    }
 }
