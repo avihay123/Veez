@@ -22,6 +22,7 @@
         android:id="@+id/b_login"
         android:layout_width="@dimen/login_width"
         android:layout_height="@dimen/login_height"
+        android:background="@drawable/login"
         android:layout_gravity="center_horizontal"/>
 
 </LinearLayout>

@@ -104,6 +104,7 @@ public class LoginActivity extends Activity {
                     }
                 });
 
+
             }
         });
     }
@@ -204,6 +205,7 @@ public class LoginActivity extends Activity {
 
         @Override
         protected void onPostExecute(VeezUser vUser){
+            //add new user data to persistent memory
             SharedPreferences  mPrefs = getPreferences(MODE_PRIVATE);
             SharedPreferences.Editor prefsEditor = mPrefs.edit();
             Gson gson = new Gson();
@@ -211,6 +213,8 @@ public class LoginActivity extends Activity {
             prefsEditor.putString(vUser.getFacebookID(), json);
             prefsEditor.commit();
 
+            //add user data to parse user
+            ParseUser.getCurrentUser().put(vUser.getFacebookID(), vUser);
         }
     }
 }
