@@ -209,8 +209,8 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
     }
 
     private void updateLabel() {
-        String myFormat = "MM/dd/yy"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        String myFormat = "dd/MM/yy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat);
         et_deadline.setText(sdf.format(myCalendar.getTime()));
     }
 

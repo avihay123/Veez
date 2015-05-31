@@ -4,7 +4,6 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.content.Context;
-import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Gravity;
@@ -18,9 +17,9 @@ import android.widget.ListView;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.widget.TextView;
 import android.content.res.Configuration;
+
 import java.util.ArrayList;
-import android.view.View;
-import android.widget.Button;
+
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
@@ -54,13 +53,13 @@ public class ListInfoActivity extends ActionBarActivity implements View.OnClickL
 
         /* -------------- Side Menu ---------------- */
 
-        mDrawerList = (ListView)findViewById(R.id.lv_navList);
-        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.lv_navList);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         addDrawerItems();
         setupDrawer();
         getSupportActionBar().hide();
 
-        /* -----------------------------------------*/
+        /* ------------------ Buttons -----------------------*/
 
         b_first_menu = (Button) findViewById(R.id.b_first_menu);
         b_first_menu.setOnClickListener(this);
@@ -77,7 +76,7 @@ public class ListInfoActivity extends ActionBarActivity implements View.OnClickL
         b_leave_list = (Button) findViewById(R.id.b_leave_list);
         b_leave_list.setOnClickListener(this);
 
-        //deadline code------------------------------------------------------------------------------
+        //------------------------------ Deadline code ---------
         et_deadline = (EditText) findViewById(R.id.et_deadline);
 
         myCalendar = Calendar.getInstance();
@@ -124,7 +123,8 @@ public class ListInfoActivity extends ActionBarActivity implements View.OnClickL
         });
     }
 
-    /* ----------------- Menu function ------------------- */
+
+    /* ----------------- Menu functions ------------------- */
 
     private void addDrawerItems() {
 
@@ -143,19 +143,15 @@ public class ListInfoActivity extends ActionBarActivity implements View.OnClickL
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 0) {
                     // move to profile_layout
-                }
-                else if (position == 1) {
+                } else if (position == 1) {
                     // move to profile_layout
-                }
-                else if (position == 2) {
+                } else if (position == 2) {
                     Intent intent = new Intent(getApplicationContext(), MyListsActivity.class);
                     startActivity(intent);
-                }
-                else if (position == 3) {
+                } else if (position == 3) {
                     Intent intent = new Intent(getApplicationContext(), ExplorerActivity.class);
                     startActivity(intent);
-                }
-                else if (position == 4) {
+                } else if (position == 4) {
                     // move to friends_layout
                 }
             }
@@ -226,8 +222,8 @@ public class ListInfoActivity extends ActionBarActivity implements View.OnClickL
 
     private void updateLabel() {
 
-        String myFormat = "MM/dd/yy"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        String myFormat = "dd/MM/yy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat);
 
         et_deadline.setText(sdf.format(myCalendar.getTime()));
     }

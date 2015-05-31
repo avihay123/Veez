@@ -13,6 +13,8 @@ public class VeezList {
     private VeezUser Admin;
     private int likesCount;
     private int numOfItemsMarkedWithVee;
+    private List<String> tags;
+
 
     //for debug
     public VeezList(int numOfItemsMarkedWithVee, int likesCount, List<VeezItem> items, boolean isPublic, String name) {

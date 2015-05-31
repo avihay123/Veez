@@ -113,7 +113,7 @@ public class ListActivity extends ActionBarActivity implements View.OnClickListe
     public void onClick(View v) {
         int viewId = v.getId();
         if (viewId == R.id.b_first_menu) {
-            //TODO
+            mDrawerLayout.openDrawer(Gravity.START);
         }
         if (viewId == R.id.b_second_menu) {
             //TODO
@@ -181,13 +181,13 @@ public class ListActivity extends ActionBarActivity implements View.OnClickListe
                 viewHolder.b_friend_veed.setVisibility(View.VISIBLE);
             } else {
                 viewHolder.cb_item_vee.setChecked(false);
-                viewHolder.b_friend_veed.setVisibility(View.GONE);
+                viewHolder.b_friend_veed.setVisibility(View.INVISIBLE);
             }
 
             if ((myList.get(position)).getInfo().length() > 0)
                 viewHolder.b_info.setVisibility(View.VISIBLE);
             else
-                viewHolder.b_info.setVisibility(View.GONE);
+                viewHolder.b_info.setVisibility(View.INVISIBLE);
 
             return view;
         }
