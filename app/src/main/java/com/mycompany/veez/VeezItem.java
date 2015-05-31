@@ -5,8 +5,31 @@ package com.mycompany.veez;
  */
 public class VeezItem {
     private String name;
+    private String info;
+    private boolean vee;
+    private VeezUser userVeed;
 
+    //for debug
     public VeezItem(String name) {
         this.name = name;
+    }
+
+    //for debug
+    public VeezItem(String name, String info, boolean vee) {
+        this.name = name;
+        this.info = info;
+        this.vee = vee;
+    }
+
+    public boolean isVee() {
+        return vee;
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public String getName() {
+        return name;
     }
 }

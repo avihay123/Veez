@@ -1,22 +1,28 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/Explorer"
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ExplorerActivity"
-    android:orientation="vertical"
-    android:weightSum="26" >
+    android:fitsSystemWindows="true"
+    android:layout_height="match_parent">
 
-    <android.support.v4.widget.DrawerLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/drawer_layout"
+    <LinearLayout
+        android:id = "@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <include
+        android:id="@+id/toolbar_actionbar"
+        layout="@layout/toolbar_default"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
 
     <!-- The first child in the layout is for the main Activity UI-->
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/Explorer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context=".ExplorerActivity"
@@ -28,7 +34,8 @@
                 android:layout_height="0dp"
                 android:background="#ffea00"
                 android:layout_weight="5"
-                android:gravity="center" >
+                android:gravity="start"
+                android:paddingTop="8dp">
 
                 <Button
                     android:layout_width="@dimen/menu_width"
@@ -49,17 +56,6 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginBottom="2dp"/>
 
-                <Button
-                    android:layout_width="@dimen/menu2_width"
-                    android:layout_height="@dimen/menu2_height"
-                    android:id="@+id/b_second_menu"
-                    android:background="@drawable/menu_list"
-                    android:onClick="onClick"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginEnd="15dp"/>
 
             </RelativeLayout>
 
@@ -241,14 +237,26 @@
             </LinearLayout>
 
         </LinearLayout>
-        <!-- Side navigation drawer UI -->
-        <ListView
-            android:id="@+id/lv_navList"
-            android:layout_width="200dp"
+    </LinearLayout>
+
+    <!-- android:layout_marginTop="?android:attr/actionBarSize"-->
+    <com.mycompany.veez.ScrimInsetsFrameLayout
+        android:id="@+id/scrimInsetsFrameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:layout_gravity="start"
+        app:insetForeground="#4000">
+
+        <fragment
+            android:id="@+id/fragment_drawer"
+            android:name="com.mycompany.veez.NavigationDrawerFragment"
+            android:layout_width="@dimen/navigation_drawer_width"
             android:layout_height="match_parent"
-            android:layout_gravity="left|start"
-            android:background="#ffffff"/>
+            android:fitsSystemWindows="true"
+            app:layout="@layout/fragment_navigation_drawer"/>
 
-    </android.support.v4.widget.DrawerLayout>
+    </com.mycompany.veez.ScrimInsetsFrameLayout>
 
-</LinearLayout>
+
+</android.support.v4.widget.DrawerLayout>

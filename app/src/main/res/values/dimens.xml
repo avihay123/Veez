@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Per the design guidelines, navigation drawers should be between 240dp and 320dp:
+     https://developer.android.com/design/patterns/navigation-drawer.html -->
+    <dimen name="navigation_drawer_width">320dp</dimen>
+    <dimen name="toolbar_elevation">4dp</dimen>
+
     <!-- dimens for activity_create-list & activity_list_info -->
     <dimen name="add_friend_button_width">65dp</dimen>
     <dimen name="add_friend_button_margin">4dp</dimen>
@@ -40,7 +45,7 @@
     <dimen name="et_explorer_height">40dp</dimen>
     <dimen name="tag_explorer_height">33dp</dimen>
     <dimen name="tag_explorer_margin">2dp</dimen>
-    <dimen name="tag_explorer_size">14dp</dimen>
+    <dimen name="tag_explorer_size">14sp</dimen>
 
     <!-- dimens for activity_list -->
     <dimen name="vee_list_width">50dp</dimen>

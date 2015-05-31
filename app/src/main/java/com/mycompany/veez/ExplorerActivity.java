@@ -1,13 +1,17 @@
 package com.mycompany.veez;
 
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -16,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.widget.TextView;
@@ -27,13 +32,13 @@ import com.parse.ParseObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExplorerActivity extends ActionBarActivity implements View.OnClickListener {
-
+public class ExplorerActivity extends ActionBarActivity
+        implements View.OnClickListener, NavigationDrawerCallbacks {
+    
     private Button b_first_menu;
 
-    private ListView mDrawerList;
-    private DrawerLayout mDrawerLayout;
-    private ActionBarDrawerToggle mDrawerToggle;
+    private NavigationDrawerFragment mNavigationDrawerFragment;
+    private Toolbar mToolbar;
 
     private ListView lv_lists;
     private TextView tv_explorer;
@@ -50,40 +55,46 @@ public class ExplorerActivity extends ActionBarActivity implements View.OnClickL
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         /* -------------- Side Menu ---------------- */
+        mToolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
+        setSupportActionBar(mToolbar);
 
-        mDrawerList = (ListView)findViewById(R.id.lv_navList);
-        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
-        addDrawerItems();
-        setupDrawer();
-        getSupportActionBar().hide();
+        mNavigationDrawerFragment = (NavigationDrawerFragment)
+                getFragmentManager().findFragmentById(R.id.fragment_drawer);
 
-        /* -----------------------------------------*/
+        //Set up the drawer.
+        mNavigationDrawerFragment.setup(R.id.fragment_drawer, (DrawerLayout) findViewById(R.id.drawer), mToolbar);
+        // populate the navigation drawer
+        mNavigationDrawerFragment.setUserData("John Doe", "13 active lists",
+                BitmapFactory.decodeResource(getResources(), R.drawable.avatar));
+        mNavigationDrawerFragment.closeDrawer();
+
+        /* ------------------- Buttons ----------------------*/
 
         b_first_menu = (Button) findViewById(R.id.b_first_menu);
         b_first_menu.setOnClickListener(this);
 
+        /* ------------------- Auto Compelte ----------------------*/
+
         tv_explorer = (TextView) findViewById(R.id.tv_explorer);
 
-        lv_lists = (ListView) findViewById(R.id.lv_explorer_lists);
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+        ArrayAdapter<String> adapterAutoComplete = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, TAGS);
 
         ac_search = (AutoCompleteTextView) findViewById(R.id.ac_search);
 
-        ac_search.setAdapter(adapter);
+        ac_search.setAdapter(adapterAutoComplete);
         ac_search.setThreshold(1);
 
         ac_search.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                searchTags[tagsNum] = (String) ((TextView)view).getText();
+                searchTags[tagsNum] = (String) ((TextView) view).getText();
                 Log.d("EXPLORER", searchTags[tagsNum]);
                 tagsNum++;
                 ac_search.setText("");
                 tv_explorer.setText(newHeadline(searchTags, tagsNum));
                 tv_explorer.setTextSize(35 - 5 * tagsNum);
-                if (tagsNum == 5){
+                if (tagsNum == 5) {
                     ac_search.setEnabled(false);
                     ac_search.setText("5 tags maximum");
                     Log.d("EXPLORER", "reached limit");
@@ -92,18 +103,110 @@ public class ExplorerActivity extends ActionBarActivity implements View.OnClickL
             }
         });
 
+        /* ------------------- Lists ----------------------*/
+        lv_lists = (ListView) findViewById(R.id.lv_explorer_lists);
+        List<VeezItem> items= new ArrayList<VeezItem>();
+        List<VeezListExplorer> lists= new ArrayList<VeezListExplorer>();
+        items.add(new VeezItem(("a")));
+        lists.add(new VeezListExplorer(0,items,"abc"));
+        items.add(new VeezItem(("b")));
+        lists.add(new VeezListExplorer(1,items,"ab"));
+        lists.add(new VeezListExplorer(1,items,"b1"));
+        lists.add(new VeezListExplorer(1,items,"b2"));
+        lists.add(new VeezListExplorer(1,items,"b3"));
+        lists.add(new VeezListExplorer(1,items,"b4"));
+        lists.add(new VeezListExplorer(1,items,"b5"));
+        //TODO get the lists from the server
+        MyAdapter adapter = new MyAdapter(lists);
+        lv_lists.setAdapter(adapter);
     }
 
-    private static String newHeadline(String[] tags, int tagsNum){
+    /* --------------------------On Click ----------------------- */
+
+    @Override
+    public void onClick(View v) {
+        int viewId = v.getId();
+        if (viewId == R.id.b_first_menu) {
+            mNavigationDrawerFragment.openDrawer();
+        }
+    }
+
+
+
+    //----------------------- List ----------------------------
+
+    private class MyAdapter extends BaseAdapter {
+
+        private List<VeezListExplorer> myList;
+
+        public MyAdapter(List<VeezListExplorer> aList) {
+            myList = aList;
+        }
+
+        @Override
+        public int getCount() {
+            return myList.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return myList.get(position);
+        }
+
+        //TODO return
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            View view;
+            ViewHolder viewHolder;
+
+            Log.d("MY_TAG", "Position: " + position);
+
+            if (convertView == null) {
+                LayoutInflater li = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                view = li.inflate(R.layout.list_view_explorer, null);
+
+                viewHolder = new ViewHolder();
+                viewHolder.tv_num_likes = (TextView) view.findViewById(R.id.tv_num_likes);
+                viewHolder.tv_list_name = (TextView) view.findViewById(R.id.tv_list_name);
+                viewHolder.b_add_to_my_lists = (Button) view.findViewById(R.id.b_add_to_my_lists);
+                view.setTag(viewHolder);
+
+            } else {
+                view = convertView;
+                viewHolder = (ViewHolder) view.getTag();
+            }
+
+            // Put the content in the view
+            viewHolder.tv_num_likes.setText(String.valueOf((myList.get(position)).getLikesCount()));
+            viewHolder.tv_list_name.setText((myList.get(position)).getName());
+
+            return view;
+        }
+
+        private class ViewHolder {
+            TextView tv_num_likes;
+            TextView tv_list_name;
+            Button b_add_to_my_lists;
+        }
+    }
+
+    /* --------------------------Auto Complete ----------------------- */
+    private static String newHeadline(String[] tags, int tagsNum) {
         String headline = "";
         headline += tags[0];
-        for (int i = 1; i < tagsNum; i++){
+        for (int i = 1; i < tagsNum; i++) {
             headline += " + " + tags[i];
         }
         return headline;
     }
 
-    private static final String[] TAGS = new String[] {
+    private static final String[] TAGS = new String[]{
             "BBQ", "Road Trip", "Camping", "Shopping", "Beach", "Sleep Over",
             "Books", "Songs", "TV Series", "Movies", "Holidays", "Action Movies",
 
@@ -131,134 +234,55 @@ public class ExplorerActivity extends ActionBarActivity implements View.OnClickL
              */
     };
 
-    /* ----------------- Menu function ------------------- */
-
-    private void addDrawerItems() {
-
-        ArrayList<String> values = new ArrayList<>();
-        values.add("");
-        values.add("Name");
-        values.add("My Lists");
-        values.add("Explorer");
-        values.add("Friends");
-
-        MyAdapter adapter = new MyAdapter(values);
-        mDrawerList.setAdapter(adapter);
-
-        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0) {
-                    // move to profile_layout
-                }
-                else if (position == 1) {
-                    // move to profile_layout
-                }
-                else if (position == 2) {
-                    Intent intent = new Intent(getApplicationContext(), MyListsActivity.class);
-                    startActivity(intent);
-                }
-                else if (position == 3) {
-                    Intent intent = new Intent(getApplicationContext(), ExplorerActivity.class);
-                    startActivity(intent);
-                }
-                else if (position == 4) {
-                    // move to friends_layout
-                }
-            }
-        });
-    }
-
-    private void setupDrawer() {
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
-
-            /** Called when a drawer has settled in a completely open state. */
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-
-            /** Called when a drawer has settled in a completely closed state. */
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-        };
-
-        mDrawerToggle.setDrawerIndicatorEnabled(true);
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
+    /* ----------------- Menu functions ------------------- */
+    @Override
+    public void onNavigationDrawerItemSelected(int position) {
+        Intent intent;
+        switch (position) {
+            case 0: // my lists //
+                intent = new Intent(getApplicationContext(), MyListsActivity.class);
+                startActivity(intent);
+                break;
+            case 1: // explorer //
+                break;
+            case 2: // friends //
+                break;
+        }
     }
 
     @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        // Sync the toggle state after onRestoreInstanceState has occurred.
-        mDrawerToggle.syncState();
+    public void onBackPressed() {
+        if (mNavigationDrawerFragment.isDrawerOpen())
+            mNavigationDrawerFragment.closeDrawer();
+        else
+            super.onBackPressed();
     }
+
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        mDrawerToggle.onConfigurationChanged(newConfig);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (!mNavigationDrawerFragment.isDrawerOpen()) {
+            // Only show items in the action bar relevant to this screen
+            // if the drawer is not showing. Otherwise, let the drawer
+            // decide what to show in the action bar.
+            getMenuInflater().inflate(R.menu.main, menu);
+            return true;
+        }
+        return super.onCreateOptionsMenu(menu);
     }
 
-    /* ------------------------------------------------- */
 
     @Override
-    public void onClick(View v) {
-        int viewId = v.getId();
-        if (viewId == R.id.b_first_menu) {
-            mDrawerLayout.openDrawer(Gravity.START);
-        }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+
+
+        return super.onOptionsItemSelected(item);
     }
+    
 
-    private class MyAdapter extends BaseAdapter {
-
-        private ArrayList<String> myList;
-
-        public MyAdapter(ArrayList<String> aList) {
-            myList = aList;
-        }
-
-        @Override
-        public int getCount() {
-            return myList.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return myList.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return 0;
-        }
-
-        @Override
-        public View getView(final int position, View convertView, ViewGroup parent) {
-
-            View view;
-            ViewHolder viewHolder;
-
-            if (convertView == null) {
-                LayoutInflater li = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                view = li.inflate(R.layout.my_simple_list_item1, null);
-
-                viewHolder = new ViewHolder();
-                viewHolder.myText = (TextView) view.findViewById(android.R.id.text1);
-                view.setTag(viewHolder);
-            } else {
-                view = convertView;
-                viewHolder = (ViewHolder) view.getTag();
-            }
-
-            viewHolder.myText.setText(myList.get(position));
-            return view;
-        }
-
-        private class ViewHolder {
-            TextView myText;
-        }
-    }
 }

@@ -13,10 +13,8 @@ public class VeezList {
     private VeezUser Admin;
     private int likesCount;
     private int numOfItemsMarkedWithVee;
+    private List<String> tags;
 
-    public String getName() {
-        return name;
-    }
 
     //for debug
     public VeezList(int numOfItemsMarkedWithVee, int likesCount, List<VeezItem> items, boolean isPublic, String name) {
@@ -25,6 +23,10 @@ public class VeezList {
         this.items = items;
         this.isPublic = isPublic;
         this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public boolean isPublic() {
