@@ -106,7 +106,6 @@ public class MyListsActivity extends ActionBarActivity
     }
 
     /* ----------------- Menu function ------------------- */
-
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         switch (position) {
