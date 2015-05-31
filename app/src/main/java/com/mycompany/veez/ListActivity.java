@@ -30,6 +30,7 @@ import android.widget.TextView;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.widget.TextView;
 import android.content.res.Configuration;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -214,12 +215,17 @@ public class ListActivity extends ActionBarActivity
             case 0: // my lists //
                 intent = new Intent(getApplicationContext(), MyListsActivity.class);
                 startActivity(intent);
+                finish();
                 break;
             case 1: // explorer //
                 intent = new Intent(getApplicationContext(), ExplorerActivity.class);
                 startActivity(intent);
+                finish();
                 break;
             case 2: // friends //
+                break;
+            case 3:
+                Toast.makeText(getApplicationContext(), "debug", Toast.LENGTH_SHORT).show();
                 break;
         }
     }

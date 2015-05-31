@@ -29,6 +29,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -142,12 +143,17 @@ public class ListInfoActivity extends ActionBarActivity
             case 0: // my lists //
                 intent = new Intent(getApplicationContext(), MyListsActivity.class);
                 startActivity(intent);
+                finish();
                 break;
             case 1: // explorer //
                 intent = new Intent(getApplicationContext(), ExplorerActivity.class);
                 startActivity(intent);
+                finish();
                 break;
             case 2: // friends //
+                break;
+            case 3:
+                Toast.makeText(getApplicationContext(), "debug", Toast.LENGTH_SHORT).show();
                 break;
         }
     }

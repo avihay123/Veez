@@ -35,6 +35,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.mycompany.veez.NavigationDrawerCallbacks;
 import com.mycompany.veez.NavigationDrawerFragment;
@@ -236,14 +237,17 @@ public class MyListsActivity extends ActionBarActivity
     /* ----------------- Menu functions ------------------- */
     @Override
     public void onNavigationDrawerItemSelected(int position) {
+        Intent intent;
         switch (position) {
-            case 0: // my lists //
-                break;
             case 1: // explorer //
-                Intent intent = new Intent(getApplicationContext(), ExplorerActivity.class);
+                intent = new Intent(getApplicationContext(), ExplorerActivity.class);
                 startActivity(intent);
+                finish();
                 break;
             case 2: // friends //
+                break;
+            case 3:
+                Toast.makeText(getApplicationContext(),"debug" ,Toast.LENGTH_SHORT).show();
                 break;
         }
     }
@@ -276,8 +280,6 @@ public class MyListsActivity extends ActionBarActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-
 
         return super.onOptionsItemSelected(item);
     }

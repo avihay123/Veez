@@ -25,6 +25,7 @@ import android.widget.ListView;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.widget.TextView;
 import android.content.res.Configuration;
+import android.widget.Toast;
 
 import com.parse.Parse;
 import com.parse.ParseObject;
@@ -242,10 +243,12 @@ public class ExplorerActivity extends ActionBarActivity
             case 0: // my lists //
                 intent = new Intent(getApplicationContext(), MyListsActivity.class);
                 startActivity(intent);
-                break;
-            case 1: // explorer //
+                finish();
                 break;
             case 2: // friends //
+                break;
+            case 3:
+                Toast.makeText(getApplicationContext(), "debug", Toast.LENGTH_SHORT).show();
                 break;
         }
     }
