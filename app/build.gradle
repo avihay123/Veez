@@ -34,3 +34,8 @@ dependencies {
     compile fileTree(dir: 'libs', include: 'bolts-android:1.+')
     compile fileTree(dir: 'libs', include: 'Parse-1.9.2.jar')
 }
+
+
+dependencies {
+    compile 'com.google.code.gson:gson:2.2.4'
+}
