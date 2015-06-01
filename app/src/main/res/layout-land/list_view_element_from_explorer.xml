@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/line_small"
+    android:weightSum="10">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_item_vee"
+        android:layout_gravity="center"
+        android:fontFamily="Myriad Hebrew"
+        android:textColor="#1c3547"
+        android:textSize="@dimen/item_name_size"
+        android:text="@string/item_name"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="7"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="end"
+        android:layout_weight="3">
+
+        <Button
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_height"
+            android:layout_gravity="center"
+            android:gravity="start"
+            android:onClick="onClick"
+            android:id="@+id/b_info"
+            android:background="@drawable/info_small"
+            android:layout_marginRight="@dimen/button_margin1"
+            android:layout_marginEnd="@dimen/button_margin1"/>
+
+    </LinearLayout>
+
+</LinearLayout>

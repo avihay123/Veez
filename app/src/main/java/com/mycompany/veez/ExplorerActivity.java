@@ -68,7 +68,6 @@ public class ExplorerActivity extends ActionBarActivity
         mNavigationDrawerFragment.setUserData("John Doe", "13 active lists",
                 BitmapFactory.decodeResource(getResources(), R.drawable.avatar));
         mNavigationDrawerFragment.closeDrawer();
-
         /* ------------------- Buttons ----------------------*/
 
         b_first_menu = (Button) findViewById(R.id.b_first_menu);
