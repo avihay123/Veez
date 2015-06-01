@@ -29,7 +29,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:background="@drawable/cover"
-                android:layout_weight="14" >
+                android:layout_weight="14"
+                android:id="@+id/rl_image_change">
 
                 <Button
                     android:layout_width="@dimen/menu_width"
@@ -50,15 +51,15 @@
                     android:layout_alignTop="@+id/b_first_menu"
                     android:layout_centerHorizontal="true"/>
 
-                <TextView
+                <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/tv_list_name"
+                    android:id="@+id/et_list_name"
                     android:fontFamily="Myriad Hebrew"
                     android:textSize="30sp"
-                    android:text="@string/new_list"
-                    android:singleLine="false"
+                    android:singleLine="true"
                     android:textStyle="bold"
+                    android:hint ="Enter list name"
                     android:layout_below="@+id/b_add_image"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/list_name_margin_top"/>
@@ -73,13 +74,25 @@
                 android:layout_weight="6"
                 android:weightSum="7">
 
-                <HorizontalScrollView
+                <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:id="@+id/sv_friends"
                     android:layout_weight="6" >
 
-                </HorizontalScrollView>
+                    <Button
+                        android:id="@+id/b_photo"
+                        android:layout_width="@dimen/add_friend_button_width"
+                        android:layout_height="fill_parent"
+                        android:layout_marginTop="@dimen/add_friend_button_margin"
+                        android:layout_marginBottom="@dimen/add_friend_button_margin"
+                        android:layout_marginLeft="@dimen/add_friend_button_margin"
+                        android:layout_marginStart="@dimen/add_friend_button_margin"
+                        android:gravity="start"
+                        android:background="@drawable/friends_small"
+                        android:onClick="onClick" />
+
+                </LinearLayout>
 
                 <Button
                     android:id="@+id/b_add_friend"
@@ -123,6 +136,23 @@
                     android:layout_marginStart="@dimen/add_tag_margin"
                     android:background="@drawable/add_small"
                     android:onClick="onClick" />
+                <Button
+                    android:id="@+id/b_remove_tag"
+                    android:layout_width="@dimen/add_tag_width"
+                    android:layout_height="@dimen/add_tag_height_land"
+                    android:layout_marginTop="@dimen/add_tag_margin"
+                    android:layout_marginBottom="@dimen/add_tag_margin"
+                    android:layout_marginLeft="@dimen/add_tag_margin"
+                    android:onClick="onClick" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_tags"
+                    android:layout_marginLeft="@dimen/title_margin_left"
+                    android:layout_marginStart="@dimen/title_margin_left"
+                    android:textColor="#505153"
+                    android:textSize="@dimen/subtitle_size" />
 
             </LinearLayout>
 

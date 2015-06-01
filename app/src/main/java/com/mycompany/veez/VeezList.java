@@ -1,5 +1,7 @@
 package com.mycompany.veez;
 
+import android.graphics.Bitmap;
+
 import java.util.List;
 
 /**
@@ -14,7 +16,7 @@ public class VeezList {
     private int likesCount;
     private int numOfItemsMarkedWithVee;
     private List<String> tags;
-
+    private Bitmap photo;
 
     //for debug
     public VeezList(int numOfItemsMarkedWithVee, int likesCount, List<VeezItem> items, boolean isPublic, String name) {

@@ -1,15 +1,23 @@
 package com.mycompany.veez;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -19,12 +27,16 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.content.res.Configuration;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Locale;
 
 public class CreateListActivity extends ActionBarActivity implements View.OnClickListener {
@@ -33,24 +45,31 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
     private Button b_add_image;
     private Button b_add_friend;
     private Button b_add_tag;
+    private EditText et_list_name;
     private EditText et_deadline;
     private CheckBox cb_private;
     private CheckBox cb_public;
     private Button b_create_list;
     private Calendar myCalendar;
+    private RelativeLayout rl_image_change;
+    private TextView tv_tags;
+    private Button b_remove_tag;
 
     private ListView mDrawerList;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
+    private LinkedHashSet<String>  tags= new LinkedHashSet<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_list);
 
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
         /* -------------- Side Menu ---------------- */
-        mDrawerList = (ListView)findViewById(R.id.lv_navList);
-        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.lv_navList);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         addDrawerItems();
         setupDrawer();
         getSupportActionBar().hide();
@@ -71,6 +90,12 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
         b_create_list = (Button) findViewById(R.id.b_create_list);
         b_create_list.setOnClickListener(this);
 
+        rl_image_change = (RelativeLayout) findViewById(R.id.rl_image_change);
+        rl_image_change.setOnClickListener(this);
+
+        b_remove_tag = (Button) findViewById(R.id.b_remove_tag);
+        b_remove_tag.setOnClickListener(this);
+
         /* -------------- Deadline ---------------- */
         et_deadline = (EditText) findViewById(R.id.et_deadline);
         myCalendar = Calendar.getInstance();
@@ -84,6 +109,7 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
                 updateLabel();
             }
         };
+//        date.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
 
         et_deadline.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,103 +138,112 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
         });
 
         cb_public.setChecked(true);
+
+        /* -------------- EditText -------------------*/
+        et_list_name = (EditText) findViewById(R.id.et_list_name);
+
+        /* -------------- TextView -------------------*/
+        tv_tags = (TextView) findViewById(R.id.tv_tags);
     }
-    /* ----------------- Menu functions ------------------- */
-
-    private void addDrawerItems() {
-
-        ArrayList<String> values = new ArrayList<String>();
-        values.add("");
-        values.add("Name");
-        values.add("My Lists");
-        values.add("Explorer");
-        values.add("Friends");
-
-        MyAdapter adapter = new MyAdapter(values);
-        mDrawerList.setAdapter(adapter);
-
-        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0) {
-                    // move to profile_layout
-                }
-                else if (position == 1) {
-                    // move to profile_layout
-                }
-                else if (position == 2) {
-                    Intent intent = new Intent(getApplicationContext(), MyListsActivity.class);
-                    startActivity(intent);
-                }
-                else if (position == 3) {
-                    Intent intent = new Intent(getApplicationContext(), ExplorerActivity.class);
-                    startActivity(intent);
-                }
-                else if (position == 4) {
-                    // move to friends_layout
-                }
-            }
-        });
-    }
-
-    private void setupDrawer() {
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
-
-            /** Called when a drawer has settled in a completely open state. */
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-
-            /** Called when a drawer has settled in a completely closed state. */
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-        };
-
-        mDrawerToggle.setDrawerIndicatorEnabled(true);
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
-    }
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        // Sync the toggle state after onRestoreInstanceState has occurred.
-        mDrawerToggle.syncState();
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        mDrawerToggle.onConfigurationChanged(newConfig);
-    }
-
-    /* ------------------------------------------------- */
 
     @Override
     public void onClick(View v) {
-        int viewId = v.getId();
+        final int viewId = v.getId();
         if (viewId == R.id.b_first_menu) {
+
+            Log.d("matan", "button click");
             mDrawerLayout.openDrawer(Gravity.START);
-        }
-        else if (viewId == R.id.b_add_image) {
-            //TODO
-        }
-        else if (viewId == R.id.b_add_friend) {
+        } else if (viewId == R.id.b_add_friend) {
+
             //TODO next build
-        }
-        else if (viewId == R.id.b_add_tag) {
+        } else if (viewId == R.id.b_add_tag || viewId == R.id.b_remove_tag) {
+
+            AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+            alert.setTitle("Enter Tag");
+
+            // Set an EditText view to get user input
+            final EditText input = new EditText(this);
+            alert.setView(input);
+
+            alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    String value = input.getText().toString();
+                    if(viewId == R.id.b_add_tag)
+                        addTag(value);
+                    else
+                        removeTag(value);
+                    //TODO for debug
+                    Toast.makeText(getApplicationContext(),value, Toast.LENGTH_SHORT).show();
+
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(input.getWindowToken(), 0);
+                }
+            });
+
+            alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    // Canceled.
+                }
+            });
+
+            alert.show();
+
+        } else if (viewId == R.id.b_add_image) {
             //TODO
-        }
-        else if (viewId == R.id.b_leave_list) {
-            //TODO delete the list from the user
+        } else if (viewId == R.id.rl_image_change) {
+            Log.d("matan", "change image click");
+            //TODO
+        } else if (viewId == R.id.b_create_list) {
+            if (et_list_name.getText().toString().length() == 0) {
+                Toast.makeText(getApplicationContext(), "You have to choose list name", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+//            VeezList newList= new VeezList()
+            //TODO ad to userVeez lists and to sharedPer and Parse
+            //TODO jump to the list
             Intent intent = new Intent(getApplicationContext(), MyListsActivity.class);
             startActivity(intent);
         }
     }
 
+
+    private void addTag(String tag) {
+        if(tags.contains(tag)){
+            Toast.makeText(getApplicationContext(),"This tag is already included", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            tags.add(tag);
+            String newTagsString=makeTagsString();
+            tv_tags.setText(newTagsString);
+        }
+    }
+
+    private void removeTag(String tag) {
+        if(!tags.contains(tag)){
+            Toast.makeText(getApplicationContext(),"This tag is not include in tags", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            tags.remove(tag);
+            String newTagsString=makeTagsString();
+            tv_tags.setText(newTagsString);
+        }
+    }
+
+    private String makeTagsString(){
+        String res="";
+        for(String tag: tags){
+            res=res+tag+",";
+        }
+        if (res.length() > 0 && res.charAt(res.length()-1)==',') {
+            res = res.substring(0, res.length()-1);
+        }
+        return res;
+    }
+
     private void updateLabel() {
+
         String myFormat = "dd/MM/yy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat);
         et_deadline.setText(sdf.format(myCalendar.getTime()));
@@ -263,4 +298,72 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
             TextView myText;
         }
     }
+
+    /* ----------------- Menu functions ------------------- */
+
+    private void addDrawerItems() {
+
+        ArrayList<String> values = new ArrayList<String>();
+        values.add("");
+        values.add("Name");
+        values.add("My Lists");
+        values.add("Explorer");
+        values.add("Friends");
+
+        MyAdapter adapter = new MyAdapter(values);
+        mDrawerList.setAdapter(adapter);
+
+        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0) {
+                    // move to profile_layout
+                } else if (position == 1) {
+                    // move to profile_layout
+                } else if (position == 2) {
+                    Intent intent = new Intent(getApplicationContext(), MyListsActivity.class);
+                    startActivity(intent);
+                } else if (position == 3) {
+                    Intent intent = new Intent(getApplicationContext(), ExplorerActivity.class);
+                    startActivity(intent);
+                } else if (position == 4) {
+                    // move to friends_layout
+                }
+            }
+        });
+    }
+
+    private void setupDrawer() {
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
 }

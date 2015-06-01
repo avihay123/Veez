@@ -1,5 +1,7 @@
 package com.mycompany.veez;
 
+import android.graphics.Bitmap;
+
 import java.util.List;
 
 /**
@@ -9,6 +11,7 @@ public class VeezListExplorer {
     private String name;
     private List<VeezItem> items;
     private int likesCount;
+    private Bitmap photo;
 
     public VeezListExplorer(int likesCount, List<VeezItem> items,String name) {
         this.name = name;

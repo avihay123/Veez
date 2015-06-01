@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
@@ -41,6 +42,7 @@ public class LoginActivity extends Activity {
     private ProfileTracker profileTracker;
     private AccessTokenTracker accessTokenTracker;
     private ParseUser user;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
