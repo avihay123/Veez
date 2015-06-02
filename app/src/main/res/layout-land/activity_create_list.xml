@@ -40,7 +40,7 @@
                     android:layout_marginStart="15dp"
                     android:onClick="onClick"/>
 
-                <Button
+                <ImageView
                     android:layout_width="@dimen/add_image_width"
                     android:layout_height="@dimen/add_image_height"
                     android:id="@+id/b_add_image"
@@ -57,7 +57,7 @@
                     android:textSize="30sp"
                     android:singleLine="true"
                     android:textStyle="bold"
-                    android:hint =""Enter to choose list name""
+                    android:hint ="Enter to choose list name"
                     android:layout_below="@+id/b_add_image"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/list_name_margin_top"/>

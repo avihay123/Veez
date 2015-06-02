@@ -3,15 +3,24 @@ package com.mycompany.veez;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -27,6 +36,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.widget.RelativeLayout;
@@ -34,6 +44,11 @@ import android.widget.TextView;
 import android.content.res.Configuration;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -42,8 +57,10 @@ import java.util.LinkedHashSet;
 
 public class CreateListActivity extends ActionBarActivity implements View.OnClickListener {
 
+    private static final int REQUEST_CAMERA = 34;
+    private static final int SELECT_FILE = 79;
     private Button b_first_menu;
-    private Button b_add_image;
+    private ImageView b_add_image;
     private Button b_add_friend;
     private Button b_add_tag;
     private EditText et_list_name;
@@ -79,7 +96,7 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
         b_first_menu = (Button) findViewById(R.id.b_first_menu);
         b_first_menu.setOnClickListener(this);
 
-        b_add_image = (Button) findViewById(R.id.b_add_image);
+        b_add_image = (ImageView) findViewById(R.id.b_add_image);
         b_add_image.setOnClickListener(this);
 
         b_add_friend = (Button) findViewById(R.id.b_add_friend);
@@ -99,18 +116,6 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
 
         /* -------------- Deadline ---------------- */
         et_deadline = (EditText) findViewById(R.id.et_deadline);
-
-        et_deadline.addTextChangedListener(new TextWatcher() {
-                                               public void afterTextChanged(Editable s) {
-                                                   et_deadline.setHint("");
-                                               }
-
-                                               public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                                               }
-
-                                               public void onTextChanged(CharSequence s, int start, int before, int count) {
-                                               }
-                                           });
 
         myCalendar = Calendar.getInstance();
 
@@ -169,21 +174,25 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
 
         /* -------------- EditText -------------------*/
         et_list_name = (EditText) findViewById(R.id.et_list_name);
-        et_list_name.addTextChangedListener(new TextWatcher() {
-            public void afterTextChanged(Editable s) {
-                et_list_name.setHint("");
-            }
-
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-        });
-
+        if(et_list_name.getText().length() > 0){
+            et_list_name.setHint("");
+        }
 
         /* -------------- TextView -------------------*/
         tv_tags = (TextView) findViewById(R.id.tv_tags);
+
+        if (savedInstanceState != null) {
+            String tagsString = savedInstanceState.getString("tv_tags");
+            tv_tags.setText(tagsString);
+            String bitMapString = savedInstanceState.getString("rl_image_change");
+            Bitmap bm = StringToBitMap(bitMapString);
+            Drawable dr = new BitmapDrawable(bm);
+            rl_image_change.setBackgroundDrawable(dr);
+            b_add_image.setVisibility(View.INVISIBLE);
+            if(et_list_name.getText().length()>0){
+                et_list_name.setHint("");
+            }
+        }
     }
 
     @Override
@@ -231,7 +240,7 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
             //TODO
         } else if (viewId == R.id.rl_image_change) {
             Log.d("matan", "change image click");
-            //TODO
+            selectImage();
         } else if (viewId == R.id.b_create_list) {
 
             if (et_list_name.getText().toString().length() == 0) {
@@ -249,6 +258,92 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
             Intent intent = new Intent(getApplicationContext(), MyListsActivity.class);
             startActivity(intent);
         }
+    }
+
+    //----------------------------- Take a photo ------------------------------
+    private void selectImage() {
+        final CharSequence[] items = { "Take Photo", "Choose from Library",
+                "Cancel" };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Add Photo!");
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                if (items[item].equals("Take Photo")) {
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(intent, REQUEST_CAMERA);
+                } else if (items[item].equals("Choose from Library")) {
+                    Intent intent = new Intent(
+                            Intent.ACTION_PICK,
+                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    intent.setType("image/*");
+                    startActivityForResult(
+                            Intent.createChooser(intent, "Select File"),
+                            SELECT_FILE);
+                } else if (items[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == REQUEST_CAMERA) {
+                Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+                ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+                thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
+
+                File destination = new File(Environment.getExternalStorageDirectory(),
+                        System.currentTimeMillis() + ".jpg");
+
+                FileOutputStream fo;
+                try {
+                    destination.createNewFile();
+                    fo = new FileOutputStream(destination);
+                    fo.write(bytes.toByteArray());
+                    fo.close();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Drawable dr = new BitmapDrawable(thumbnail);
+                rl_image_change.setBackgroundDrawable(dr);
+                b_add_image.setVisibility(View.INVISIBLE);
+
+            } else if (requestCode == SELECT_FILE) {
+                Uri selectedImageUri = data.getData();
+                String[] projection = { MediaStore.Images.Media.DATA };
+                Cursor cursor = managedQuery(selectedImageUri, projection, null, null,
+                        null);
+                int column_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
+                cursor.moveToFirst();
+
+                String selectedImagePath = cursor.getString(column_index);
+
+
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inJustDecodeBounds = true;
+                BitmapFactory.decodeFile(selectedImagePath, options);
+                final int REQUIRED_SIZE = 200;
+                int scale = 1;
+                while (options.outWidth / scale / 2 >= REQUIRED_SIZE
+                        && options.outHeight / scale / 2 >= REQUIRED_SIZE)
+                    scale *= 2;
+                options.inSampleSize = scale;
+                options.inJustDecodeBounds = false;
+                Bitmap bm = BitmapFactory.decodeFile(selectedImagePath, options);
+
+                Drawable dr = new BitmapDrawable(bm);
+                rl_image_change.setBackgroundDrawable(dr);
+                b_add_image.setVisibility(View.INVISIBLE);
+            }
+        }
+
     }
 
 
@@ -335,6 +430,37 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
         }
     }
 
+    public String BitMapToString(Bitmap bitmap){
+        ByteArrayOutputStream baos=new  ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
+        byte [] b=baos.toByteArray();
+        String temp= Base64.encodeToString(b, Base64.DEFAULT);
+        return temp;
+    }
+
+    /**
+     * @param encodedString
+     * @return bitmap (from given string)
+     */
+    public Bitmap StringToBitMap(String encodedString){
+        try {
+            byte [] encodeByte=Base64.decode(encodedString,Base64.DEFAULT);
+            Bitmap bitmap=BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch(Exception e) {
+            e.getMessage();
+            return null;
+        }
+    }
+    @Override
+    protected void onSaveInstanceState (Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("tv_tags", tv_tags.getText().toString());
+        outState.putString("rl_image_change", BitMapToString(((BitmapDrawable) (rl_image_change.getBackground())).getBitmap()));
+
+    }
+
+
     /* ----------------- Menu functions ------------------- */
 
     private void addDrawerItems() {
@@ -394,12 +520,41 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
         mDrawerToggle.syncState();
+
+        et_deadline.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+                et_deadline.setHint("");
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+        });
+
+        et_list_name.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+                et_list_name.setHint("");
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+        });
+
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         mDrawerToggle.onConfigurationChanged(newConfig);
+
+        if(et_list_name.getText().length()>0){
+            et_list_name.setHint("");
+        }
     }
 
 }
