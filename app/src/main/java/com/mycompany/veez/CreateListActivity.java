@@ -85,6 +85,7 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
+
         /* -------------- Side Menu ---------------- */
         mDrawerList = (ListView) findViewById(R.id.lv_navList);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -98,6 +99,8 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
 
         b_add_image = (ImageView) findViewById(R.id.b_add_image);
         b_add_image.setOnClickListener(this);
+        //TODO next iteration care about this
+        b_add_image.setVisibility(View.INVISIBLE);
 
         b_add_friend = (Button) findViewById(R.id.b_add_friend);
         b_add_friend.setOnClickListener(this);
@@ -185,12 +188,15 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
             String tagsString = savedInstanceState.getString("tv_tags");
             tv_tags.setText(tagsString);
             String bitMapString = savedInstanceState.getString("rl_image_change");
-            Bitmap bm = StringToBitMap(bitMapString);
-            Drawable dr = new BitmapDrawable(bm);
-            rl_image_change.setBackgroundDrawable(dr);
-            b_add_image.setVisibility(View.INVISIBLE);
+            if(bitMapString != null ) {
+                Bitmap bm = StringToBitMap(bitMapString);
+                Drawable dr = new BitmapDrawable(bm);
+                rl_image_change.setBackgroundDrawable(dr);
+
+            }
             if(et_list_name.getText().length()>0){
                 et_list_name.setHint("");
+                et_list_name.setText(et_list_name.getText());
             }
         }
     }
@@ -262,8 +268,10 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
 
     //----------------------------- Take a photo ------------------------------
     private void selectImage() {
-        final CharSequence[] items = { "Take Photo", "Choose from Library",
-                "Cancel" };
+//        final CharSequence[] items = { "Take Photo", "Choose from Library",
+//                "Cancel" };
+
+        final CharSequence[] items = { "Take Photo", "Cancel" };
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Add Photo!");
