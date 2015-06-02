@@ -56,7 +56,7 @@ public class ExplorerActivity extends ActionBarActivity implements View.OnClickL
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
-        /* -------------- Side Menu ---------------- */
+        //Side Menu
 
         mDrawerList = (ListView) findViewById(R.id.lv_navList);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -64,7 +64,7 @@ public class ExplorerActivity extends ActionBarActivity implements View.OnClickL
         setupDrawer();
         getSupportActionBar().hide();
 
-        /* ------------------- Buttons ----------------------*/
+        //Buttons
 
         b_first_menu = (Button) findViewById(R.id.b_first_menu);
         b_first_menu.setOnClickListener(this);
@@ -80,13 +80,25 @@ public class ExplorerActivity extends ActionBarActivity implements View.OnClickL
         tv_array_tags[7] = (TextView) findViewById(R.id.tv_tag8);
         tv_array_tags[8] = (TextView) findViewById(R.id.tv_tag9);
 
-        for (int i = 0; i < tv_array_tags.length; i++){
-            tv_array_tags[0].setVisibility(View.INVISIBLE);
+        for (int i = 0; i < tv_array_tags.length; i++) {
+            tv_array_tags[i].setVisibility(View.INVISIBLE);
         }
 
-        /* ------------------- Auto Compelte ----------------------*/
+        for (int i = 0; i < tv_array_tags.length; i++) {
+            tv_array_tags[i].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    searchTags.remove((String) ((TextView) v).getText());
+                    tagsNum--;
+                    ((MyAdapter) lv_lists.getAdapter()).updateTags(searchTags);
+                    updateTags();
+                }
+            });
+        }
 
-            tv_explorer = (TextView) findViewById(R.id.tv_explorer);
+        //Auto Compelte
+
+        tv_explorer = (TextView) findViewById(R.id.tv_explorer);
 
         ArrayAdapter<String> adapterAutoComplete = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, TAGS);
@@ -96,27 +108,7 @@ public class ExplorerActivity extends ActionBarActivity implements View.OnClickL
         ac_search.setAdapter(adapterAutoComplete);
         ac_search.setThreshold(1);
 
-        ac_search.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                final int numOfButtons = 9;
-                int numOfLists = ac_search.getAdapter().getCount();
-                for (int i=0; i < Math.min(numOfButtons,numOfLists); i++){
-                    Log.d("DROPDOWN", (String) ac_search.getAdapter().getItem(i));
-                }
-
-            }
-        });
         ac_search.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -125,36 +117,48 @@ public class ExplorerActivity extends ActionBarActivity implements View.OnClickL
                 Log.d("EXPLORER", searchTags.get(tagsNum));
                 tagsNum++;
                 ac_search.setText("");
-                tv_explorer.setText(newHeadline(searchTags, tagsNum));
-                tv_explorer.setTextSize(35 - 5 * tagsNum);
-                if (tagsNum == 5) {
+                if (tagsNum == 9) {
                     ac_search.setEnabled(false);
-                    ac_search.setText("5 tags maximum");
+                    ac_search.setText("9 tags maximum");
                     Log.d("EXPLORER", "reached limit");
                 }
                 ((MyAdapter)lv_lists.getAdapter()).updateTags(searchTags);
+                updateTags();
 
             }
         });
 
-        /* ------------------- Lists ----------------------*/
+        //Lists
         lv_lists = (ListView) findViewById(R.id.lv_explorer_lists);
         List<VeezItem> items= new ArrayList<>();
         List<VeezListExplorer> lists= new ArrayList<>();
         items.add(new VeezItem(("a")));
-        lists.add(new VeezListExplorer(0,items,"abc",
+        lists.add(new VeezListExplorer(0,items,"BBQ",
                 Arrays.asList("BBQ")));
         items.add(new VeezItem(("b")));
-        lists.add(new VeezListExplorer(1,items,"ab",
+        lists.add(new VeezListExplorer(1,items,"BBQBBQ",
                 Arrays.asList("BBQ","BBQ2")));
-        lists.add(new VeezListExplorer(1,items,"b1",Arrays.asList("Shopping")));
-        lists.add(new VeezListExplorer(1,items,"b2",Arrays.asList("Camping")));
-        lists.add(new VeezListExplorer(1,items,"b3",Arrays.asList("Road Trip")));
-        lists.add(new VeezListExplorer(1,items,"b4",Arrays.asList("Movies")));
-        lists.add(new VeezListExplorer(1,items,"b5",Arrays.asList("Books")));
+        lists.add(new VeezListExplorer(1,items,"Shopping",Arrays.asList("Shopping")));
+        lists.add(new VeezListExplorer(1,items,"Camping",Arrays.asList("Camping")));
+        lists.add(new VeezListExplorer(1,items,"Trip",Arrays.asList("Road Trip")));
+        lists.add(new VeezListExplorer(1,items,"Movies",Arrays.asList("Movies")));
+        lists.add(new VeezListExplorer(1,items,"Books",Arrays.asList("Books")));
         //TODO get the lists from the server
         MyAdapter adapter = new MyAdapter(lists);
         lv_lists.setAdapter(adapter);
+    }
+
+    private void updateTags(){
+        for (int i = 0; i < 9; i++){
+            if (i < tagsNum){
+                //this means the view at index i should be visible and showing a tag
+                tv_array_tags[i].setText(searchTags.get(i));
+                tv_array_tags[i].setVisibility(View.VISIBLE);
+            }
+            else{
+                tv_array_tags[i].setVisibility(View.INVISIBLE);
+            }
+        }
     }
 
     /* --------------------------On Click ----------------------- */
