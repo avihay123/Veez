@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class VeezUser {
     private String name;
-    private Bitmap profilePicture;
+    private String profilePictureJson;
     private String facebookID;
     private List<VeezList> myLists;
 
@@ -18,9 +18,9 @@ public class VeezUser {
         return name;
     }
 
-    public VeezUser(String name, Bitmap profilePicutre, String facebookID){
+    public VeezUser(String name, String profilePictureJson, String facebookID){
         this.name = name;
-        this.profilePicture = profilePicture;
+        this.profilePictureJson = profilePictureJson;
         this.facebookID = facebookID;
         myLists = new ArrayList<>();
     }
@@ -45,11 +45,11 @@ public class VeezUser {
         this.facebookID = facebookID;
     }
 
-    public Bitmap getBitmap() {
-        return profilePicture;
+    public String getProfilePicture() {
+        return profilePictureJson;
     }
 
-    public void setBitmap(Bitmap bitmap) {
-        this.profilePicture = bitmap;
+    public void setProfilePicture(String bitmap) {
+        this.profilePictureJson = bitmap;
     }
 }
