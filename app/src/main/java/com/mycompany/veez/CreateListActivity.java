@@ -3,6 +3,7 @@ package com.mycompany.veez;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -44,6 +45,8 @@ import android.widget.TextView;
 import android.content.res.Configuration;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -72,6 +75,8 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
     private RelativeLayout rl_image_change;
     private TextView tv_tags;
     private Button b_remove_tag;
+    private ImageView im_photo;
+    private VeezUser veezUser;
 
     private ListView mDrawerList;
     private DrawerLayout mDrawerLayout;
@@ -85,6 +90,10 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
+
+        /*---------------- Get Users bitmap--------------*/
+//        im_photo = (ImageView)findViewById(R.id.im_photo);
+//        im_photo.setImageBitmap(b_yourPhoto);
 
         /* -------------- Side Menu ---------------- */
         mDrawerList = (ListView) findViewById(R.id.lv_navList);
@@ -208,6 +217,7 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
 
             Log.d("matan", "button click");
             mDrawerLayout.openDrawer(Gravity.START);
+
         } else if (viewId == R.id.b_add_friend) {
 
             //TODO next build
@@ -242,9 +252,7 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
 
             alert.show();
 
-        } else if (viewId == R.id.b_add_image) {
-            //TODO
-        } else if (viewId == R.id.rl_image_change) {
+        }  else if (viewId == R.id.rl_image_change) {
             Log.d("matan", "change image click");
             selectImage();
         } else if (viewId == R.id.b_create_list) {
@@ -258,8 +266,11 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
                 return;
             }
 
-//            VeezList newList= new VeezList()
-            //TODO ad to userVeez lists and to sharedPer and Parse
+            VeezList newList= new VeezList(et_list_name.getText(),cb_public.isChecked(),new ArrayList<VeezUser>().add(veezUser), veezUser, tags)
+
+
+            //TODO add to userVeez!!!!!
+
             //TODO jump to the list
             Intent intent = new Intent(getApplicationContext(), MyListsActivity.class);
             startActivity(intent);

@@ -80,8 +80,8 @@
                     android:id="@+id/sv_friends"
                     android:layout_weight="6">
 
-                    <Button
-                        android:id="@+id/b_photo"
+                    <ImageView
+                        android:id="@+id/im_photo"
                         android:layout_width="@dimen/add_friend_button_width"
                         android:layout_height="fill_parent"
                         android:layout_marginTop="@dimen/add_friend_button_margin"
@@ -89,8 +89,7 @@
                         android:layout_marginLeft="@dimen/add_friend_button_margin"
                         android:layout_marginStart="@dimen/add_friend_button_margin"
                         android:gravity="start"
-                        android:background="@drawable/friends_small"
-                        android:onClick="onClick" />
+                        android:background="@drawable/friends_small" />
 
 
                 </LinearLayout>
