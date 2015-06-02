@@ -18,10 +18,11 @@
         android:src="@drawable/logo"
         android:layout_marginBottom="20dp"/>
 
-    <com.facebook.login.widget.LoginButton
-        android:id="@+id/login_button"
+    <Button
+        android:id="@+id/b_login"
         android:layout_width="@dimen/login_width"
         android:layout_height="@dimen/login_height"
+        android:background="@drawable/login"
         android:layout_gravity="center_horizontal"/>
 
 </LinearLayout>

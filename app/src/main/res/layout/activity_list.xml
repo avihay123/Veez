@@ -71,7 +71,8 @@
                         android:singleLine="false"
                         android:textStyle="bold"
                         android:visibility="visible"
-                        android:layout_gravity="center_horizontal" />
+                        android:layout_gravity="center_horizontal"
+                        android:textColor="#464545" />
 
                     <LinearLayout
                         android:orientation="horizontal"
@@ -94,7 +95,8 @@
                             android:fontFamily="Myriad Hebrew"
                             android:textSize="@dimen/count_vee_size"
                             android:textStyle="bold"
-                            android:text="@string/zero" />
+                            android:text="@string/zero"
+                            android:textColor="#464545" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -102,7 +104,8 @@
                             android:fontFamily="Myriad Hebrew"
                             android:textSize="@dimen/count_vee_size"
                             android:textStyle="bold"
-                            android:text="@string/slash" />
+                            android:text="@string/slash"
+                            android:textColor="#464545" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -111,7 +114,8 @@
                             android:fontFamily="Myriad Hebrew"
                             android:textSize="@dimen/count_vee_size"
                             android:textStyle="bold"
-                            android:text="@string/zero" />
+                            android:text="@string/zero"
+                            android:textColor="#464545"/>
 
                         </LinearLayout>
                 </LinearLayout>
@@ -149,7 +153,8 @@
                     android:background="@drawable/likes_w"
                     android:layout_alignParentBottom="true"
                     android:layout_alignRight="@+id/b_second_menu"
-                    android:layout_alignEnd="@+id/b_second_menu" />
+                    android:layout_alignEnd="@+id/b_second_menu"
+                    android:textColor="#464545"/>
 
             </RelativeLayout>
 

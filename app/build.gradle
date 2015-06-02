@@ -25,6 +25,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:21.0.3'
 }
 
+
 dependencies {
     compile 'com.facebook.android:facebook-android-sdk:4.1.0'
 }
@@ -32,4 +33,9 @@ dependencies {
 dependencies {
     compile fileTree(dir: 'libs', include: 'bolts-android:1.+')
     compile fileTree(dir: 'libs', include: 'Parse-1.9.2.jar')
+}
+
+
+dependencies {
+    compile 'com.google.code.gson:gson:2.2.4'
 }

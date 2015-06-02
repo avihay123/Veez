@@ -1,15 +1,19 @@
 package com.mycompany.veez;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.content.Context;
+import android.view.View.OnClickListener;
 import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -21,17 +25,22 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.widget.TextView;
 import android.content.res.Configuration;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class ListActivity extends ActionBarActivity implements View.OnClickListener {
@@ -47,11 +56,14 @@ public class ListActivity extends ActionBarActivity implements View.OnClickListe
     //TODO delete it is exists in VeezList
     private Integer currentItmes = 0;
     private Integer TotalItems = 0;
-    private PopupWindow addItemPopup;
 
     private ListView mDrawerList;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
+
+    final Context context = this;
+
+    private List<VeezItem> items;
 
 
     @Override
@@ -61,61 +73,113 @@ public class ListActivity extends ActionBarActivity implements View.OnClickListe
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
-        //-------------------------------- buttons code ----------------------------------------------
-        b_first_menu = (Button) findViewById(R.id.b_first_menu);
-        b_first_menu.setOnClickListener(this);
+        /* -------------- List View ---------------- */
+        lv_list_items = (ListView) findViewById(R.id.lv_list_items);
 
+        items = new ArrayList<VeezItem>();
+        items.add(new VeezItem("Coke","",false));
+        items.add(new VeezItem("Beer","6 pack",true));
+        items.add(new VeezItem("Wine","",false));
+        items.add(new VeezItem("Steake","3 pieces",false));
+        items.add(new VeezItem("Water","asd",true));
+        items.add(new VeezItem("Chicken","",false));
+        items.add(new VeezItem("Plates","",true));
+        sortItems(items);
+        MyAdapter adapter = new MyAdapter(items);
+
+        lv_list_items.setAdapter(adapter);
+
+        //-------------------------------- buttons code ----------------------------------
         b_second_menu = (Button) findViewById(R.id.b_second_menu);
         b_second_menu.setOnClickListener(this);
 
         b_add_item = (Button) findViewById(R.id.b_add_item);
-        b_add_item.setOnClickListener(this);
+        b_add_item.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+
+                // get prompts.xml view
+                LayoutInflater li = LayoutInflater.from(context);
+                View addItemView = li.inflate(R.layout.activity_add_item, null);
+
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                        context);
+
+                // set prompts.xml to alert dialog builder
+                alertDialogBuilder.setView(addItemView);
+
+                final EditText item = (EditText) addItemView.findViewById(R.id.et_item);
+                final EditText info = (EditText) addItemView.findViewById(R.id.et_info);
+                Button b_add_item_dialog = (Button) addItemView.findViewById(R.id.b_add_item_dialog);
+
+                // create alert dialog
+                final AlertDialog alertDialog = alertDialogBuilder.create();
+                // show it
+                alertDialog.show();
+
+                b_add_item_dialog.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        if(item.getText().toString().equals("")) {
+                            Toast.makeText(getApplicationContext(), "You must enter item name!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            boolean isAlreadyExists = false;
+                            for (int i=0; i < items.size(); i++) {
+                                if(items.get(i).getName().equals(item.getText().toString()))
+                                    isAlreadyExists = true;
+                            }
+                            if (isAlreadyExists == true) {
+                                Toast.makeText(getApplicationContext(), "This item is already exists!", Toast.LENGTH_SHORT).show();
+                            } else {
+                                TotalItems++;
+                                tv_total_items.setText(TotalItems.toString());
+                                items.add(new VeezItem(item.getText().toString(), info.getText().toString(), false));
+                                sortItems(items);
+                                ((BaseAdapter) lv_list_items.getAdapter()).notifyDataSetChanged();
+
+                                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                                imm.hideSoftInputFromWindow(item.getWindowToken(), 0);
+                                alertDialog.cancel();
+                            }
+                        }
+                    }
+                });
+            }
+        });
 
         //-------------------------------- TextView code --------------------------------
         tv_likes = (TextView) findViewById(R.id.tv_likes);
         tv_curr_items = (TextView) findViewById(R.id.tv_curr_items);
         tv_curr_items.setText(currentItmes.toString());
         tv_total_items = (TextView) findViewById(R.id.tv_total_items);
+        if (items != null) {
+            TotalItems = items.size();
+        }
         tv_total_items.setText(TotalItems.toString());
 
-
         /* -------------- Side Menu ---------------- */
-
         mDrawerList = (ListView) findViewById(R.id.lv_navList);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         addDrawerItems();
         setupDrawer();
-        getSupportActionBar().hide();
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
 
         b_first_menu = (Button) findViewById(R.id.b_first_menu);
         b_first_menu.setOnClickListener(this);
 
-        /* -------------- List View ---------------- */
-        lv_list_items = (ListView) findViewById(R.id.lv_list_items);
-
-        List<VeezItem> items= new ArrayList<VeezItem>();
-        items.add(new VeezItem("Coke","",false));
-        items.add(new VeezItem("Beer","6 pack",false));
-        items.add(new VeezItem("Wine","",false));
-        items.add(new VeezItem("Steake","3 pieces",false));
-        items.add(new VeezItem("Water","asd",true));
-        items.add(new VeezItem("Chicken","",true));
-        items.add(new VeezItem("Plates","",true));
-        MyAdapter adapter = new MyAdapter(items);
-
-        lv_list_items.setAdapter(adapter);
-
     }
 
-    //TODO change to VeezList.Length and remove the total items and currentItmes
-    private void addItem() {
-        Dialog myDialog = new Dialog(this);
-        myDialog.setContentView(R.layout.activity_add_item);
-        myDialog.setTitle("Warning");
-        myDialog.show();
-        //TODO list handle
-        TotalItems++;
-        tv_total_items.setText(TotalItems.toString());
+    private void sortItems(List<VeezItem> items) {
+        Collections.sort(items, new Comparator<VeezItem>() {
+            public int compare(VeezItem item1, VeezItem item2) {
+                int res = (item1.isVee()? 1 : 0) - (item2.isVee()? 1 : 0);
+                if (res == 0) {
+                    res = item1.getName().compareTo(item2.getName());
+                }
+                return res;
+            }
+        });
     }
 
     @Override
@@ -125,14 +189,56 @@ public class ListActivity extends ActionBarActivity implements View.OnClickListe
             mDrawerLayout.openDrawer(Gravity.START);
         }
         if (viewId == R.id.b_second_menu) {
-            //TODO
-        }
 
-        if (viewId == R.id.b_add_item) {
-            addItem();
+            LayoutInflater li = LayoutInflater.from(context);
+            View addItemView = li.inflate(R.layout.second_menu, null);
+
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                    context);
+
+            // set prompts.xml to alert dialog builder
+            alertDialogBuilder.setView(addItemView);
+
+            Button b_list_info = (Button) addItemView.findViewById(R.id.b_menu_list_info);
+            Button b_add_friend = (Button) addItemView.findViewById(R.id.b_menu_add_friend);
+            Button b_leave_list = (Button) addItemView.findViewById(R.id.b_menu_leave_list);
+
+            // create alert dialog
+            final AlertDialog alertDialog = alertDialogBuilder.create();
+
+            WindowManager.LayoutParams wmlp = alertDialog.getWindow().getAttributes();
+
+            wmlp.gravity = Gravity.TOP | Gravity.RIGHT;
+            wmlp.x = -65;
+            wmlp.y = -65;
+
+            // show it
+            alertDialog.show();
+            alertDialog.getWindow().setLayout(190, 235);
+
+            b_list_info.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    Intent intent = new Intent(getApplicationContext(), ListInfoActivity.class);
+                    startActivity(intent);
+                }
+            });
+
+            b_add_friend.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    //TODO - next build
+                }
+            });
+
+            b_leave_list.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    // TODO leave list and remove it
+                    Intent intent = new Intent(getApplicationContext(), MyListsActivity.class);
+                    startActivity(intent);
+                }
+            });
+
         }
     }
-
 
     private class MyAdapter extends BaseAdapter {
 
@@ -159,10 +265,10 @@ public class ListActivity extends ActionBarActivity implements View.OnClickListe
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
 
             View view;
-            ViewHolder viewHolder;
+            final ViewHolder viewHolder;
 
             Log.d("MY_TAG", "Position: " + position);
 
@@ -172,6 +278,7 @@ public class ListActivity extends ActionBarActivity implements View.OnClickListe
 
                 viewHolder = new ViewHolder();
                 viewHolder.cb_item_vee = (CheckBox) view.findViewById(R.id.cb_item_vee);
+                viewHolder.tv_item_name = (TextView) view.findViewById(R.id.tv_item_name);
                 viewHolder.b_info = (Button) view.findViewById(R.id.b_info);
                 viewHolder.b_friend_veed = (Button) view.findViewById(R.id.b_friend);
 
@@ -182,8 +289,51 @@ public class ListActivity extends ActionBarActivity implements View.OnClickListe
                 viewHolder = (ViewHolder) view.getTag();
             }
 
+            // add info code
+            viewHolder.b_info.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View arg0) {
+
+                    // get prompts.xml view
+                    LayoutInflater li = LayoutInflater.from(context);
+                    View addItemView = li.inflate(R.layout.activity_item_info, null);
+
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                            context);
+
+                    // set prompts.xml to alert dialog builder
+                    alertDialogBuilder.setView(addItemView);
+
+                    final EditText new_info = (EditText) addItemView.findViewById(R.id.et_info2);
+                    Button b_add_info_dialog = (Button) addItemView.findViewById(R.id.b_add_info_dialog);
+
+                    String currentInfo = myList.get(position).getInfo();
+                    if (currentInfo.length() > 0) {
+                        new_info.setText(currentInfo);
+                    } else {
+                        new_info.setText("No information for this item.");
+                    }
+
+                    // create alert dialog
+                    final AlertDialog alertDialog = alertDialogBuilder.create();
+                    // show it
+                    alertDialog.show();
+
+                    b_add_info_dialog.setOnClickListener(new View.OnClickListener() {
+                        public void onClick(View v) {
+                            myList.get(position).setInfo(new_info.getText().toString());
+                            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                            imm.hideSoftInputFromWindow(new_info.getWindowToken(), 0);
+                            alertDialog.cancel();
+                        }
+                    });
+                }
+            });
+
             // Put the content in the view
-            viewHolder.cb_item_vee.setText((myList.get(position)).getName());
+            viewHolder.tv_item_name.setText((myList.get(position)).getName());
+
+            // checkbox code
             if ((myList.get(position)).isVee()) {
                 viewHolder.cb_item_vee.setChecked(true);
                 //TODO set the photo of the
@@ -193,52 +343,46 @@ public class ListActivity extends ActionBarActivity implements View.OnClickListe
                 viewHolder.b_friend_veed.setVisibility(View.INVISIBLE);
             }
 
-            if ((myList.get(position)).getInfo().length() > 0)
+            viewHolder.cb_item_vee.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View arg) {
+                    if (viewHolder.cb_item_vee.isChecked() == true) {
+                        //TODO set the photo of the
+                        //viewHolder.b_friend_veed.setImageBitmap();
+
+                        viewHolder.b_friend_veed.setVisibility(View.VISIBLE);
+                        ListActivity.this.currentItmes++;
+                        ListActivity.this.tv_curr_items.setText(ListActivity.this.currentItmes.toString());
+                    } else {
+                        viewHolder.b_friend_veed.setVisibility(View.INVISIBLE);
+                        ListActivity.this.currentItmes--;
+                        ListActivity.this.tv_curr_items.setText(ListActivity.this.currentItmes.toString());
+                    }
+                    VeezItem new_item = myList.get(position);
+                    new_item.setVee(viewHolder.cb_item_vee.isChecked());
+                    items.remove(myList.get(position));
+                    items.add(new_item);
+                    sortItems(items);
+                    MyAdapter.this.notifyDataSetChanged();
+                }
+            });
+
+            /* if ((myList.get(position)).getInfo().length() > 0) {
                 viewHolder.b_info.setVisibility(View.VISIBLE);
-            else
+            } else {
                 viewHolder.b_info.setVisibility(View.INVISIBLE);
+            } */
 
             return view;
         }
 
         private class ViewHolder {
             CheckBox cb_item_vee;
+            TextView tv_item_name;
             Button b_info;
             Button b_friend_veed;
         }
     }
-
-
-    /* ----------------- popup functions ------------------- */
-    private void initiatePopupAddItem() {
-        try {
-            //We need to get the instance of the LayoutInflater, use the context of this activity
-            LayoutInflater inflater = (LayoutInflater) ListActivity.this
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            //Inflate the view from a predefined XML layout
-            View layout = inflater.inflate(R.layout.activity_add_item,
-                    (ViewGroup) findViewById(R.id.AddItem));
-            // create a 300px width and 470px height PopupWindow
-            addItemPopup = new PopupWindow(layout, LayoutParams.WRAP_CONTENT , LayoutParams.WRAP_CONTENT, true);
-            // display the popup in the center
-            addItemPopup.showAtLocation(layout, Gravity.CENTER, 0, 0);
-
-            EditText et_item_name = (EditText) layout.findViewById(R.id.et_item);
-            EditText et_item_info = (EditText) layout.findViewById(R.id.et_info);
-            // TODO add the item name and info to global ListItems
-
-            Button b_add_item = (Button) layout.findViewById(R.id.b_add_item);
-            b_add_item.setOnClickListener(new Button.OnClickListener(){
-                @Override
-                public void onClick(View v) {
-                    addItemPopup.dismiss();
-                }});
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
 
     /* ----------------- Menu functions ------------------- */
 

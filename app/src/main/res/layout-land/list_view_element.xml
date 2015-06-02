@@ -12,15 +12,22 @@
         android:button="@drawable/check_box_item_design"
         android:id="@+id/cb_item_vee"
         android:layout_gravity="center"
-        android:fontFamily="Myriad Hebrew"
-        android:textColor="#1c3547"
-        android:textSize="@dimen/item_name_size"
-        android:text="@string/item_name"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:layout_weight="7"/>
+        android:layout_weight="0.3" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/item_name"
+        android:id="@+id/tv_item_name"
+        android:textSize="@dimen/item_name_size"
+        android:layout_gravity="center"
+        android:fontFamily="Myriad Hebrew"
+        android:textColor="#1c3547"
+        android:layout_weight="6"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
