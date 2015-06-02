@@ -24,6 +24,7 @@ import android.widget.ListView;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.widget.TextView;
 import android.content.res.Configuration;
+import android.widget.Toast;
 
 import com.parse.Parse;
 import com.parse.ParseObject;
@@ -112,9 +113,13 @@ public class ExplorerActivity extends ActionBarActivity implements View.OnClickL
         ac_search.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                searchTags.add((String) ((TextView) view).getText());
-                Log.d("EXPLORER", searchTags.get(tagsNum));
+                String tag = (String) ((TextView) view).getText();
+                if (searchTags.contains(tag)){
+                    Toast.makeText(getApplicationContext(),"This tag is already selected", Toast.LENGTH_SHORT).show();
+                    ac_search.setText("");
+                    return;
+                }
+                searchTags.add(tag);
                 tagsNum++;
                 ac_search.setText("");
                 if (tagsNum == 9) {
@@ -158,6 +163,10 @@ public class ExplorerActivity extends ActionBarActivity implements View.OnClickL
             else{
                 tv_array_tags[i].setVisibility(View.INVISIBLE);
             }
+        }
+        if (tagsNum < 9){
+            ac_search.setText("");
+            ac_search.setEnabled(true);
         }
     }
 

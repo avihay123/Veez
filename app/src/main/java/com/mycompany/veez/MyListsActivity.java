@@ -307,6 +307,7 @@ public class MyListsActivity extends ActionBarActivity implements View.OnClickLi
                             SharedPreferences prefs = getSharedPreferences("tomer", MODE_PRIVATE);
                             String facebookID = (String) parseUser.get("facebookID");
                             String userJson = prefs.getString(facebookID, "");
+                            Log.d("GSON",userJson);
                             Gson gson = new Gson();
                             VeezUser veezUser = gson.fromJson(userJson, VeezUser.class);
                             Log.d("Persistent", veezUser.getName());

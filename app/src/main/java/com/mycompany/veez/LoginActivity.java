@@ -210,7 +210,7 @@ public class LoginActivity extends Activity {
             }
             VeezUser result = null;
             try {
-                result = new VeezUser(jsonObject.getString("name"), bitmap, jsonObject.getString("id"));
+                result = new VeezUser(jsonObject.getString("name"), new Gson().toJson(bitmap), jsonObject.getString("id"));
             } catch (JSONException e) {
                 Log.d("PB", "exception thrown while trying to deserialize json object");
                 e.printStackTrace();
