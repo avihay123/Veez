@@ -88,6 +88,7 @@
     <dimen name="info_size">35sp</dimen>
     <dimen name="et_item_height">55dp</dimen>
     <dimen name="et_info_height">175dp</dimen>
+    <dimen name="et_info_height_land">120dp</dimen>
     <dimen name="add_item_margin">30dp</dimen>
     <dimen name="add_button_width">70dp</dimen>
     <dimen name="add_button_height">70dp</dimen>

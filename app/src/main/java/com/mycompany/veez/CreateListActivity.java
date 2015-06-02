@@ -154,7 +154,6 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
             Log.d("matan", "button click");
             mDrawerLayout.openDrawer(Gravity.START);
         } else if (viewId == R.id.b_add_friend) {
-
             //TODO next build
         } else if (viewId == R.id.b_add_tag || viewId == R.id.b_remove_tag) {
 
@@ -199,8 +198,7 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
                 Toast.makeText(getApplicationContext(), "You have to choose list name", Toast.LENGTH_SHORT).show();
                 return;
             }
-
-//            VeezList newList= new VeezList()
+//           VeezList newList= new VeezList()
             //TODO ad to userVeez lists and to sharedPer and Parse
             //TODO jump to the list
             Intent intent = new Intent(getApplicationContext(), MyListsActivity.class);
