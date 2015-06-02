@@ -227,7 +227,7 @@ public class LoginActivity extends Activity {
                 return;
             }
             //add new user data to persistent memory
-            SharedPreferences  mPrefs = getPreferences(MODE_PRIVATE);
+            SharedPreferences  mPrefs = getSharedPreferences("tomer",MODE_PRIVATE);
             SharedPreferences.Editor prefsEditor = mPrefs.edit();
             Gson gson = new Gson();
             String json = gson.toJson(vUser);
@@ -235,6 +235,7 @@ public class LoginActivity extends Activity {
             prefsEditor.commit();
 
             //add user data to parse user
+            ParseUser.getCurrentUser().put("facebookID", vUser.getFacebookID());
             ParseUser.getCurrentUser().put(vUser.getFacebookID(), json);
         }
     }

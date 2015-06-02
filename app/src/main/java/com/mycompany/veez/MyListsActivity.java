@@ -2,7 +2,9 @@ package com.mycompany.veez;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
@@ -25,6 +27,10 @@ import android.widget.ListView;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.widget.TextView;
 import android.content.res.Configuration;
+
+import com.google.gson.Gson;
+import com.parse.ParseUser;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -294,7 +300,22 @@ public class MyListsActivity extends ActionBarActivity implements View.OnClickLi
                         Intent intent = new Intent(getApplicationContext(), ExplorerActivity.class);
                         startActivity(intent);
                     } else if (position == 4) {
-                        // move to friends_layout
+                        // move to friends activity
+                        //using button for debug
+                        ParseUser parseUser = ParseUser.getCurrentUser();
+                        if (parseUser != null){
+                            SharedPreferences prefs = getSharedPreferences("tomer", MODE_PRIVATE);
+                            String facebookID = (String) parseUser.get("facebookID");
+                            String userJson = prefs.getString(facebookID, "");
+                            Gson gson = new Gson();
+                            VeezUser veezUser = gson.fromJson(userJson, VeezUser.class);
+                            Log.d("Persistent", veezUser.getName());
+                            Log.d("Persistent", veezUser.getFacebookID());
+                        }
+                        else{
+                            Log.d("Persistent", "how to get user");
+                        }
+
                     }
                 }
             });
