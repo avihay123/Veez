@@ -2,13 +2,17 @@ package com.mycompany.veez;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.facebook.AccessToken;
@@ -19,6 +23,7 @@ import com.facebook.GraphResponse;
 import com.facebook.ProfileTracker;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.widget.LoginButton;
+import com.google.gson.Gson;
 import com.parse.LogInCallback;
 import com.parse.ParseFacebookUtils;
 import com.parse.ParseUser;
@@ -36,7 +41,7 @@ import java.util.Arrays;
 public class LoginActivity extends Activity {
 
     //    private Button b_login;
-    private LoginButton loginButton;
+    private Button b_login;
     private ImageView iv_logo;
     private CallbackManager callbackManager;
     private ProfileTracker profileTracker;
@@ -57,16 +62,10 @@ public class LoginActivity extends Activity {
                 Log.d("PB", "Token changed");
                 user = ParseUser.getCurrentUser();
                 if (user != null){
-                    Log.d("PB",user.getUsername());
                     GraphRequest fbRequest = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
                         @Override
                         public void onCompleted(JSONObject jsonObject, GraphResponse graphResponse) {
-                            try {
-                                new BackgroundProfilePictureFetcher().execute(jsonObject.getString("id"));
-                            } catch (JSONException e) {
-                                Log.d("PB","error at parsing the json object");
-                                e.printStackTrace();
-                            }
+                                new BackgroundMakeVeezUser().execute(jsonObject);
                         }
                     });
                     fbRequest.executeAsync();
@@ -76,45 +75,54 @@ public class LoginActivity extends Activity {
         };
 
 
-        loginButton = (LoginButton) findViewById(R.id.login_button);
-        loginButton.setReadPermissions("user_friends");
+        b_login = (Button) findViewById(R.id.b_login);
         callbackManager = CallbackManager.Factory.create();
 
 
 
-        // Other app specific specialization
-        //TODO WHAT ARE LEGITIMATE PERMISSION VALUES??????????????
-        ParseFacebookUtils.logInWithReadPermissionsInBackground(this, Arrays.asList("user_friends"), new LogInCallback() {
+        b_login.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void done(final ParseUser user, com.parse.ParseException err) {
+            public void onClick(View v) {
+                ParseFacebookUtils.logInWithReadPermissionsInBackground(LoginActivity.this, Arrays.asList("user_friends"), new LogInCallback() {
+                    @Override
+                    public void done(final ParseUser user, com.parse.ParseException err) {
 
-                if (user == null) {
-                    Log.d("PB", "Uh oh. The user cancelled the Facebook login.");
-                    return;
-                } else if (user.isNew()) {
-                    Log.d("PB", "User signed up and logged in through Facebook!");
-                } else {
-                    Log.d("PB", "User logged in through Facebook!");
-                }
-                //link to parseuser
-                if (!ParseFacebookUtils.isLinked(user)) {
-                    Log.d("PB", "linking");
-                    ParseFacebookUtils.linkWithReadPermissionsInBackground(user, LoginActivity.this, Arrays.asList("user_friends"), new SaveCallback() {
-                        @Override
-                        public void done(com.parse.ParseException ex) {
-                            if (ParseFacebookUtils.isLinked(user)) {
-                                Log.d("MyApp", "Woohoo, user logged in with Facebook!");
-                            }
+                        if (user == null) {
+                            Log.d("PB", "Uh oh. The user cancelled the Facebook login.");
+                            return;
+                        } else if (user.isNew()) {
+                            GraphRequest fbRequest = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+                                @Override
+                                public void onCompleted(JSONObject jsonObject, GraphResponse graphResponse) {
+                                    new BackgroundMakeVeezUser().execute(jsonObject);
+                                }
+                            });
+                            fbRequest.executeAsync();
+                            Log.d("PB", "User signed up and logged in through Facebook!");
+                        } else {
+                            Log.d("PB", "User logged in through Facebook!");
                         }
-                    });
-                }else{
-                    Log.d("PB", "already linked");
-                }
+                        //link to parse user
+                        if (!ParseFacebookUtils.isLinked(user)) {
+                            Log.d("PB", "linking");
+                            ParseFacebookUtils.linkWithReadPermissionsInBackground(user, LoginActivity.this, Arrays.asList("user_friends"), new SaveCallback() {
+                                @Override
+                                public void done(com.parse.ParseException ex) {
+                                    if (ParseFacebookUtils.isLinked(user)) {
+                                        Log.d("MyApp", "Woohoo, user logged in with Facebook!");
+                                    }
+                                }
+                            });
+                        }else{
+                            Log.d("PB", "already linked");
+                        }
+
+                    }
+                });
+
 
             }
         });
-
-
     }
 
 
@@ -171,44 +179,24 @@ public class LoginActivity extends Activity {
         AppEventsLogger.deactivateApp(this);
     }
 
-    public static Bitmap getFacebookProfilePicture(String userID){
-        URL imageURL = null;
-        try {
-            imageURL = new URL("https://graph.facebook.com/" + userID + "/picture?type=large");
-            Log.d("PBPic", "url created");
-        } catch (MalformedURLException e) {
-            Log.d("PB", "exception thrown while trying to create url of profile picture");
-            e.printStackTrace();
-            return null;
-        }
-        Bitmap bitmap = null;
-        try {
-            bitmap = BitmapFactory.decodeStream(imageURL.openConnection().getInputStream());
-            Log.d("PBPic", "bitmap created");
-        } catch (IOException e) {
-            Log.d("PB", "exception thrown while trying to decode data stream from url of profile picture");
-            e.printStackTrace();
-        } catch (android.os.NetworkOnMainThreadException e){
-            Log.d("PB", "i'm executin async, why is this thrown??"); //TODO
-        }
-
-        return bitmap;
-    }
-
-
-    private class BackgroundProfilePictureFetcher extends AsyncTask<String, Void, Bitmap> {
+    private class BackgroundMakeVeezUser extends AsyncTask<JSONObject, Void, VeezUser> {
 
         @Override
-        protected Bitmap doInBackground(String... params) {
-            String userID = params[0];
+        protected VeezUser doInBackground(JSONObject... params) {
+            JSONObject jsonObject = params[0];
+
             URL imageURL = null;
             try {
+                String userID = jsonObject.getString("id");
                 imageURL = new URL("https://graph.facebook.com/" + userID + "/picture?type=large");
                 Log.d("PBPic", "url created");
             } catch (MalformedURLException e) {
                 Log.d("PB", "exception thrown while trying to create url of profile picture");
                 e.printStackTrace();
                 return null;
+            } catch (JSONException e) {
+                Log.d("PB", "exception thrown while trying to deserialize json object");
+                e.printStackTrace();
             }
             Bitmap bitmap = null;
             try {
@@ -220,13 +208,35 @@ public class LoginActivity extends Activity {
             } catch (android.os.NetworkOnMainThreadException e){
                 Log.d("PB", "i'm executin async, why is this thrown??"); //TODO
             }
+            VeezUser result = null;
+            try {
+                result = new VeezUser(jsonObject.getString("name"), bitmap, jsonObject.getString("id"));
+            } catch (JSONException e) {
+                Log.d("PB", "exception thrown while trying to deserialize json object");
+                e.printStackTrace();
+                return null;
+            }
 
-            return bitmap;
+            return result;
         }
 
         @Override
-        protected void onPostExecute(Bitmap bitmap){
-            iv_logo.setImageBitmap(bitmap);
+        protected void onPostExecute(VeezUser vUser){
+            if (vUser == null){
+                Log.d("PB", "nal");
+                return;
+            }
+            //add new user data to persistent memory
+            SharedPreferences  mPrefs = getSharedPreferences("tomer",MODE_PRIVATE);
+            SharedPreferences.Editor prefsEditor = mPrefs.edit();
+            Gson gson = new Gson();
+            String json = gson.toJson(vUser);
+            prefsEditor.putString(vUser.getFacebookID(), json);
+            prefsEditor.commit();
+
+            //add user data to parse user
+            ParseUser.getCurrentUser().put("facebookID", vUser.getFacebookID());
+            ParseUser.getCurrentUser().put(vUser.getFacebookID(), json);
         }
     }
 }
