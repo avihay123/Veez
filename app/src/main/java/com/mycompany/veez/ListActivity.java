@@ -1,6 +1,7 @@
 package com.mycompany.veez;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,12 +21,15 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.widget.TextView;
 import android.content.res.Configuration;
+import android.view.ViewGroup.LayoutParams;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,10 +47,12 @@ public class ListActivity extends ActionBarActivity implements View.OnClickListe
     //TODO delete it is exists in VeezList
     private Integer currentItmes = 0;
     private Integer TotalItems = 0;
+    private PopupWindow addItemPopup;
 
     private ListView mDrawerList;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +109,10 @@ public class ListActivity extends ActionBarActivity implements View.OnClickListe
 
     //TODO change to VeezList.Length and remove the total items and currentItmes
     private void addItem() {
-        //TODO popup
+        Dialog myDialog = new Dialog(this);
+        myDialog.setContentView(R.layout.activity_add_item);
+        myDialog.setTitle("Warning");
+        myDialog.show();
         //TODO list handle
         TotalItems++;
         tv_total_items.setText(TotalItems.toString());
@@ -196,6 +205,37 @@ public class ListActivity extends ActionBarActivity implements View.OnClickListe
             CheckBox cb_item_vee;
             Button b_info;
             Button b_friend_veed;
+        }
+    }
+
+
+    /* ----------------- popup functions ------------------- */
+    private void initiatePopupAddItem() {
+        try {
+            //We need to get the instance of the LayoutInflater, use the context of this activity
+            LayoutInflater inflater = (LayoutInflater) ListActivity.this
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            //Inflate the view from a predefined XML layout
+            View layout = inflater.inflate(R.layout.activity_add_item,
+                    (ViewGroup) findViewById(R.id.AddItem));
+            // create a 300px width and 470px height PopupWindow
+            addItemPopup = new PopupWindow(layout, LayoutParams.WRAP_CONTENT , LayoutParams.WRAP_CONTENT, true);
+            // display the popup in the center
+            addItemPopup.showAtLocation(layout, Gravity.CENTER, 0, 0);
+
+            EditText et_item_name = (EditText) layout.findViewById(R.id.et_item);
+            EditText et_item_info = (EditText) layout.findViewById(R.id.et_info);
+            // TODO add the item name and info to global ListItems
+
+            Button b_add_item = (Button) layout.findViewById(R.id.b_add_item);
+            b_add_item.setOnClickListener(new Button.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    addItemPopup.dismiss();
+                }});
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

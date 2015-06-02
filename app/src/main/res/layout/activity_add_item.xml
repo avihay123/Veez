@@ -5,13 +5,13 @@
     android:id="@+id/AddItem"
     tools:context=".AddItemActivity"
     android:orientation="vertical"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:background="#ffffff">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:layout_marginBottom="@dimen/add_item_margin">
@@ -30,7 +30,7 @@
 
         <EditText
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/et_item_height"
+            android:layout_height="53dp"
             android:id="@+id/et_item"
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
@@ -41,7 +41,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp">
 
@@ -59,7 +59,7 @@
 
         <EditText
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/et_info_height"
+            android:layout_height="109dp"
             android:id="@+id/et_info"
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
