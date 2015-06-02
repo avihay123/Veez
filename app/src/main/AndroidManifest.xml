@@ -29,11 +29,6 @@
         <activity
             android:name=".ListActivity"
             android:label="title_activity_list" >
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <activity
@@ -51,6 +46,10 @@
             android:name=".CreateListActivity"
             android:label="activity_my_lists" >
 
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <activity

@@ -1,26 +1,28 @@
 package com.mycompany.veez;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
+import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
@@ -35,9 +37,8 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Locale;
 
 public class CreateListActivity extends ActionBarActivity implements View.OnClickListener {
 
@@ -98,6 +99,19 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
 
         /* -------------- Deadline ---------------- */
         et_deadline = (EditText) findViewById(R.id.et_deadline);
+
+        et_deadline.addTextChangedListener(new TextWatcher() {
+                                               public void afterTextChanged(Editable s) {
+                                                   et_deadline.setHint("");
+                                               }
+
+                                               public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                                               }
+
+                                               public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                               }
+                                           });
+
         myCalendar = Calendar.getInstance();
 
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
@@ -106,17 +120,31 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
                 myCalendar.set(Calendar.YEAR, year);
                 myCalendar.set(Calendar.MONTH, monthOfYear);
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateLabel();
+
+                if(new Date(myCalendar.getTimeInMillis()+86400000).before((new Date()))){
+                    {
+                        //kv Make them try again
+                        et_deadline.performClick();
+                        Toast.makeText(getApplicationContext(),"Invalid date, please try again", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+
+                String myFormat = "dd/MM/yy"; //In which you need put here
+                SimpleDateFormat sdf = new SimpleDateFormat(myFormat);
+                et_deadline.setText(sdf.format(myCalendar.getTime()));
             }
         };
-//        date.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
 
         et_deadline.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(CreateListActivity.this, date, myCalendar
+                DatePickerDialog datePickerDialog = new DatePickerDialog(CreateListActivity.this, date, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                        myCalendar.get(Calendar.DAY_OF_MONTH));
+                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+                datePickerDialog.show();
+
             }
         });
         /* -------------- CheckBoxes ---------------- */
@@ -141,6 +169,18 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
 
         /* -------------- EditText -------------------*/
         et_list_name = (EditText) findViewById(R.id.et_list_name);
+        et_list_name.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+                et_list_name.setHint("");
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+        });
+
 
         /* -------------- TextView -------------------*/
         tv_tags = (TextView) findViewById(R.id.tv_tags);
@@ -173,8 +213,6 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
                         addTag(value);
                     else
                         removeTag(value);
-                    //TODO for debug
-                    Toast.makeText(getApplicationContext(),value, Toast.LENGTH_SHORT).show();
 
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(input.getWindowToken(), 0);
@@ -195,8 +233,13 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
             Log.d("matan", "change image click");
             //TODO
         } else if (viewId == R.id.b_create_list) {
+
             if (et_list_name.getText().toString().length() == 0) {
                 Toast.makeText(getApplicationContext(), "You have to choose list name", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (et_deadline.getText().toString().length() == 0) {
+                Toast.makeText(getApplicationContext(), "You have to choose deadline", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -240,13 +283,6 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
             res = res.substring(0, res.length()-1);
         }
         return res;
-    }
-
-    private void updateLabel() {
-
-        String myFormat = "dd/MM/yy"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat);
-        et_deadline.setText(sdf.format(myCalendar.getTime()));
     }
 
     private class MyAdapter extends BaseAdapter {
