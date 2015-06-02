@@ -68,7 +68,8 @@
                         android:fontFamily="Myriad Hebrew"
                         android:textSize="@dimen/count_vee_size"
                         android:textStyle="bold"
-                        android:text="@string/zero" />
+                        android:text="@string/zero"
+                        android:textColor="#464545" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -76,7 +77,8 @@
                         android:fontFamily="Myriad Hebrew"
                         android:textSize="@dimen/count_vee_size"
                         android:textStyle="bold"
-                        android:text="@string/slash" />
+                        android:text="@string/slash"
+                        android:textColor="#464545" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -85,7 +87,8 @@
                         android:fontFamily="Myriad Hebrew"
                         android:textSize="@dimen/count_vee_size"
                         android:textStyle="bold"
-                        android:text="@string/zero"/>
+                        android:text="@string/zero"
+                        android:textColor="#464545"/>
 
                 </LinearLayout>
 
@@ -113,7 +116,8 @@
                     android:gravity="center"
                     android:layout_above="@+id/linearLayout"
                     android:layout_centerHorizontal="true"
-                    android:id="@+id/tv_list_name" />
+                    android:id="@+id/tv_list_name"
+                    android:textColor="#464545" />
 
                 <TextView
                     android:layout_width="@dimen/likes_list_width"
@@ -129,7 +133,8 @@
                     android:background="@drawable/likes_w"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true" />
+                    android:layout_alignParentEnd="true"
+                    android:textColor="#464545"/>
 
             </RelativeLayout>
 

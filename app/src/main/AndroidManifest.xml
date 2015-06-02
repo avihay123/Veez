@@ -32,7 +32,7 @@
 
         <activity
             android:name=".ListActivity"
-            android:label="title_activity_list" >
+            android:label="title_activity_list"  >
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -53,13 +53,13 @@
 
         <activity
             android:name=".CreateListActivity"
-            android:label="activity_my_lists" >
+            android:label="activity_create_list" >
 
         </activity>
 
         <activity
             android:name=".ListInfoActivity"
-            android:label="activity_my_lists" >
+            android:label="activity_list_info" >
         </activity>
     </application>
 

@@ -32,4 +32,8 @@ public class VeezItem {
     public String getName() {
         return name;
     }
+
+    public void setVee(Boolean vee) { this.vee = vee; }
+
+    public void setInfo(String info) { this.info = info; }
 }
