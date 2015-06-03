@@ -75,7 +75,26 @@ public class MyListsActivity extends ActionBarActivity implements View.OnClickLi
         /* ----------- listView -------------------------------------*/
         //----------------------------for debug -----------------------
         lv_my_lists = (ListView) findViewById(R.id.lv_my_lists);
-        List<VeezItem> items = new ArrayList<VeezItem>();
+
+        ParseUser parseUser = ParseUser.getCurrentUser();
+        VeezUser veezUser = null;
+        if (parseUser != null){
+            SharedPreferences prefs = getSharedPreferences("tomer", MODE_PRIVATE);
+            String facebookID = (String) parseUser.get("facebookID");
+            String userJson = prefs.getString(facebookID, "");
+            Log.d("GSON",userJson);
+            Gson gson = new Gson();
+            veezUser = gson.fromJson(userJson, VeezUser.class);
+            Log.d("Persistent", veezUser.getName());
+            Log.d("Persistent", veezUser.getFacebookID());
+        }
+        else{
+            Log.d("Persistent", "how to get user");
+        }
+
+        List<VeezList> lists = veezUser.getLists();
+
+        /*List<VeezItem> items = new ArrayList<VeezItem>();
         List<VeezList> lists = new ArrayList<VeezList>();
         items.add(new VeezItem(("a")));
         lists.add(new VeezList(0, 0, items, true, "abc"));
@@ -86,7 +105,8 @@ public class MyListsActivity extends ActionBarActivity implements View.OnClickLi
         lists.add(new VeezList(1, 100, items, false, "ab3"));
         lists.add(new VeezList(1, 100, items, false, "ab4"));
         lists.add(new VeezList(1, 100, items, false, "ab5"));
-        lists.add(new VeezList(1, 100, items, false, "ab6"));
+        lists.add(new VeezList(1, 100, items, false, "ab6"));*/
+
         MyAdapter adapter = new MyAdapter(lists);
 
         //reaplace to this in case of true use
@@ -165,7 +185,7 @@ public class MyListsActivity extends ActionBarActivity implements View.OnClickLi
             }
 
             @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
+            public View getView(final int position, View convertView, ViewGroup parent) {
 
                 View view;
                 ViewHolder viewHolder;
@@ -201,6 +221,18 @@ public class MyListsActivity extends ActionBarActivity implements View.OnClickLi
                     viewHolder.iv_lock.setVisibility(View.GONE);
                 else
                     viewHolder.iv_lock.setVisibility(View.VISIBLE);
+
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        VeezList list = listsToShow.get(position);
+                        Intent intent = new Intent(getApplicationContext(), ListActivity.class);
+                        intent.putExtra("list", list);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+
                 return view;
             }
 

@@ -2,24 +2,35 @@ package com.mycompany.veez;
 
 import android.graphics.Bitmap;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by T on 5/27/2015.
  */
-public class VeezList {
+public class VeezList implements Serializable {
     private String name;
     private boolean isPublic;
     private List<VeezItem> items;
     private List<VeezUser> users;
+
+    public void setNumOfItemsMarkedWithVee(int numOfItemsMarkedWithVee) {
+        this.numOfItemsMarkedWithVee = numOfItemsMarkedWithVee;
+    }
+
+    public List<VeezItem> getItems() {
+        return items;
+    }
+
     private VeezUser Admin;
     private int likesCount;
     private int numOfItemsMarkedWithVee;
     private List<String> tags;
-    private Bitmap photo;
+    private String photo;
+    private String deadline;
 
-    public VeezList(String name, boolean isPublic, List<VeezUser> users, VeezUser admin, List<String> tags, Bitmap photo) {
+    public VeezList(String name, boolean isPublic, List<VeezUser> users, VeezUser admin, List<String> tags, String photo) {
         this.name = name;
         this.isPublic = isPublic;
         this.users = users;
@@ -29,6 +40,10 @@ public class VeezList {
         this.items = new ArrayList<VeezItem>();
         likesCount = 0;
         numOfItemsMarkedWithVee = 0;
+    }
+
+    public String getStringPhoto() {
+        return photo;
     }
 
     //for debug
@@ -52,11 +67,11 @@ public class VeezList {
         return likesCount;
     }
 
-    public int getNumOfItemsMarkedWithVee() {
+    public Integer getNumOfItemsMarkedWithVee() {
         return numOfItemsMarkedWithVee;
     }
 
-    public int getNumOfItems() {
+    public Integer getNumOfItems() {
         return items.size();
     }
 }
