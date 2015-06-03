@@ -13,6 +13,15 @@ public class VeezList implements Serializable {
     private String name;
     private boolean isPublic;
     private List<VeezItem> items;
+
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
     private List<VeezUser> users;
     private VeezUser Admin;
     private int likesCount;
