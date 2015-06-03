@@ -9,8 +9,6 @@
     android:weightSum="44" >
 
     <android.support.v4.widget.DrawerLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -42,7 +40,7 @@
                     android:layout_marginStart="15dp"
                     android:onClick="onClick"/>
 
-                <Button
+                <ImageView
                     android:layout_width="@dimen/add_image_width"
                     android:layout_height="@dimen/add_image_height"
                     android:id="@+id/b_add_image"
@@ -59,7 +57,7 @@
                     android:textSize="30sp"
                     android:singleLine="true"
                     android:textStyle="bold"
-                    android:hint ="Enter list name"
+                    android:hint ="Enter to choose list name"
                     android:layout_below="@+id/b_add_image"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/list_name_margin_top"/>
@@ -72,7 +70,7 @@
                 android:orientation="horizontal"
                 android:background="@drawable/lines"
                 android:layout_weight="6"
-                android:weightSum="7">
+                android:weightSum="8">
 
                 <LinearLayout
                     android:layout_width="fill_parent"
@@ -80,8 +78,8 @@
                     android:id="@+id/sv_friends"
                     android:layout_weight="6" >
 
-                    <Button
-                        android:id="@+id/b_photo"
+                    <ImageView
+                        android:id="@+id/im_photo"
                         android:layout_width="@dimen/add_friend_button_width"
                         android:layout_height="fill_parent"
                         android:layout_marginTop="@dimen/add_friend_button_margin"
@@ -89,10 +87,22 @@
                         android:layout_marginLeft="@dimen/add_friend_button_margin"
                         android:layout_marginStart="@dimen/add_friend_button_margin"
                         android:gravity="start"
-                        android:background="@drawable/friends_small"
-                        android:onClick="onClick" />
+                        android:background="@drawable/friends_small"/>
 
                 </LinearLayout>
+
+                <Button
+                    android:id="@+id/b_remove_friend"
+                    android:layout_width="@dimen/add_friend_button_width"
+                    android:layout_height="fill_parent"
+                    android:layout_marginTop="@dimen/add_friend_button_margin"
+                    android:layout_marginBottom="@dimen/add_friend_button_margin"
+                    android:layout_marginRight="@dimen/add_friend_button_margin"
+                    android:layout_marginEnd="@dimen/add_friend_button_margin"
+                    android:background="@drawable/remove"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:onClick="onClick" />
 
                 <Button
                     android:id="@+id/b_add_friend"
@@ -128,22 +138,24 @@
 
                 <Button
                     android:id="@+id/b_add_tag"
+                    android:background="@drawable/add_small"
                     android:layout_width="@dimen/add_tag_width"
                     android:layout_height="@dimen/add_tag_height_land"
                     android:layout_marginTop="@dimen/add_tag_margin"
                     android:layout_marginBottom="@dimen/add_tag_margin"
                     android:layout_marginLeft="@dimen/add_tag_margin"
                     android:layout_marginStart="@dimen/add_tag_margin"
-                    android:background="@drawable/add_small"
                     android:onClick="onClick" />
                 <Button
                     android:id="@+id/b_remove_tag"
+                    android:background="@drawable/remove_small"
                     android:layout_width="@dimen/add_tag_width"
                     android:layout_height="@dimen/add_tag_height_land"
                     android:layout_marginTop="@dimen/add_tag_margin"
                     android:layout_marginBottom="@dimen/add_tag_margin"
                     android:layout_marginLeft="@dimen/add_tag_margin"
-                    android:onClick="onClick" />
+                    android:layout_marginStart="@dimen/add_tag_margin"
+                    android:onClick="onClick"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -210,7 +222,7 @@
                     android:layout_marginLeft="@dimen/title_margin_left"
                     android:layout_marginStart="@dimen/title_margin_left"
                     android:layout_marginTop="@dimen/subtitle_margin"
-                    android:text="@string/date"
+                    android:hint="Enter to choose deadline"
                     android:textColor="#505153"
                     android:layout_gravity="bottom"
                     android:textSize="@dimen/subtitle_size"/>

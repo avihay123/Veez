@@ -2,6 +2,7 @@ package com.mycompany.veez;
 
 import android.graphics.Bitmap;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -9,7 +10,7 @@ import java.util.List;
  */
 public class VeezList {
     private String name;
-    private boolean isPublic = true;
+    private boolean isPublic;
     private List<VeezItem> items;
     private List<VeezUser> users;
     private VeezUser Admin;
@@ -17,6 +18,18 @@ public class VeezList {
     private int numOfItemsMarkedWithVee;
     private List<String> tags;
     private Bitmap photo;
+
+    public VeezList(String name, boolean isPublic, List<VeezUser> users, VeezUser admin, List<String> tags, Bitmap photo) {
+        this.name = name;
+        this.isPublic = isPublic;
+        this.users = users;
+        Admin = admin;
+        this.tags = tags;
+        this.photo = photo;
+        this.items = new ArrayList<VeezItem>();
+        likesCount = 0;
+        numOfItemsMarkedWithVee = 0;
+    }
 
     //for debug
     public VeezList(int numOfItemsMarkedWithVee, int likesCount, List<VeezItem> items, boolean isPublic, String name) {

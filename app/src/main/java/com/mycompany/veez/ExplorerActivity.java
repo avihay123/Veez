@@ -5,12 +5,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -21,14 +24,16 @@ import android.widget.ListView;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.widget.TextView;
 import android.content.res.Configuration;
+import android.widget.Toast;
 
 import com.parse.Parse;
 import com.parse.ParseObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public class ExplorerActivity extends ActionBarActivity implements View.OnClickListener {
+public class ExplorerActivity extends ActionBarActivity implements View.OnClickListener{
 
     private Button b_first_menu;
 
@@ -36,12 +41,14 @@ public class ExplorerActivity extends ActionBarActivity implements View.OnClickL
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
 
+
     private ListView lv_lists;
     private TextView tv_explorer;
     private AutoCompleteTextView ac_search;
-    private String[] searchTags = new String[5];
+    private List<String> searchTags = new ArrayList<>();
+    private TextView[] tv_array_tags = new TextView[9];
     private int tagsNum = 0;
-    private List<VeezList> allLists;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +57,7 @@ public class ExplorerActivity extends ActionBarActivity implements View.OnClickL
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
-        /* -------------- Side Menu ---------------- */
+        //Side Menu
 
         mDrawerList = (ListView) findViewById(R.id.lv_navList);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -58,12 +65,39 @@ public class ExplorerActivity extends ActionBarActivity implements View.OnClickL
         setupDrawer();
         getSupportActionBar().hide();
 
-        /* ------------------- Buttons ----------------------*/
+        //Buttons
 
         b_first_menu = (Button) findViewById(R.id.b_first_menu);
         b_first_menu.setOnClickListener(this);
 
-        /* ------------------- Auto Compelte ----------------------*/
+
+        tv_array_tags[0] = (TextView) findViewById(R.id.tv_tag1);
+        tv_array_tags[1] = (TextView) findViewById(R.id.tv_tag2);
+        tv_array_tags[2] = (TextView) findViewById(R.id.tv_tag3);
+        tv_array_tags[3] = (TextView) findViewById(R.id.tv_tag4);
+        tv_array_tags[4] = (TextView) findViewById(R.id.tv_tag5);
+        tv_array_tags[5] = (TextView) findViewById(R.id.tv_tag6);
+        tv_array_tags[6] = (TextView) findViewById(R.id.tv_tag7);
+        tv_array_tags[7] = (TextView) findViewById(R.id.tv_tag8);
+        tv_array_tags[8] = (TextView) findViewById(R.id.tv_tag9);
+
+        for (int i = 0; i < tv_array_tags.length; i++) {
+            tv_array_tags[i].setVisibility(View.INVISIBLE);
+        }
+
+        for (int i = 0; i < tv_array_tags.length; i++) {
+            tv_array_tags[i].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    searchTags.remove((String) ((TextView) v).getText());
+                    tagsNum--;
+                    ((MyAdapter) lv_lists.getAdapter()).updateTags(searchTags);
+                    updateTags();
+                }
+            });
+        }
+
+        //Auto Compelte
 
         tv_explorer = (TextView) findViewById(R.id.tv_explorer);
 
@@ -75,40 +109,65 @@ public class ExplorerActivity extends ActionBarActivity implements View.OnClickL
         ac_search.setAdapter(adapterAutoComplete);
         ac_search.setThreshold(1);
 
+
         ac_search.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                searchTags[tagsNum] = (String) ((TextView) view).getText();
-                Log.d("EXPLORER", searchTags[tagsNum]);
+                String tag = (String) ((TextView) view).getText();
+                if (searchTags.contains(tag)){
+                    Toast.makeText(getApplicationContext(),"This tag is already selected", Toast.LENGTH_SHORT).show();
+                    ac_search.setText("");
+                    return;
+                }
+                searchTags.add(tag);
                 tagsNum++;
                 ac_search.setText("");
-                tv_explorer.setText(newHeadline(searchTags, tagsNum));
-                tv_explorer.setTextSize(35 - 5 * tagsNum);
-                if (tagsNum == 5) {
+                if (tagsNum == 9) {
                     ac_search.setEnabled(false);
-                    ac_search.setText("5 tags maximum");
+                    ac_search.setText("9 tags maximum");
                     Log.d("EXPLORER", "reached limit");
                 }
+                ((MyAdapter)lv_lists.getAdapter()).updateTags(searchTags);
+                updateTags();
 
             }
         });
 
-        /* ------------------- Lists ----------------------*/
+        //Lists
         lv_lists = (ListView) findViewById(R.id.lv_explorer_lists);
-        List<VeezItem> items= new ArrayList<VeezItem>();
-        List<VeezListExplorer> lists= new ArrayList<VeezListExplorer>();
+        List<VeezItem> items= new ArrayList<>();
+        List<VeezListExplorer> lists= new ArrayList<>();
         items.add(new VeezItem(("a")));
-        lists.add(new VeezListExplorer(0,items,"abc"));
+        lists.add(new VeezListExplorer(0,items,"BBQ",
+                Arrays.asList("BBQ")));
         items.add(new VeezItem(("b")));
-        lists.add(new VeezListExplorer(1,items,"ab"));
-        lists.add(new VeezListExplorer(1,items,"b1"));
-        lists.add(new VeezListExplorer(1,items,"b2"));
-        lists.add(new VeezListExplorer(1,items,"b3"));
-        lists.add(new VeezListExplorer(1,items,"b4"));
-        lists.add(new VeezListExplorer(1,items,"b5"));
+        lists.add(new VeezListExplorer(1,items,"BBQBBQ",
+                Arrays.asList("BBQ","BBQ2")));
+        lists.add(new VeezListExplorer(1,items,"Shopping",Arrays.asList("Shopping")));
+        lists.add(new VeezListExplorer(1,items,"Camping",Arrays.asList("Camping")));
+        lists.add(new VeezListExplorer(1,items,"Trip",Arrays.asList("Road Trip")));
+        lists.add(new VeezListExplorer(1,items,"Movies",Arrays.asList("Movies")));
+        lists.add(new VeezListExplorer(1,items,"Books",Arrays.asList("Books")));
         //TODO get the lists from the server
         MyAdapter adapter = new MyAdapter(lists);
         lv_lists.setAdapter(adapter);
+    }
+
+    private void updateTags(){
+        for (int i = 0; i < 9; i++){
+            if (i < tagsNum){
+                //this means the view at index i should be visible and showing a tag
+                tv_array_tags[i].setText(searchTags.get(i));
+                tv_array_tags[i].setVisibility(View.VISIBLE);
+            }
+            else{
+                tv_array_tags[i].setVisibility(View.INVISIBLE);
+            }
+        }
+        if (tagsNum < 9){
+            ac_search.setText("");
+            ac_search.setEnabled(true);
+        }
     }
 
     /* --------------------------On Click ----------------------- */
@@ -127,20 +186,22 @@ public class ExplorerActivity extends ActionBarActivity implements View.OnClickL
 
     private class MyAdapter extends BaseAdapter {
 
-        private List<VeezListExplorer> myList;
+        private List<VeezListExplorer> allItems;
+        private List<VeezListExplorer> itemsToShow;
 
-        public MyAdapter(List<VeezListExplorer> aList) {
-            myList = aList;
+        public MyAdapter(List<VeezListExplorer> aList){
+            allItems = new ArrayList<>(aList);
+            itemsToShow = new ArrayList<>(aList);
         }
 
         @Override
         public int getCount() {
-            return myList.size();
+            return itemsToShow.size();
         }
 
         @Override
         public Object getItem(int position) {
-            return myList.get(position);
+            return itemsToShow.get(position);
         }
 
         //TODO return
@@ -172,11 +233,25 @@ public class ExplorerActivity extends ActionBarActivity implements View.OnClickL
                 viewHolder = (ViewHolder) view.getTag();
             }
 
+
+
             // Put the content in the view
-            viewHolder.tv_num_likes.setText(String.valueOf((myList.get(position)).getLikesCount()));
-            viewHolder.tv_list_name.setText((myList.get(position)).getName());
+            viewHolder.tv_num_likes.setText(String.valueOf((itemsToShow.get(position)).getLikesCount()));
+            viewHolder.tv_list_name.setText((itemsToShow.get(position)).getName());
 
             return view;
+        }
+
+        public void updateTags(List<String> tags){
+            List<VeezListExplorer> result = new ArrayList<>();
+            for (VeezListExplorer list : allItems){
+                if (list.hasAllTags(tags))
+                    result.add(list);
+            }
+            itemsToShow = result;
+            this.notifyDataSetChanged();
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(ac_search.getWindowToken(), 0);
         }
 
         private class ViewHolder {
@@ -187,11 +262,11 @@ public class ExplorerActivity extends ActionBarActivity implements View.OnClickL
     }
 
     /* --------------------------Auto Complete ----------------------- */
-    private static String newHeadline(String[] tags, int tagsNum) {
+    private static String newHeadline(List<String> tags, int tagsNum) {
         String headline = "";
-        headline += tags[0];
+        headline += tags.get(0);
         for (int i = 1; i < tagsNum; i++) {
-            headline += " + " + tags[i];
+            headline += " + " + tags.get(i);
         }
         return headline;
     }
