@@ -63,7 +63,8 @@ public class ExplorerActivity extends ActionBarActivity implements View.OnClickL
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         addDrawerItems();
         setupDrawer();
-        getSupportActionBar().hide();
+        if(getSupportActionBar() != null)
+            getSupportActionBar().hide();
 
         //Buttons
 
@@ -211,7 +212,7 @@ public class ExplorerActivity extends ActionBarActivity implements View.OnClickL
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
 
             View view;
             ViewHolder viewHolder;
@@ -240,8 +241,13 @@ public class ExplorerActivity extends ActionBarActivity implements View.OnClickL
             viewHolder.tv_list_name.setText((itemsToShow.get(position)).getName());
 
             viewHolder.b_add_to_my_lists.setOnClickListener(new View.OnClickListener() {
+                @Override
                 public void onClick(View v) {
-
+                    VeezListExplorer list = itemsToShow.get(position);
+                    Intent intent = new Intent(getApplicationContext(), ListActivity.class);
+                    intent.putExtra("list", list);
+                    startActivity(intent);
+                    finish();
                 }
             });
 

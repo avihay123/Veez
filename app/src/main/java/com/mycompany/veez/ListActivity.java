@@ -67,6 +67,7 @@ public class ListActivity extends ActionBarActivity implements View.OnClickListe
     private Integer TotalItems = 0;
     private List<VeezItem> items;
 
+    private VeezList veezList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

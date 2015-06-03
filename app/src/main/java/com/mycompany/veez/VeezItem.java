@@ -1,9 +1,11 @@
 package com.mycompany.veez;
 
+import java.io.Serializable;
+
 /**
  * Created by T on 5/27/2015.
  */
-public class VeezItem {
+public class VeezItem implements Serializable{
     private String name;
     private String info;
     private boolean vee;
