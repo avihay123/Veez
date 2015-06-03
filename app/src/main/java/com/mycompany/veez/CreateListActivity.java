@@ -46,6 +46,7 @@ import android.content.res.Configuration;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.parse.ParseUser;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -76,12 +77,11 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
     private TextView tv_tags;
     private Button b_remove_tag;
     private ImageView im_photo;
-    private VeezUser veezUser;
 
     private ListView mDrawerList;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
-    private LinkedHashSet<String>  tags= new LinkedHashSet<String>();
+    private LinkedHashSet<String> tags = new LinkedHashSet<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,8 +92,31 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
 
 
         /*---------------- Get Users bitmap--------------*/
-//        im_photo = (ImageView)findViewById(R.id.im_photo);
-//        im_photo.setImageBitmap(b_yourPhoto);
+        ParseUser parseUser = ParseUser.getCurrentUser();
+        if (parseUser != null) {
+            SharedPreferences prefs = getSharedPreferences("tomer", MODE_PRIVATE);
+            String facebookID = (String) parseUser.get("facebookID");
+            String userJson = prefs.getString(facebookID, "");
+            Log.d("GSON", userJson);
+            Gson gson = new Gson();
+            VeezUser veezUser = gson.fromJson(userJson, VeezUser.class);
+            if (veezUser == null)
+                Log.d("Persistent", "WTF");
+            Log.d("Persistent", veezUser.getName());
+            Log.d("Persistent", veezUser.getFacebookID());
+            if (veezUser == null)
+                Log.d("Persistent", "WTF2");
+            Log.d("Persistent",veezUser.getProfilePicture());
+            Bitmap bm = StringToBitMap(veezUser.getProfilePicture());
+           // Bitmap bm = new Gson().fromJson(veezUser.getProfilePicture(), Bitmap.class);
+            Log.d("Persistent","1");
+            ImageView im_photo = (ImageView) findViewById(R.id.im_photo);
+            im_photo.setImageBitmap(bm);
+        } else {
+            Log.d("Persistent", "how to get user");
+        }
+
+
 
         /* -------------- Side Menu ---------------- */
         mDrawerList = (ListView) findViewById(R.id.lv_navList);
@@ -138,11 +161,11 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
                 myCalendar.set(Calendar.MONTH, monthOfYear);
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-                if(new Date(myCalendar.getTimeInMillis()+86400000).before((new Date()))){
+                if (new Date(myCalendar.getTimeInMillis() + 86400000).before((new Date()))) {
                     {
                         //kv Make them try again
                         et_deadline.performClick();
-                        Toast.makeText(getApplicationContext(),"Invalid date, please try again", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Invalid date, please try again", Toast.LENGTH_SHORT).show();
                         return;
                     }
                 }
@@ -186,7 +209,7 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
 
         /* -------------- EditText -------------------*/
         et_list_name = (EditText) findViewById(R.id.et_list_name);
-        if(et_list_name.getText().length() > 0){
+        if (et_list_name.getText().length() > 0) {
             et_list_name.setHint("");
         }
 
@@ -197,13 +220,13 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
             String tagsString = savedInstanceState.getString("tv_tags");
             tv_tags.setText(tagsString);
             String bitMapString = savedInstanceState.getString("rl_image_change");
-            if(bitMapString != null ) {
+            if (bitMapString != null) {
                 Bitmap bm = StringToBitMap(bitMapString);
                 Drawable dr = new BitmapDrawable(bm);
                 rl_image_change.setBackgroundDrawable(dr);
 
             }
-            if(et_list_name.getText().length()>0){
+            if (et_list_name.getText().length() > 0) {
                 et_list_name.setHint("");
                 et_list_name.setText(et_list_name.getText());
             }
@@ -234,7 +257,7 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
             alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int whichButton) {
                     String value = input.getText().toString();
-                    if(viewId == R.id.b_add_tag)
+                    if (viewId == R.id.b_add_tag)
                         addTag(value);
                     else
                         removeTag(value);
@@ -252,7 +275,7 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
 
             alert.show();
 
-        }  else if (viewId == R.id.rl_image_change) {
+        } else if (viewId == R.id.rl_image_change) {
             Log.d("matan", "change image click");
             selectImage();
         } else if (viewId == R.id.b_create_list) {
@@ -266,7 +289,7 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
                 return;
             }
 
-            VeezList newList= new VeezList(et_list_name.getText(),cb_public.isChecked(),new ArrayList<VeezUser>().add(veezUser), veezUser, tags)
+            // VeezList newList= new VeezList(et_list_name.getText(),cb_public.isChecked(),new ArrayList<VeezUser>().add(veezUser), veezUser, tags)
 
 
             //TODO add to userVeez!!!!!
@@ -282,7 +305,7 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
 //        final CharSequence[] items = { "Take Photo", "Choose from Library",
 //                "Cancel" };
 
-        final CharSequence[] items = { "Take Photo", "Cancel" };
+        final CharSequence[] items = {"Take Photo", "Cancel"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Add Photo!");
@@ -307,6 +330,7 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
         });
         builder.show();
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -336,7 +360,7 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
 
             } else if (requestCode == SELECT_FILE) {
                 Uri selectedImageUri = data.getData();
-                String[] projection = { MediaStore.Images.Media.DATA };
+                String[] projection = {MediaStore.Images.Media.DATA};
                 Cursor cursor = managedQuery(selectedImageUri, projection, null, null,
                         null);
                 int column_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
@@ -367,34 +391,32 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
 
 
     private void addTag(String tag) {
-        if(tags.contains(tag)){
-            Toast.makeText(getApplicationContext(),"This tag is already included", Toast.LENGTH_SHORT).show();
-        }
-        else{
+        if (tags.contains(tag)) {
+            Toast.makeText(getApplicationContext(), "This tag is already included", Toast.LENGTH_SHORT).show();
+        } else {
             tags.add(tag);
-            String newTagsString=makeTagsString();
+            String newTagsString = makeTagsString();
             tv_tags.setText(newTagsString);
         }
     }
 
     private void removeTag(String tag) {
-        if(!tags.contains(tag)){
-            Toast.makeText(getApplicationContext(),"This tag is not include in tags", Toast.LENGTH_SHORT).show();
-        }
-        else{
+        if (!tags.contains(tag)) {
+            Toast.makeText(getApplicationContext(), "This tag is not include in tags", Toast.LENGTH_SHORT).show();
+        } else {
             tags.remove(tag);
-            String newTagsString=makeTagsString();
+            String newTagsString = makeTagsString();
             tv_tags.setText(newTagsString);
         }
     }
 
-    private String makeTagsString(){
-        String res="";
-        for(String tag: tags){
-            res=res+tag+",";
+    private String makeTagsString() {
+        String res = "";
+        for (String tag : tags) {
+            res = res + tag + ",";
         }
-        if (res.length() > 0 && res.charAt(res.length()-1)==',') {
-            res = res.substring(0, res.length()-1);
+        if (res.length() > 0 && res.charAt(res.length() - 1) == ',') {
+            res = res.substring(0, res.length() - 1);
         }
         return res;
     }
@@ -449,11 +471,11 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
         }
     }
 
-    public String BitMapToString(Bitmap bitmap){
-        ByteArrayOutputStream baos=new  ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
-        byte [] b=baos.toByteArray();
-        String temp= Base64.encodeToString(b, Base64.DEFAULT);
+    public String BitMapToString(Bitmap bitmap) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        byte[] b = baos.toByteArray();
+        String temp = Base64.encodeToString(b, Base64.DEFAULT);
         return temp;
     }
 
@@ -461,18 +483,19 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
      * @param encodedString
      * @return bitmap (from given string)
      */
-    public Bitmap StringToBitMap(String encodedString){
+    public Bitmap StringToBitMap(String encodedString) {
         try {
-            byte [] encodeByte=Base64.decode(encodedString,Base64.DEFAULT);
-            Bitmap bitmap=BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
             return bitmap;
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.getMessage();
             return null;
         }
     }
+
     @Override
-    protected void onSaveInstanceState (Bundle outState) {
+    protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString("tv_tags", tv_tags.getText().toString());
         outState.putString("rl_image_change", BitMapToString(((BitmapDrawable) (rl_image_change.getBackground())).getBitmap()));
@@ -571,7 +594,7 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
         super.onConfigurationChanged(newConfig);
         mDrawerToggle.onConfigurationChanged(newConfig);
 
-        if(et_list_name.getText().length()>0){
+        if (et_list_name.getText().length() > 0) {
             et_list_name.setHint("");
         }
     }

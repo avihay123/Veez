@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,6 +32,8 @@ import com.parse.SaveCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -210,7 +213,7 @@ public class LoginActivity extends Activity {
             }
             VeezUser result = null;
             try {
-                result = new VeezUser(jsonObject.getString("name"), new Gson().toJson(bitmap), jsonObject.getString("id"));
+                result = new VeezUser(jsonObject.getString("name"), BitMapToString(bitmap), jsonObject.getString("id"));
             } catch (JSONException e) {
                 Log.d("PB", "exception thrown while trying to deserialize json object");
                 e.printStackTrace();
@@ -218,6 +221,14 @@ public class LoginActivity extends Activity {
             }
 
             return result;
+        }
+
+        public String BitMapToString(Bitmap bitmap) {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+            byte[] b = baos.toByteArray();
+            String temp = Base64.encodeToString(b, Base64.DEFAULT);
+            return temp;
         }
 
         @Override
