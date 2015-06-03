@@ -35,6 +35,7 @@
         <activity
             android:name=".ListActivity"
             android:label="title_activity_list" >
+
         </activity>
 
         <activity

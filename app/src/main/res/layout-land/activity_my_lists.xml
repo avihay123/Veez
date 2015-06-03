@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     tools:context=".MyListsActivity"
     android:orientation="vertical"
-    android:weightSum="29" >
+    android:weightSum="29"
+    android:background="#ffffff" >
 
     <android.support.v4.widget.DrawerLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -70,7 +71,7 @@
                 android:orientation="horizontal"
                 android:weightSum="7" >
 
-                <AutoCompleteTextView
+                <EditText
                     android:layout_width="@dimen/search_size"
                     android:layout_height="fill_parent"
                     android:id="@+id/ac_search_list"
