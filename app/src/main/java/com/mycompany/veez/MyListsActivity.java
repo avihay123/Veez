@@ -205,7 +205,7 @@ public class MyListsActivity extends ActionBarActivity implements View.OnClickLi
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        VeezList list = myList.get(position);
+                        VeezList list = listsToShow.get(position);
                         Intent intent = new Intent(getApplicationContext(), ListActivity.class);
                         intent.putExtra("list", list);
                         startActivity(intent);
