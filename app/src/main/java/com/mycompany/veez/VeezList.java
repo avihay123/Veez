@@ -15,6 +15,10 @@ public class VeezList implements Serializable {
     private List<VeezItem> items;
     private List<VeezUser> users;
 
+    public void setNumOfItemsMarkedWithVee(int numOfItemsMarkedWithVee) {
+        this.numOfItemsMarkedWithVee = numOfItemsMarkedWithVee;
+    }
+
     public List<VeezItem> getItems() {
         return items;
     }
@@ -24,6 +28,7 @@ public class VeezList implements Serializable {
     private int numOfItemsMarkedWithVee;
     private List<String> tags;
     private String photo;
+    private String deadline;
 
     public VeezList(String name, boolean isPublic, List<VeezUser> users, VeezUser admin, List<String> tags, String photo) {
         this.name = name;

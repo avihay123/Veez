@@ -75,8 +75,8 @@ public class ListActivity extends ActionBarActivity implements View.OnClickListe
     private String userPhoto;
 
     //TODO delete it is exists in VeezList
-    private Integer currentItmes = 0;
-    private Integer TotalItems = 0;
+//    private Integer currentItmes = 0;
+//    private Integer TotalItems = 0;
     private List<VeezItem> items;
 
     private VeezList veezList;
@@ -176,9 +176,8 @@ public class ListActivity extends ActionBarActivity implements View.OnClickListe
                             if (isAlreadyExists == true) {
                                 Toast.makeText(getApplicationContext(), "This item is already exists!", Toast.LENGTH_SHORT).show();
                             } else {
-                                TotalItems++;
-                                tv_total_items.setText(TotalItems.toString());
                                 items.add(new VeezItem(item.getText().toString(), info.getText().toString(), false));
+                                tv_total_items.setText((veezList.getNumOfItems()).toString());
                                 sortItems(items);
                                 ((BaseAdapter) lv_list_items.getAdapter()).notifyDataSetChanged();
 
@@ -198,9 +197,6 @@ public class ListActivity extends ActionBarActivity implements View.OnClickListe
         tv_curr_items = (TextView) findViewById(R.id.tv_curr_items);
         tv_curr_items.setText((veezList.getNumOfItemsMarkedWithVee()).toString());
         tv_total_items = (TextView) findViewById(R.id.tv_total_items);
-        if (items != null) {
-            TotalItems = items.size();
-        }
         tv_total_items.setText((veezList.getNumOfItems()).toString());
 
         /* -------------- Side Menu ---------------- */
@@ -373,7 +369,7 @@ public class ListActivity extends ActionBarActivity implements View.OnClickListe
                 viewHolder.cb_item_vee = (CheckBox) view.findViewById(R.id.cb_item_vee);
                 viewHolder.tv_item_name = (TextView) view.findViewById(R.id.tv_item_name);
                 viewHolder.b_info = (Button) view.findViewById(R.id.b_info);
-                viewHolder.b_friend_veed = (Button) view.findViewById(R.id.b_friend);
+                viewHolder.b_friend_veed = (ImageView) view.findViewById(R.id.b_friend);
                 view.setTag(viewHolder);
 
             } else {
@@ -440,15 +436,15 @@ public class ListActivity extends ActionBarActivity implements View.OnClickListe
                 public void onClick(View arg) {
                     if (viewHolder.cb_item_vee.isChecked() == true) {
                         //TODO set the photo of the
-                        //viewHolder.b_friend_veed.setImageBitmap();
+                        viewHolder.b_friend_veed.setImageBitmap(getRoundedShape(StringToBitMap(userPhoto)));
 
                         viewHolder.b_friend_veed.setVisibility(View.VISIBLE);
-                        ListActivity.this.currentItmes++;
-                        ListActivity.this.tv_curr_items.setText(ListActivity.this.currentItmes.toString());
+                        veezList.setNumOfItemsMarkedWithVee(veezList.getNumOfItemsMarkedWithVee()+1);
+                        ListActivity.this.tv_curr_items.setText((veezList.getNumOfItemsMarkedWithVee()).toString());
                     } else {
                         viewHolder.b_friend_veed.setVisibility(View.INVISIBLE);
-                        ListActivity.this.currentItmes--;
-                        ListActivity.this.tv_curr_items.setText(ListActivity.this.currentItmes.toString());
+                        veezList.setNumOfItemsMarkedWithVee(veezList.getNumOfItemsMarkedWithVee()-1);
+                        ListActivity.this.tv_curr_items.setText((veezList.getNumOfItemsMarkedWithVee()).toString());
                     }
                     VeezItem new_item = itemsToShow.get(position);
                     new_item.setVee(viewHolder.cb_item_vee.isChecked());
@@ -485,7 +481,7 @@ public class ListActivity extends ActionBarActivity implements View.OnClickListe
             CheckBox cb_item_vee;
             TextView tv_item_name;
             Button b_info;
-            Button b_friend_veed;
+            ImageView b_friend_veed;
         }
     }
 

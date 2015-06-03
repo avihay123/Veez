@@ -47,15 +47,14 @@
             android:layout_marginRight="@dimen/button_margin1"
             android:layout_marginEnd="@dimen/button_margin1"/>
 
-        <Button
+        <ImageView
             android:layout_width="@dimen/button_width"
             android:layout_height="@dimen/button_height"
             android:layout_gravity="center"
             android:gravity="end"
             android:id="@+id/b_friend"
             android:layout_marginLeft="@dimen/button_margin1"
-            android:layout_marginRight="@dimen/button_margin1"
-            android:background="@drawable/friends_small"/>
+            android:layout_marginRight="@dimen/button_margin1"/>
 
         </LinearLayout>
 

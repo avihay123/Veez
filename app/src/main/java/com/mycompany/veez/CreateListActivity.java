@@ -112,13 +112,6 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
             Log.d("GSON", userJson);
             Gson gson = new Gson();
             veezUser = gson.fromJson(userJson, VeezUser.class);
-            if (veezUser == null)
-                Log.d("Persistent", "WTF");
-            Log.d("Persistent", veezUser.getName());
-            Log.d("Persistent", veezUser.getFacebookID());
-            if (veezUser == null)
-                Log.d("Persistent", "WTF2");
-            Log.d("Persistent",veezUser.getProfilePicture());
             Bitmap bm = StringToBitMap(veezUser.getProfilePicture());
            // Bitmap bm = new Gson().fromJson(veezUser.getProfilePicture(), Bitmap.class);
             Log.d("Persistent","1");
