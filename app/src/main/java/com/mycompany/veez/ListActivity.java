@@ -6,10 +6,13 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.content.Context;
@@ -50,19 +53,18 @@ public class ListActivity extends ActionBarActivity implements View.OnClickListe
     private TextView tv_curr_items;
     private TextView tv_total_items;
     private TextView tv_likes;
-    private AutoCompleteTextView ac_search_item;
+    private EditText ac_search_item;
     private Button b_add_item;
     private ListView lv_list_items;
-    //TODO delete it is exists in VeezList
-    private Integer currentItmes = 0;
-    private Integer TotalItems = 0;
 
     private ListView mDrawerList;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
-
     final Context context = this;
 
+    //TODO delete it is exists in VeezList
+    private Integer currentItmes = 0;
+    private Integer TotalItems = 0;
     private List<VeezItem> items;
 
 
@@ -89,6 +91,21 @@ public class ListActivity extends ActionBarActivity implements View.OnClickListe
 
         lv_list_items.setAdapter(adapter);
 
+        // Search_item
+
+        ac_search_item = (EditText) findViewById(R.id.ac_search_item);
+        ac_search_item.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                ((MyAdapter) lv_list_items.getAdapter()).updateItems(((EditText)s).getText().toString());
+            }
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count){
+                ((MyAdapter) lv_list_items.getAdapter()).updateItems(((EditText)s).getText().toString());
+            }
+        });
         //-------------------------------- buttons code ----------------------------------
         b_second_menu = (Button) findViewById(R.id.b_second_menu);
         b_second_menu.setOnClickListener(this);
@@ -124,8 +141,10 @@ public class ListActivity extends ActionBarActivity implements View.OnClickListe
                         } else {
                             boolean isAlreadyExists = false;
                             for (int i=0; i < items.size(); i++) {
-                                if(items.get(i).getName().equals(item.getText().toString()))
+                                if(items.get(i).getName().equals(item.getText().toString())) {
                                     isAlreadyExists = true;
+                                    break;
+                                }
                             }
                             if (isAlreadyExists == true) {
                                 Toast.makeText(getApplicationContext(), "This item is already exists!", Toast.LENGTH_SHORT).show();
@@ -242,20 +261,22 @@ public class ListActivity extends ActionBarActivity implements View.OnClickListe
 
     private class MyAdapter extends BaseAdapter {
 
-        private List<VeezItem> myList;
+        private List<VeezItem> allItems;
+        private List<VeezItem> itemsToShow;
 
         public MyAdapter(List<VeezItem> aList) {
-            myList = aList;
+            allItems = aList;
+            itemsToShow = aList;
         }
 
         @Override
         public int getCount() {
-            return myList.size();
+            return itemsToShow.size();
         }
 
         @Override
         public Object getItem(int position) {
-            return myList.get(position);
+            return itemsToShow.get(position);
         }
 
         //TODO return
@@ -281,11 +302,10 @@ public class ListActivity extends ActionBarActivity implements View.OnClickListe
                 viewHolder.tv_item_name = (TextView) view.findViewById(R.id.tv_item_name);
                 viewHolder.b_info = (Button) view.findViewById(R.id.b_info);
                 viewHolder.b_friend_veed = (Button) view.findViewById(R.id.b_friend);
-
                 view.setTag(viewHolder);
+
             } else {
                 view = convertView;
-
                 viewHolder = (ViewHolder) view.getTag();
             }
 
@@ -307,7 +327,7 @@ public class ListActivity extends ActionBarActivity implements View.OnClickListe
                     final EditText new_info = (EditText) addItemView.findViewById(R.id.et_info2);
                     Button b_add_info_dialog = (Button) addItemView.findViewById(R.id.b_add_info_dialog);
 
-                    String currentInfo = myList.get(position).getInfo();
+                    String currentInfo = itemsToShow.get(position).getInfo();
                     if (currentInfo.length() > 0) {
                         new_info.setText(currentInfo);
                     } else {
@@ -321,7 +341,7 @@ public class ListActivity extends ActionBarActivity implements View.OnClickListe
 
                     b_add_info_dialog.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
-                            myList.get(position).setInfo(new_info.getText().toString());
+                            itemsToShow.get(position).setInfo(new_info.getText().toString());
                             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                             imm.hideSoftInputFromWindow(new_info.getWindowToken(), 0);
                             alertDialog.cancel();
@@ -331,10 +351,10 @@ public class ListActivity extends ActionBarActivity implements View.OnClickListe
             });
 
             // Put the content in the view
-            viewHolder.tv_item_name.setText((myList.get(position)).getName());
+            viewHolder.tv_item_name.setText(itemsToShow.get(position).getName());
 
             // checkbox code
-            if ((myList.get(position)).isVee()) {
+            if (itemsToShow.get(position).isVee()) {
                 viewHolder.cb_item_vee.setChecked(true);
                 //TODO set the photo of the
                 viewHolder.b_friend_veed.setVisibility(View.VISIBLE);
@@ -358,9 +378,9 @@ public class ListActivity extends ActionBarActivity implements View.OnClickListe
                         ListActivity.this.currentItmes--;
                         ListActivity.this.tv_curr_items.setText(ListActivity.this.currentItmes.toString());
                     }
-                    VeezItem new_item = myList.get(position);
+                    VeezItem new_item = itemsToShow.get(position);
                     new_item.setVee(viewHolder.cb_item_vee.isChecked());
-                    items.remove(myList.get(position));
+                    items.remove(itemsToShow.get(position));
                     items.add(new_item);
                     sortItems(items);
                     MyAdapter.this.notifyDataSetChanged();
@@ -374,6 +394,19 @@ public class ListActivity extends ActionBarActivity implements View.OnClickListe
             } */
 
             return view;
+        }
+
+        public void updateItems(String prefix){
+            List<VeezItem> result = new ArrayList<>();
+            for (VeezItem item : allItems){
+                if (item.getName().startsWith(prefix))
+                    result.add(item);
+            }
+
+            itemsToShow = result;
+            this.notifyDataSetChanged();
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(ac_search_item.getWindowToken(), 0);
         }
 
         private class ViewHolder {
