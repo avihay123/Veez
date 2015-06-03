@@ -176,6 +176,7 @@
                     android:layout_marginTop="6dp"
                     android:layout_marginBottom="6dp"
                     android:layout_weight="6"
+                    android:singleLine="true"
                     android:background="@drawable/search" />
 
                 <Button
