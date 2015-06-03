@@ -134,7 +134,8 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         addDrawerItems();
         setupDrawer();
-        getSupportActionBar().hide();
+        if(getSupportActionBar() != null)
+            getSupportActionBar().hide();
 
         /* -------------------Buttons----------------------*/
         b_first_menu = (Button) findViewById(R.id.b_first_menu);
