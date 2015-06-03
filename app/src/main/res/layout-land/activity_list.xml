@@ -28,7 +28,8 @@
                 android:layout_height="0dp"
                 android:background="@drawable/cover"
                 android:orientation="vertical"
-                android:layout_weight="10" >
+                android:layout_weight="10"
+                android:id="@+id/rl_add_image">
 
                 <Button
                     android:layout_width="@dimen/menu_width"

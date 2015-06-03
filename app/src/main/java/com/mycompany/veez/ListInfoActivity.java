@@ -33,6 +33,7 @@ public class ListInfoActivity extends ActionBarActivity implements View.OnClickL
 
     private Button b_first_menu;
     private Button b_add_image;
+    private Button b_remove_tag;
 
     private Button b_add_friend;
     private Button b_add_tag;
@@ -46,10 +47,11 @@ public class ListInfoActivity extends ActionBarActivity implements View.OnClickL
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_info);
+        setContentView(R.layout.activity_create_list);
 
         /* -------------- Side Menu ---------------- */
 
@@ -67,6 +69,10 @@ public class ListInfoActivity extends ActionBarActivity implements View.OnClickL
 
         b_add_image = (Button) findViewById(R.id.b_add_image);
         b_add_image.setOnClickListener(this);
+        b_add_image.setVisibility(View.INVISIBLE);
+
+        b_add_image = (Button) findViewById(R.id.b_add_image);
+        b_add_image.setOnClickListener(this);
 
         b_add_friend = (Button) findViewById(R.id.b_add_friend);
         b_add_friend.setOnClickListener(this);
@@ -74,8 +80,12 @@ public class ListInfoActivity extends ActionBarActivity implements View.OnClickL
         b_add_tag = (Button) findViewById(R.id.b_add_tag);
         b_add_tag.setOnClickListener(this);
 
-        b_leave_list = (Button) findViewById(R.id.b_leave_list);
+        b_remove_tag = (Button) findViewById(R.id.b_remove_tag);
+        b_remove_tag.setOnClickListener(this);
+
+        b_leave_list = (Button) findViewById(R.id.b_create_list);
         b_leave_list.setOnClickListener(this);
+        b_leave_list.setBackgroundDrawable((getResources().getDrawable(R.drawable.leave_list)));
 
         //------------------------------ Deadline code ---------
         et_deadline = (EditText) findViewById(R.id.et_deadline);

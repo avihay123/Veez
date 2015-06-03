@@ -5,9 +5,17 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Path;
+import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -34,6 +42,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.widget.TextView;
@@ -53,6 +62,7 @@ public class ListActivity extends ActionBarActivity implements View.OnClickListe
     private TextView tv_curr_items;
     private TextView tv_total_items;
     private TextView tv_likes;
+    private TextView tv_list_name;
     private EditText ac_search_item;
     private Button b_add_item;
     private ListView lv_list_items;
@@ -61,6 +71,8 @@ public class ListActivity extends ActionBarActivity implements View.OnClickListe
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     final Context context = this;
+    private RelativeLayout rl_add_image;
+    private String userPhoto;
 
     //TODO delete it is exists in VeezList
     private Integer currentItmes = 0;
@@ -77,16 +89,30 @@ public class ListActivity extends ActionBarActivity implements View.OnClickListe
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         /* -------------- List View ---------------- */
+        veezList = (VeezList) getIntent().getSerializableExtra("listToShow");
+        userPhoto = getIntent().getStringExtra("userPhoto");
+
+        tv_list_name = (TextView) findViewById(R.id.tv_list_name);
+        tv_list_name.setText(veezList.getName());
+
+        rl_add_image = (RelativeLayout) findViewById(R.id.rl_add_image);
+        Bitmap bm = StringToBitMap(veezList.getStringPhoto());
+        Drawable dr = new BitmapDrawable(bm);
+        rl_add_image.setBackgroundDrawable(dr);
+
         lv_list_items = (ListView) findViewById(R.id.lv_list_items);
 
-        items = new ArrayList<VeezItem>();
-        items.add(new VeezItem("Coke","",false));
-        items.add(new VeezItem("Beer","6 pack",true));
-        items.add(new VeezItem("Wine","",false));
-        items.add(new VeezItem("Steake","3 pieces",false));
-        items.add(new VeezItem("Water","asd",true));
-        items.add(new VeezItem("Chicken","",false));
-        items.add(new VeezItem("Plates","",true));
+//        items = new ArrayList<VeezItem>();
+//        items.add(new VeezItem("Coke","",false));
+//        items.add(new VeezItem("Beer","6 pack",true));
+//        items.add(new VeezItem("Wine","",false));
+//        items.add(new VeezItem("Steake","3 pieces",false));
+//        items.add(new VeezItem("Water","asd",true));
+//        items.add(new VeezItem("Chicken","",false));
+//        items.add(new VeezItem("Plates","",true));
+        veezList.getItems().add(new VeezItem("Coke", "", false));
+        items = veezList.getItems();
+
         sortItems(items);
         MyAdapter adapter = new MyAdapter(items);
 
@@ -168,13 +194,14 @@ public class ListActivity extends ActionBarActivity implements View.OnClickListe
 
         //-------------------------------- TextView code --------------------------------
         tv_likes = (TextView) findViewById(R.id.tv_likes);
+
         tv_curr_items = (TextView) findViewById(R.id.tv_curr_items);
-        tv_curr_items.setText(currentItmes.toString());
+        tv_curr_items.setText((veezList.getNumOfItemsMarkedWithVee()).toString());
         tv_total_items = (TextView) findViewById(R.id.tv_total_items);
         if (items != null) {
             TotalItems = items.size();
         }
-        tv_total_items.setText(TotalItems.toString());
+        tv_total_items.setText((veezList.getNumOfItems()).toString());
 
         /* -------------- Side Menu ---------------- */
         mDrawerList = (ListView) findViewById(R.id.lv_navList);
@@ -200,6 +227,46 @@ public class ListActivity extends ActionBarActivity implements View.OnClickListe
                 return res;
             }
         });
+    }
+
+    /**
+     * @param encodedString
+     * @return bitmap (from given string)
+     */
+    public Bitmap StringToBitMap(String encodedString) {
+        try {
+            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch (Exception e) {
+            e.getMessage();
+            return null;
+        }
+    }
+
+    public Bitmap getRoundedShape(Bitmap scaleBitmapImage) {
+        int targetWidth = 125;
+        int targetHeight = 125;
+
+        Bitmap targetBitmap = Bitmap.createBitmap(targetWidth,
+                targetHeight, Bitmap.Config.ARGB_8888);
+
+        Canvas canvas = new Canvas(targetBitmap);
+        Path path = new Path();
+        path.addCircle(
+                ((float) targetWidth - 1) / 2,
+                ((float) targetHeight - 1) / 2,
+                (Math.min(((float) targetWidth), ((float) targetHeight)) / 2),
+                Path.Direction.CCW);
+
+        canvas.clipPath(path);
+        Bitmap sourceBitmap = scaleBitmapImage;
+        canvas.drawBitmap(
+                sourceBitmap,
+                new Rect(0, 0, sourceBitmap.getWidth(), sourceBitmap
+                        .getHeight()), new Rect(0, 0, targetWidth,
+                        targetHeight), null);
+        return targetBitmap;
     }
 
     @Override
@@ -238,8 +305,10 @@ public class ListActivity extends ActionBarActivity implements View.OnClickListe
 
             b_list_info.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    Intent intent = new Intent(getApplicationContext(), ListInfoActivity.class);
+                    Intent intent = new Intent(ListActivity.this, ListInfoActivity.class);
+                    intent.putExtra("listToShow", veezList);
                     startActivity(intent);
+                    //finish();
                 }
             });
 
@@ -257,6 +326,8 @@ public class ListActivity extends ActionBarActivity implements View.OnClickListe
                 }
             });
 
+        } else if (viewId == R.id.b_second_menu){
+
         }
     }
 
@@ -267,7 +338,7 @@ public class ListActivity extends ActionBarActivity implements View.OnClickListe
 
         public MyAdapter(List<VeezItem> aList) {
             allItems = new ArrayList<VeezItem>(aList);
-            itemsToShow = new ArrayList<VeezItem>(aList);
+            itemsToShow = aList;
         }
 
         @Override
