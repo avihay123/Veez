@@ -97,13 +97,13 @@ public class ListActivity extends ActionBarActivity implements View.OnClickListe
         ac_search_item.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
-                ((MyAdapter) lv_list_items.getAdapter()).updateItems(((EditText)s).getText().toString());
+                ((MyAdapter) lv_list_items.getAdapter()).updateItems(s.toString());
             }
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count){
-                ((MyAdapter) lv_list_items.getAdapter()).updateItems(((EditText)s).getText().toString());
+                ((MyAdapter) lv_list_items.getAdapter()).updateItems(s.toString());
             }
         });
         //-------------------------------- buttons code ----------------------------------
@@ -265,8 +265,8 @@ public class ListActivity extends ActionBarActivity implements View.OnClickListe
         private List<VeezItem> itemsToShow;
 
         public MyAdapter(List<VeezItem> aList) {
-            allItems = aList;
-            itemsToShow = aList;
+            allItems = new ArrayList<VeezItem>(aList);
+            itemsToShow = new ArrayList<VeezItem>(aList);
         }
 
         @Override
