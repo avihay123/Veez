@@ -50,6 +50,7 @@ public class LoginActivity extends Activity {
     private ProfileTracker profileTracker;
     private AccessTokenTracker accessTokenTracker;
     private ParseUser user;
+    private boolean startedActivity = false;
 
 
     @Override
@@ -131,7 +132,8 @@ public class LoginActivity extends Activity {
 
 
     private void updateWithToken(AccessToken currentAccessToken) {
-        if (currentAccessToken != null) {
+        if (currentAccessToken != null && startedActivity == false) {
+            startedActivity = true;
             Intent intent = new Intent(getApplicationContext(), MyListsActivity.class);
             startActivity(intent);
             finish();
