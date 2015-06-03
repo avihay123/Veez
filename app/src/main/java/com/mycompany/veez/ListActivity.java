@@ -110,7 +110,6 @@ public class ListActivity extends ActionBarActivity implements View.OnClickListe
 //        items.add(new VeezItem("Water","asd",true));
 //        items.add(new VeezItem("Chicken","",false));
 //        items.add(new VeezItem("Plates","",true));
-        veezList.getItems().add(new VeezItem("Coke", "", false));
         items = veezList.getItems();
 
         sortItems(items);

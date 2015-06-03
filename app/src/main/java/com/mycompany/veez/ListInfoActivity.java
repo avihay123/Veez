@@ -242,7 +242,7 @@ public class ListInfoActivity extends ActionBarActivity implements View.OnClickL
 
 
         et_list_name.setText(veezList.getName());
-        et_deadline.setRawInputType(veezList.getDeadline());
+     //   et_deadline.setRawInputType(veezList.getDeadline());
 
 
         if (savedInstanceState != null) {
