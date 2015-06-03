@@ -63,7 +63,8 @@ public class ExplorerActivity extends ActionBarActivity implements View.OnClickL
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         addDrawerItems();
         setupDrawer();
-        getSupportActionBar().hide();
+        if(getSupportActionBar() != null)
+            getSupportActionBar().hide();
 
         //Buttons
 

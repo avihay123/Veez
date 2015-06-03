@@ -61,6 +61,8 @@
                     android:textStyle="bold"
                     android:hint="Enter to choose list name"
                     android:ellipsize="start"
+                    android:textColor="#464545"
+                    android:textColorHint="#464545"
                     android:layout_centerHorizontal="true"
                     android:layout_below="@+id/b_add_image" />
 
@@ -136,16 +138,15 @@
                     android:layout_marginLeft="@dimen/tags_margin_left"
                     android:layout_marginStart="@dimen/tags_margin_left"
                     android:layout_marginTop="@dimen/tags_margin"
-                    android:layout_marginBottom="@dimen/tags_margin"
                     android:src="@drawable/tags"
-                    android:layout_weight="1" />
+                    android:layout_weight="0.8" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="27dp"
                     android:orientation="horizontal"
                     android:background="@drawable/line"
-                    android:layout_weight="2"
+                    android:layout_weight="2.2"
                     android:weightSum="6">
 
                     <Button

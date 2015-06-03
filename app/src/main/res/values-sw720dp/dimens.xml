@@ -17,7 +17,7 @@
     <dimen name="tags_margin_left">25dp</dimen>
     <dimen name="tags_margin">7dp</dimen>
     <dimen name="add_tag_width">80dp</dimen>
-    <dimen name="add_tag_height">35dp</dimen>
+    <dimen name="add_tag_height">85dp</dimen>
     <dimen name="add_tag_height_land">54dp</dimen>
     <dimen name="add_tag_margin">7dp</dimen>
     <dimen name="title_width">140dp</dimen>
