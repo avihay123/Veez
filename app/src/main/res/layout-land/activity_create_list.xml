@@ -6,7 +6,7 @@
     tools:context=".CreateListActivity"
     android:orientation="vertical"
     android:background="#ffffff"
-    android:weightSum="44" >
+    android:weightSum="45" >
 
     <android.support.v4.widget.DrawerLayout
         android:id="@+id/drawer_layout"
@@ -60,9 +60,9 @@
                     android:singleLine="true"
                     android:textStyle="bold"
                     android:hint ="Enter to choose list name"
-                    android:layout_below="@+id/b_add_image"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="@dimen/list_name_margin_top"/>
+                    android:layout_below="@+id/b_add_image"
+                    android:layout_alignParentBottom="true" />
 
             </RelativeLayout>
 
@@ -126,7 +126,7 @@
                 android:orientation="horizontal"
                 android:background="@drawable/line"
                 android:gravity="center_vertical"
-                android:layout_weight="6">
+                android:layout_weight="5">
 
                 <ImageView
                     android:layout_width="@dimen/tags_width"
@@ -225,6 +225,7 @@
                     android:layout_marginTop="@dimen/subtitle_margin"
                     android:hint="Enter to choose deadline"
                     android:textColor="#505153"
+                    android:textColorHint="#505153"
                     android:layout_gravity="bottom"
                     android:textSize="@dimen/subtitle_size"/>
 
@@ -281,11 +282,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:id="@+id/b_create_list"
-                android:background="@drawable/create_list_land"
-                android:layout_weight="4"
+                android:src="@drawable/create_list_land"
+                android:background="@drawable/create_list"
+                android:layout_weight="5"
                 android:onClick="onClick" />
 
+
         </LinearLayout>
+
         <!-- Side navigation drawer UI -->
         <ListView
             android:id="@+id/lv_navList"

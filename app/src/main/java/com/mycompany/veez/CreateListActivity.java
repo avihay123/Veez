@@ -154,6 +154,7 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
     //    b_add_tag.setHeight(b_add_tag.getWidth());
 
         b_create_list = (Button) findViewById(R.id.b_create_list);
+
         b_create_list.setOnClickListener(this);
 
         rl_image_change = (RelativeLayout) findViewById(R.id.rl_image_change);
