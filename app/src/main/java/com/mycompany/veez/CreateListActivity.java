@@ -1,6 +1,7 @@
 package com.mycompany.veez;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
@@ -303,14 +304,12 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
 
             //VeezList newList= new VeezList(et_list_name.getText(),cb_public.isChecked(),new ArrayList<VeezUser>().add(veezUser), veezUser, tags);
             VeezList newList= new VeezList(et_list_name.getText().toString(),cb_public.isChecked(),null, null, tags, bmp_listPhoto);
-
-
-
-            //TODO add to userVeez!!!!!
-
+            //TODO add to userVeez and to the server!!!!!
             //TODO jump to the list
             Intent intent = new Intent(getApplicationContext(), MyListsActivity.class);
-            startActivity(intent);
+           // intent.putExtra("listToShow", newList);
+            setResult(Activity.RESULT_OK, intent);
+            finish();
         }
     }
 
