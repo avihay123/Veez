@@ -239,6 +239,12 @@ public class ExplorerActivity extends ActionBarActivity implements View.OnClickL
             viewHolder.tv_num_likes.setText(String.valueOf((itemsToShow.get(position)).getLikesCount()));
             viewHolder.tv_list_name.setText((itemsToShow.get(position)).getName());
 
+            viewHolder.b_add_to_my_lists.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+
+                }
+            });
+
             return view;
         }
 
