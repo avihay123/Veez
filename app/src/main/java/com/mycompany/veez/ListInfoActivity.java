@@ -109,7 +109,7 @@ public class ListInfoActivity extends ActionBarActivity implements View.OnClickL
     private EditText et_deadline;
     private CheckBox cb_private;
     private CheckBox cb_public;
-    private Button b_create_list;
+    private Button b_leave_list;
     private Calendar myCalendar;
     private RelativeLayout rl_image_change;
     private TextView tv_tags;
@@ -162,9 +162,9 @@ public class ListInfoActivity extends ActionBarActivity implements View.OnClickL
         b_add_tag.setOnClickListener(this);
         //    b_add_tag.setHeight(b_add_tag.getWidth());
 
-        b_create_list = (Button) findViewById(R.id.b_create_list);
+        b_leave_list = (Button) findViewById(R.id.b_leave_list);
 
-        b_create_list.setOnClickListener(this);
+        b_leave_list.setOnClickListener(this);
 
         rl_image_change = (RelativeLayout) findViewById(R.id.rl_image_change);
         rl_image_change.setOnClickListener(this);
@@ -242,7 +242,17 @@ public class ListInfoActivity extends ActionBarActivity implements View.OnClickL
 
 
         et_list_name.setText(veezList.getName());
-        et_deadline.setRawInputType(veezList.getDeadline());
+        et_deadline.setText(veezList.getDeadline());
+        tags = veezList.getTags();
+        tv_tags.setText(makeTagsString());
+        cb_public.setChecked(veezList.isPublic());
+        cb_private.setChecked(!veezList.isPublic());
+        im_photo.setImageBitmap(getRoundedShape(StringToBitMap(userPhoto)));
+
+        Bitmap bm2 = StringToBitMap(veezList.getStringPhoto());
+        Drawable dr2 = new BitmapDrawable(bm2);
+        rl_image_change.setBackgroundDrawable(dr2);
+
 
 
         if (savedInstanceState != null) {

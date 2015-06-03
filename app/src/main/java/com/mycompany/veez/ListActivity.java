@@ -303,6 +303,7 @@ public class ListActivity extends ActionBarActivity implements View.OnClickListe
                 public void onClick(View v) {
                     Intent intent = new Intent(ListActivity.this, ListInfoActivity.class);
                     intent.putExtra("listToShow", veezList);
+                    intent.putExtra("userPhoto", userPhoto);
                     startActivity(intent);
                     //finish();
                 }
