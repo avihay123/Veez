@@ -75,7 +75,26 @@ public class MyListsActivity extends ActionBarActivity implements View.OnClickLi
         /* ----------- listView -------------------------------------*/
         //----------------------------for debug -----------------------
         lv_my_lists = (ListView) findViewById(R.id.lv_my_lists);
-        List<VeezItem> items = new ArrayList<VeezItem>();
+
+        ParseUser parseUser = ParseUser.getCurrentUser();
+        VeezUser veezUser = null;
+        if (parseUser != null){
+            SharedPreferences prefs = getSharedPreferences("tomer", MODE_PRIVATE);
+            String facebookID = (String) parseUser.get("facebookID");
+            String userJson = prefs.getString(facebookID, "");
+            Log.d("GSON",userJson);
+            Gson gson = new Gson();
+            veezUser = gson.fromJson(userJson, VeezUser.class);
+            Log.d("Persistent", veezUser.getName());
+            Log.d("Persistent", veezUser.getFacebookID());
+        }
+        else{
+            Log.d("Persistent", "how to get user");
+        }
+
+        List<VeezList> lists = veezUser.getLists();
+
+        /*List<VeezItem> items = new ArrayList<VeezItem>();
         List<VeezList> lists = new ArrayList<VeezList>();
         items.add(new VeezItem(("a")));
         lists.add(new VeezList(0, 0, items, true, "abc"));
@@ -86,7 +105,8 @@ public class MyListsActivity extends ActionBarActivity implements View.OnClickLi
         lists.add(new VeezList(1, 100, items, false, "ab3"));
         lists.add(new VeezList(1, 100, items, false, "ab4"));
         lists.add(new VeezList(1, 100, items, false, "ab5"));
-        lists.add(new VeezList(1, 100, items, false, "ab6"));
+        lists.add(new VeezList(1, 100, items, false, "ab6"));*/
+
         MyAdapter adapter = new MyAdapter(lists);
 
         //reaplace to this in case of true use
@@ -140,81 +160,81 @@ public class MyListsActivity extends ActionBarActivity implements View.OnClickLi
 
     private class MyAdapter extends BaseAdapter {
 
-            private List<VeezList> allLists;
-            private List<VeezList> listsToShow;
+        private List<VeezList> allLists;
+        private List<VeezList> listsToShow;
 
-            public MyAdapter(List<VeezList> aList) {
-                allLists = new ArrayList<VeezList>(aList);
-                listsToShow = aList;
+        public MyAdapter(List<VeezList> aList) {
+            allLists = new ArrayList<VeezList>(aList);
+            listsToShow = aList;
+        }
+
+        @Override
+        public int getCount() {
+            return listsToShow.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return listsToShow.get(position);
+        }
+
+        //TODO return
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(final int position, View convertView, ViewGroup parent) {
+
+            View view;
+            ViewHolder viewHolder;
+
+            Log.d("MY_TAG", "Position: " + position);
+
+            if (convertView == null) {
+                LayoutInflater li = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                view = li.inflate(R.layout.list_view_list, null);
+
+                viewHolder = new ViewHolder();
+                viewHolder.tv_num_likes = (TextView) view.findViewById(R.id.tv_num_likes);
+                viewHolder.tv_list_name = (TextView) view.findViewById(R.id.tv_list_name);
+                viewHolder.tv_curr_items = (TextView) view.findViewById(R.id.tv_curr_items);
+                viewHolder.tv_total_items = (TextView) view.findViewById(R.id.tv_total_items);
+                viewHolder.iv_lock = (ImageView) view.findViewById(R.id.im_lock);
+
+                view.setTag(viewHolder);
+            } else {
+                view = convertView;
+
+                viewHolder = (ViewHolder) view.getTag();
             }
 
-            @Override
-            public int getCount() {
-                return listsToShow.size();
-            }
+            // Put the content in the view
+            viewHolder.tv_num_likes.setText(String.valueOf((listsToShow.get(position)).getLikesCount()));
+            viewHolder.tv_list_name.setText((listsToShow.get(position)).getName());
+            viewHolder.tv_curr_items.setText(String.valueOf((listsToShow.get(position)).getNumOfItemsMarkedWithVee()));
+            viewHolder.tv_total_items.setText(String.valueOf((listsToShow.get(position)).getNumOfItems()));
 
-            @Override
-            public Object getItem(int position) {
-                return listsToShow.get(position);
-            }
+            //viewHolder.myImage.setImageResource(imageId.get(position));
+            if ((listsToShow.get(position)).isPublic())
+                viewHolder.iv_lock.setVisibility(View.GONE);
+            else
+                viewHolder.iv_lock.setVisibility(View.VISIBLE);
 
-            //TODO return
-            @Override
-            public long getItemId(int position) {
-                return 0;
-            }
-
-            @Override
-            public View getView(final int position, View convertView, ViewGroup parent) {
-
-                View view;
-                ViewHolder viewHolder;
-
-                Log.d("MY_TAG", "Position: " + position);
-
-                if (convertView == null) {
-                    LayoutInflater li = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                    view = li.inflate(R.layout.list_view_list, null);
-
-                    viewHolder = new ViewHolder();
-                    viewHolder.tv_num_likes = (TextView) view.findViewById(R.id.tv_num_likes);
-                    viewHolder.tv_list_name = (TextView) view.findViewById(R.id.tv_list_name);
-                    viewHolder.tv_curr_items = (TextView) view.findViewById(R.id.tv_curr_items);
-                    viewHolder.tv_total_items = (TextView) view.findViewById(R.id.tv_total_items);
-                    viewHolder.iv_lock = (ImageView) view.findViewById(R.id.im_lock);
-
-                    view.setTag(viewHolder);
-                } else {
-                    view = convertView;
-
-                    viewHolder = (ViewHolder) view.getTag();
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    VeezList list = listsToShow.get(position);
+                    Intent intent = new Intent(getApplicationContext(), ListActivity.class);
+                    intent.putExtra("list", list);
+                    startActivity(intent);
+                    finish();
                 }
+            });
 
-                // Put the content in the view
-                viewHolder.tv_num_likes.setText(String.valueOf((listsToShow.get(position)).getLikesCount()));
-                viewHolder.tv_list_name.setText((listsToShow.get(position)).getName());
-                viewHolder.tv_curr_items.setText(String.valueOf((listsToShow.get(position)).getNumOfItemsMarkedWithVee()));
-                viewHolder.tv_total_items.setText(String.valueOf((listsToShow.get(position)).getNumOfItems()));
-
-                //viewHolder.myImage.setImageResource(imageId.get(position));
-                if ((listsToShow.get(position)).isPublic())
-                    viewHolder.iv_lock.setVisibility(View.GONE);
-                else
-                    viewHolder.iv_lock.setVisibility(View.VISIBLE);
-
-                view.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        VeezList list = myList.get(position);
-                        Intent intent = new Intent(getApplicationContext(), ListActivity.class);
-                        intent.putExtra("list", list);
-                        startActivity(intent);
-                        finish();
-                    }
-                });
-
-                return view;
-            }
+            return view;
+        }
 
         public void updateLists(String prefix){
             List<VeezList> result = new ArrayList<>();
@@ -229,147 +249,147 @@ public class MyListsActivity extends ActionBarActivity implements View.OnClickLi
             imm.hideSoftInputFromWindow(ac_search_list.getWindowToken(), 0);
         }
 
-            //TODO next build add the field tv_list_friends
-            //TODO handle the deadline
-            private class ViewHolder {
-                TextView tv_num_likes;
-                TextView tv_list_name;
-                ImageView iv_lock;
-                TextView tv_curr_items;
-                TextView tv_total_items;
-            }
+        //TODO next build add the field tv_list_friends
+        //TODO handle the deadline
+        private class ViewHolder {
+            TextView tv_num_likes;
+            TextView tv_list_name;
+            ImageView iv_lock;
+            TextView tv_curr_items;
+            TextView tv_total_items;
         }
+    }
 
     /* ----------------- Menu functions ------------------- */
 
-        private class MyAdapter2 extends BaseAdapter {
+    private class MyAdapter2 extends BaseAdapter {
 
-            private ArrayList<String> myList;
+        private ArrayList<String> myList;
 
-            public MyAdapter2(ArrayList<String> aList) {
-                myList = aList;
-            }
-
-            @Override
-            public int getCount() {
-                return myList.size();
-            }
-
-            @Override
-            public Object getItem(int position) {
-                return myList.get(position);
-            }
-
-            @Override
-            public long getItemId(int position) {
-                return 0;
-            }
-
-            @Override
-            public View getView(final int position, View convertView, ViewGroup parent) {
-
-                View view;
-                ViewHolder viewHolder;
-
-                if (convertView == null) {
-                    LayoutInflater li = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                    view = li.inflate(R.layout.my_simple_list_item1, null);
-
-                    viewHolder = new ViewHolder();
-                    viewHolder.myText = (TextView) view.findViewById(android.R.id.text1);
-                    view.setTag(viewHolder);
-                } else {
-                    view = convertView;
-                    viewHolder = (ViewHolder) view.getTag();
-                }
-
-                viewHolder.myText.setText(myList.get(position));
-                return view;
-            }
-
-            private class ViewHolder {
-                TextView myText;
-            }
-        }
-
-        private void addDrawerItems() {
-
-            ArrayList<String> values = new ArrayList<String>();
-            values.add("");
-            values.add("Name");
-            values.add("My Lists");
-            values.add("Explorer");
-            values.add("Friends");
-
-            MyAdapter2 adapter = new MyAdapter2(values);
-            mDrawerList.setAdapter(adapter);
-
-            mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    if (position == 0) {
-                        // move to profile_layout
-                    } else if (position == 1) {
-                        // move to profile_layout
-                    } else if (position == 2) {
-                        Intent intent = new Intent(getApplicationContext(), MyListsActivity.class);
-                        startActivity(intent);
-                    } else if (position == 3) {
-                        Intent intent = new Intent(getApplicationContext(), ExplorerActivity.class);
-                        startActivity(intent);
-                    } else if (position == 4) {
-                        // move to friends activity
-                        //using button for debug
-                        ParseUser parseUser = ParseUser.getCurrentUser();
-                        if (parseUser != null){
-                            SharedPreferences prefs = getSharedPreferences("tomer", MODE_PRIVATE);
-                            String facebookID = (String) parseUser.get("facebookID");
-                            String userJson = prefs.getString(facebookID, "");
-                            Log.d("GSON",userJson);
-                            Gson gson = new Gson();
-                            VeezUser veezUser = gson.fromJson(userJson, VeezUser.class);
-                            Log.d("Persistent", veezUser.getName());
-                            Log.d("Persistent", veezUser.getFacebookID());
-                        }
-                        else{
-                            Log.d("Persistent", "how to get user");
-                        }
-
-                    }
-                }
-            });
-        }
-
-        private void setupDrawer() {
-            mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
-
-                /** Called when a drawer has settled in a completely open state. */
-                public void onDrawerOpened(View drawerView) {
-                    super.onDrawerOpened(drawerView);
-                    invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-                }
-
-                /** Called when a drawer has settled in a completely closed state. */
-                public void onDrawerClosed(View view) {
-                    super.onDrawerClosed(view);
-                    invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-                }
-            };
-
-            mDrawerToggle.setDrawerIndicatorEnabled(true);
-            mDrawerLayout.setDrawerListener(mDrawerToggle);
+        public MyAdapter2(ArrayList<String> aList) {
+            myList = aList;
         }
 
         @Override
-        protected void onPostCreate(Bundle savedInstanceState) {
-            super.onPostCreate(savedInstanceState);
-            // Sync the toggle state after onRestoreInstanceState has occurred.
-            mDrawerToggle.syncState();
+        public int getCount() {
+            return myList.size();
         }
 
         @Override
-        public void onConfigurationChanged(Configuration newConfig) {
-            super.onConfigurationChanged(newConfig);
-            mDrawerToggle.onConfigurationChanged(newConfig);
+        public Object getItem(int position) {
+            return myList.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(final int position, View convertView, ViewGroup parent) {
+
+            View view;
+            ViewHolder viewHolder;
+
+            if (convertView == null) {
+                LayoutInflater li = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                view = li.inflate(R.layout.my_simple_list_item1, null);
+
+                viewHolder = new ViewHolder();
+                viewHolder.myText = (TextView) view.findViewById(android.R.id.text1);
+                view.setTag(viewHolder);
+            } else {
+                view = convertView;
+                viewHolder = (ViewHolder) view.getTag();
+            }
+
+            viewHolder.myText.setText(myList.get(position));
+            return view;
+        }
+
+        private class ViewHolder {
+            TextView myText;
         }
     }
+
+    private void addDrawerItems() {
+
+        ArrayList<String> values = new ArrayList<String>();
+        values.add("");
+        values.add("Name");
+        values.add("My Lists");
+        values.add("Explorer");
+        values.add("Friends");
+
+        MyAdapter2 adapter = new MyAdapter2(values);
+        mDrawerList.setAdapter(adapter);
+
+        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0) {
+                    // move to profile_layout
+                } else if (position == 1) {
+                    // move to profile_layout
+                } else if (position == 2) {
+                    Intent intent = new Intent(getApplicationContext(), MyListsActivity.class);
+                    startActivity(intent);
+                } else if (position == 3) {
+                    Intent intent = new Intent(getApplicationContext(), ExplorerActivity.class);
+                    startActivity(intent);
+                } else if (position == 4) {
+                    // move to friends activity
+                    //using button for debug
+                    ParseUser parseUser = ParseUser.getCurrentUser();
+                    if (parseUser != null){
+                        SharedPreferences prefs = getSharedPreferences("tomer", MODE_PRIVATE);
+                        String facebookID = (String) parseUser.get("facebookID");
+                        String userJson = prefs.getString(facebookID, "");
+                        Log.d("GSON",userJson);
+                        Gson gson = new Gson();
+                        VeezUser veezUser = gson.fromJson(userJson, VeezUser.class);
+                        Log.d("Persistent", veezUser.getName());
+                        Log.d("Persistent", veezUser.getFacebookID());
+                    }
+                    else{
+                        Log.d("Persistent", "how to get user");
+                    }
+
+                }
+            }
+        });
+    }
+
+    private void setupDrawer() {
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+}
