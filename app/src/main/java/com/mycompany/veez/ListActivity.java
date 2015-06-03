@@ -130,7 +130,7 @@ public class ListActivity extends ActionBarActivity implements View.OnClickListe
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count){
-                ((MyAdapter) lv_list_items.getAdapter()).updateItems(s.toString());
+                //((MyAdapter) lv_list_items.getAdapter()).updateItems(s.toString());
             }
         });
         //-------------------------------- buttons code ----------------------------------
