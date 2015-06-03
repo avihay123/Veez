@@ -14,21 +14,20 @@ public class VeezList implements Serializable {
     private boolean isPublic;
     private List<VeezItem> items;
     private List<VeezUser> users;
-
-    public void setNumOfItemsMarkedWithVee(int numOfItemsMarkedWithVee) {
-        this.numOfItemsMarkedWithVee = numOfItemsMarkedWithVee;
-    }
-
-    public List<VeezItem> getItems() {
-        return items;
-    }
-
     private VeezUser Admin;
     private int likesCount;
     private int numOfItemsMarkedWithVee;
     private List<String> tags;
     private String photo;
     private String deadline;
+
+    public String getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(String deadline) {
+        this.deadline = deadline;
+    }
 
     public VeezList(String name, boolean isPublic, List<VeezUser> users, VeezUser admin, List<String> tags, String photo) {
         this.name = name;
@@ -73,5 +72,13 @@ public class VeezList implements Serializable {
 
     public Integer getNumOfItems() {
         return items.size();
+    }
+
+    public void setNumOfItemsMarkedWithVee(int numOfItemsMarkedWithVee) {
+        this.numOfItemsMarkedWithVee = numOfItemsMarkedWithVee;
+    }
+
+    public List<VeezItem> getItems() {
+        return items;
     }
 }
