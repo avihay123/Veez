@@ -124,14 +124,14 @@ public class LoginActivity extends Activity {
 
             }
         });
-
-        if (ParseFacebookUtils.isLinked(ParseUser.getCurrentUser())) {
-            startedActivity = true;
-            Intent intent = new Intent(getApplicationContext(), MyListsActivity.class);
-            startActivity(intent);
-            finish();
+        if (ParseUser.getCurrentUser() != null) {
+            if (ParseFacebookUtils.isLinked(ParseUser.getCurrentUser())) {
+                startedActivity = true;
+                Intent intent = new Intent(getApplicationContext(), MyListsActivity.class);
+                startActivity(intent);
+                finish();
+            }
         }
-
     }
 
 

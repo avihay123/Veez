@@ -244,6 +244,7 @@
                     android:layout_marginStart="@dimen/title_margin_left"
                     android:hint="Enter to choose deadline"
                     android:textColor="#505153"
+                    android:textColorHint="#505153"
                     android:textSize="@dimen/subtitle_size"
                     android:layout_weight="1" />
 

@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -39,7 +40,7 @@ public class MyListsActivity extends ActionBarActivity implements View.OnClickLi
 
     private Button b_first_menu;
     private Button b_add_list;
-    private AutoCompleteTextView ac_search_list;
+    private EditText ac_search_list;
     private ListView lv_my_lists;
 
     private ListView mDrawerList;
@@ -52,24 +53,6 @@ public class MyListsActivity extends ActionBarActivity implements View.OnClickLi
         setContentView(R.layout.activity_my_lists);
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-
-
-        //TODO- NICE TO HAVE
-        /* -------------- Keyboard Handling---------------- */
-
-        final View l_activityRootView = findViewById(R.id.l_main_layout);
-        final View l_activityHeaderView = findViewById(R.id.l_header_layout);
-        l_activityRootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                int heightDiff = l_activityRootView.getRootView().getHeight() - l_activityRootView.getHeight();
-                if (heightDiff > 200) { // if more than 200 pixels, its probably a keyboard...
-                    l_activityHeaderView.setVisibility(View.GONE);
-                } else {
-                    l_activityHeaderView.setVisibility(View.VISIBLE);
-                }
-            }
-        });
 
 
         /* -------------- Side Menu ---------------- */
@@ -110,14 +93,21 @@ public class MyListsActivity extends ActionBarActivity implements View.OnClickLi
         //   MyAdapter adapter = new MyAdapter(((MyApplication)getApplicationContext()).getUser().getLists());
         lv_my_lists.setAdapter(adapter);
 
-        /* ----------- AutoComplete Search ----------------*/
+        /* -----------  Search ----------------*/
+        ac_search_list = (EditText) findViewById(R.id.ac_search_list);
+        ac_search_list.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                ((MyAdapter) lv_my_lists.getAdapter()).updateLists(s.toString());
+            }
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count){
+                ((MyAdapter) lv_my_lists.getAdapter()).updateLists(s.toString());
+            }
+        });
 
-        ArrayAdapter<String> adapterAutoComplete = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, getListsName(lists));
-
-        ac_search_list = (AutoCompleteTextView) findViewById(R.id.ac_search_list);
-        ac_search_list.setAdapter(adapterAutoComplete);
-        ac_search_list.setThreshold(1);
     }
 
     //TODO the parameter is only for debug
@@ -150,20 +140,22 @@ public class MyListsActivity extends ActionBarActivity implements View.OnClickLi
 
     private class MyAdapter extends BaseAdapter {
 
-            private List<VeezList> myList;
+            private List<VeezList> allLists;
+            private List<VeezList> listsToShow;
 
             public MyAdapter(List<VeezList> aList) {
-                myList = aList;
+                allLists = new ArrayList<VeezList>(aList);
+                listsToShow = aList;
             }
 
             @Override
             public int getCount() {
-                return myList.size();
+                return listsToShow.size();
             }
 
             @Override
             public Object getItem(int position) {
-                return myList.get(position);
+                return listsToShow.get(position);
             }
 
             //TODO return
@@ -199,13 +191,13 @@ public class MyListsActivity extends ActionBarActivity implements View.OnClickLi
                 }
 
                 // Put the content in the view
-                viewHolder.tv_num_likes.setText(String.valueOf((myList.get(position)).getLikesCount()));
-                viewHolder.tv_list_name.setText((myList.get(position)).getName());
-                viewHolder.tv_curr_items.setText(String.valueOf((myList.get(position)).getNumOfItemsMarkedWithVee()));
-                viewHolder.tv_total_items.setText(String.valueOf((myList.get(position)).getNumOfItems()));
+                viewHolder.tv_num_likes.setText(String.valueOf((listsToShow.get(position)).getLikesCount()));
+                viewHolder.tv_list_name.setText((listsToShow.get(position)).getName());
+                viewHolder.tv_curr_items.setText(String.valueOf((listsToShow.get(position)).getNumOfItemsMarkedWithVee()));
+                viewHolder.tv_total_items.setText(String.valueOf((listsToShow.get(position)).getNumOfItems()));
 
                 //viewHolder.myImage.setImageResource(imageId.get(position));
-                if ((myList.get(position)).isPublic())
+                if ((listsToShow.get(position)).isPublic())
                     viewHolder.iv_lock.setVisibility(View.GONE);
                 else
                     viewHolder.iv_lock.setVisibility(View.VISIBLE);
@@ -223,6 +215,19 @@ public class MyListsActivity extends ActionBarActivity implements View.OnClickLi
 
                 return view;
             }
+
+        public void updateLists(String prefix){
+            List<VeezList> result = new ArrayList<>();
+            for (VeezList list : allLists){
+                if (list.getName().startsWith(prefix))
+                    result.add(list);
+            }
+
+            listsToShow = result;
+            this.notifyDataSetChanged();
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(ac_search_list.getWindowToken(), 0);
+        }
 
             //TODO next build add the field tv_list_friends
             //TODO handle the deadline
