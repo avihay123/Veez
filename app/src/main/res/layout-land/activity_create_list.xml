@@ -54,7 +54,9 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/et_list_name"
                     android:fontFamily="Myriad Hebrew"
-                    android:textSize="30sp"
+                    android:textSize="@dimen/list_name_size"
+                    android:textColor="#464545"
+                    android:textColorHint="#464545"
                     android:singleLine="true"
                     android:textStyle="bold"
                     android:hint ="Enter to choose list name"
@@ -86,8 +88,7 @@
                         android:layout_marginBottom="@dimen/add_friend_button_margin"
                         android:layout_marginLeft="@dimen/add_friend_button_margin"
                         android:layout_marginStart="@dimen/add_friend_button_margin"
-                        android:gravity="start"
-                        android:background="@drawable/friends_small"/>
+                        android:gravity="start"/>
 
                 </LinearLayout>
 

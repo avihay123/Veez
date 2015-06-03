@@ -78,7 +78,8 @@ public class MyListsActivity extends ActionBarActivity implements View.OnClickLi
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         addDrawerItems();
         setupDrawer();
-        getSupportActionBar().hide();
+        if (getSupportActionBar() != null)
+            getSupportActionBar().hide();
 
         /* ------------------ Buttons ----------------*/
 
