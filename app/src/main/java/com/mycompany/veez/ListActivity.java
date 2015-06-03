@@ -266,7 +266,7 @@ public class ListActivity extends ActionBarActivity implements View.OnClickListe
 
         public MyAdapter(List<VeezItem> aList) {
             allItems = new ArrayList<VeezItem>(aList);
-            itemsToShow = new ArrayList<VeezItem>(aList);
+            itemsToShow = aList;
         }
 
         @Override
