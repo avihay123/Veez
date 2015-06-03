@@ -2,16 +2,17 @@ package com.mycompany.veez;
 
 import android.graphics.Bitmap;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by רביבו on 30/05/2015.
  */
-public class VeezListExplorer {
+public class VeezListExplorer implements Serializable{
     private String name;
     private List<VeezItem> items;
     private int likesCount;
-    private Bitmap photo;
+//    private Bitmap photo;
     private List<String> tags;
 
     public VeezListExplorer(int likesCount, List<VeezItem> items,String name, List<String> tags) {

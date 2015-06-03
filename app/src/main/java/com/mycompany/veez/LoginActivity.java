@@ -45,7 +45,6 @@ public class LoginActivity extends Activity {
 
     //    private Button b_login;
     private Button b_login;
-    private ImageView iv_logo;
     private CallbackManager callbackManager;
     private ProfileTracker profileTracker;
     private AccessTokenTracker accessTokenTracker;
@@ -57,8 +56,6 @@ public class LoginActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        iv_logo = (ImageView) findViewById(R.id.iv_logo);
 
         accessTokenTracker = new AccessTokenTracker() {
             @Override
@@ -127,6 +124,14 @@ public class LoginActivity extends Activity {
 
             }
         });
+
+        if (ParseFacebookUtils.isLinked(ParseUser.getCurrentUser())) {
+            startedActivity = true;
+            Intent intent = new Intent(getApplicationContext(), MyListsActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
     }
 
 
