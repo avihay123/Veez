@@ -245,7 +245,7 @@ public class ExplorerActivity extends ActionBarActivity implements View.OnClickL
                 public void onClick(View v) {
                     VeezListExplorer list = itemsToShow.get(position);
                     Intent intent = new Intent(getApplicationContext(), ListActivity.class);
-                    intent.putExtra("list", list);
+                    intent.putExtra("listToShow", new VeezList(list));
                     startActivity(intent);
                     finish();
                 }
@@ -256,7 +256,7 @@ public class ExplorerActivity extends ActionBarActivity implements View.OnClickL
                 public void onClick(View v) {
                     VeezListExplorer list = itemsToShow.get(position);
                     Intent intent = new Intent(getApplicationContext(), ListActivity.class);
-                    intent.putExtra("list", list);
+                    intent.putExtra("listToShow", new VeezList(list));
                     startActivity(intent);
                     finish();
                 }

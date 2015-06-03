@@ -18,6 +18,19 @@ public class VeezList implements Serializable {
         return tags;
     }
 
+    public VeezList(VeezListExplorer v){
+        this.name = v.getName();
+        this.isPublic = true;
+        this.users = new ArrayList<>();
+        Admin = null;
+        this.tags = v.getTags();
+        this.photo = "";
+        this.items = v.getItems();
+        likesCount = 0;
+        numOfItemsMarkedWithVee = 0;
+    }
+
+
     public String getPhoto() {
         return photo;
     }

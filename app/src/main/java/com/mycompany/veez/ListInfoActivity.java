@@ -137,6 +137,24 @@ public class ListInfoActivity extends ActionBarActivity implements View.OnClickL
         veezList = (VeezList) getIntent().getSerializableExtra("listToShow");
         userPhoto = getIntent().getStringExtra("userPhoto");
 
+        ParseUser parseUser = ParseUser.getCurrentUser();
+        if (parseUser != null) {
+            SharedPreferences prefs = getSharedPreferences("tomer", MODE_PRIVATE);
+            String facebookID = (String) parseUser.get("facebookID");
+            String userJson = prefs.getString(facebookID, "");
+            Log.d("GSON", userJson);
+            Gson gson = new Gson();
+            veezUser = gson.fromJson(userJson, VeezUser.class);
+            Bitmap bm = StringToBitMap(veezUser.getProfilePicture());
+            // Bitmap bm = new Gson().fromJson(veezUser.getProfilePicture(), Bitmap.class);
+            Log.d("Persistent","1");
+            ImageView im_photo = (ImageView) findViewById(R.id.im_photo);
+            im_photo.setImageBitmap(getRoundedShape(bm));
+            //  im_photo.setImageBitmap(getRoundedShape(StringToBitMap(userPhoto)));
+        } else {
+            Log.d("Persistent", "how to get user");
+        }
+
 
         /* -------------- Side Menu ---------------- */
         mDrawerList = (ListView) findViewById(R.id.lv_navList);
@@ -200,7 +218,7 @@ public class ListInfoActivity extends ActionBarActivity implements View.OnClickL
             }
         };
 
-        et_deadline.setOnClickListener(new View.OnClickListener() {
+                et_deadline.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(ListInfoActivity.this, date, myCalendar
@@ -247,7 +265,7 @@ public class ListInfoActivity extends ActionBarActivity implements View.OnClickL
         tv_tags.setText(makeTagsString());
         cb_public.setChecked(veezList.isPublic());
         cb_private.setChecked(!veezList.isPublic());
-      //  im_photo.setImageBitmap(getRoundedShape(StringToBitMap(userPhoto)));
+
 
         Bitmap bm2 = StringToBitMap(veezList.getStringPhoto());
         Drawable dr2 = new BitmapDrawable(bm2);

@@ -15,10 +15,15 @@ public class VeezListExplorer implements Serializable{
 //    private Bitmap photo;
     private List<String> tags;
 
+    public List<String> getTags() {
+        return tags;
+    }
+
     public VeezListExplorer(int likesCount, List<VeezItem> items,String name, List<String> tags) {
         this.name = name;
         this.items = items;
         this.likesCount = likesCount;
+
         this.tags = tags;
     }
 
