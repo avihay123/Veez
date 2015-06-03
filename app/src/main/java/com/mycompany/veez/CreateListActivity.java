@@ -1,5 +1,6 @@
 package com.mycompany.veez;
 
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
@@ -7,6 +8,13 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -58,6 +66,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedHashSet;
+import java.util.List;
 
 public class CreateListActivity extends ActionBarActivity implements View.OnClickListener {
 
@@ -77,11 +86,12 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
     private TextView tv_tags;
     private Button b_remove_tag;
     private ImageView im_photo;
+    private Bitmap bmp_listPhoto = null;
 
     private ListView mDrawerList;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
-    private LinkedHashSet<String> tags = new LinkedHashSet<String>();
+    private List<String> tags = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,7 +121,7 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
            // Bitmap bm = new Gson().fromJson(veezUser.getProfilePicture(), Bitmap.class);
             Log.d("Persistent","1");
             ImageView im_photo = (ImageView) findViewById(R.id.im_photo);
-            im_photo.setImageBitmap(bm);
+            im_photo.setImageBitmap(getRoundedShape(bm));
         } else {
             Log.d("Persistent", "how to get user");
         }
@@ -139,6 +149,7 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
 
         b_add_tag = (Button) findViewById(R.id.b_add_tag);
         b_add_tag.setOnClickListener(this);
+    //    b_add_tag.setHeight(b_add_tag.getWidth());
 
         b_create_list = (Button) findViewById(R.id.b_create_list);
         b_create_list.setOnClickListener(this);
@@ -148,6 +159,7 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
 
         b_remove_tag = (Button) findViewById(R.id.b_remove_tag);
         b_remove_tag.setOnClickListener(this);
+     //   b_remove_tag.setHeight(b_remove_tag.getWidth());
 
         /* -------------- Deadline ---------------- */
         et_deadline = (EditText) findViewById(R.id.et_deadline);
@@ -289,7 +301,9 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
                 return;
             }
 
-            // VeezList newList= new VeezList(et_list_name.getText(),cb_public.isChecked(),new ArrayList<VeezUser>().add(veezUser), veezUser, tags)
+            //VeezList newList= new VeezList(et_list_name.getText(),cb_public.isChecked(),new ArrayList<VeezUser>().add(veezUser), veezUser, tags);
+            VeezList newList= new VeezList(et_list_name.getText().toString(),cb_public.isChecked(),null, null, tags, bmp_listPhoto);
+
 
 
             //TODO add to userVeez!!!!!
@@ -354,6 +368,7 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                bmp_listPhoto = thumbnail;
                 Drawable dr = new BitmapDrawable(thumbnail);
                 rl_image_change.setBackgroundDrawable(dr);
                 b_add_image.setVisibility(View.INVISIBLE);
@@ -381,6 +396,8 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
                 options.inJustDecodeBounds = false;
                 Bitmap bm = BitmapFactory.decodeFile(selectedImagePath, options);
 
+                bmp_listPhoto = bm;
+
                 Drawable dr = new BitmapDrawable(bm);
                 rl_image_change.setBackgroundDrawable(dr);
                 b_add_image.setVisibility(View.INVISIBLE);
@@ -388,7 +405,30 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
         }
 
     }
+    public Bitmap getRoundedShape(Bitmap scaleBitmapImage) {
+        int targetWidth = 125;
+        int targetHeight = 125;
 
+        Bitmap targetBitmap = Bitmap.createBitmap(targetWidth,
+                targetHeight, Bitmap.Config.ARGB_8888);
+
+        Canvas canvas = new Canvas(targetBitmap);
+        Path path = new Path();
+        path.addCircle(
+                ((float) targetWidth - 1) / 2,
+                ((float) targetHeight - 1) / 2,
+                (Math.min(((float) targetWidth), ((float) targetHeight)) / 2),
+                Path.Direction.CCW);
+
+        canvas.clipPath(path);
+        Bitmap sourceBitmap = scaleBitmapImage;
+        canvas.drawBitmap(
+                sourceBitmap,
+                new Rect(0, 0, sourceBitmap.getWidth(), sourceBitmap
+                        .getHeight()), new Rect(0, 0, targetWidth,
+                        targetHeight), null);
+        return targetBitmap;
+    }
 
     private void addTag(String tag) {
         if (tags.contains(tag)) {
@@ -415,7 +455,7 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
         for (String tag : tags) {
             res = res + tag + ",";
         }
-        if (res.length() > 0 && res.charAt(res.length() - 1) == ',') {
+        if (res.length() > 1 && res.charAt(res.length() - 1) == ',') {
             res = res.substring(0, res.length() - 1);
         }
         return res;

@@ -88,8 +88,7 @@
                         android:layout_marginBottom="@dimen/add_friend_button_margin"
                         android:layout_marginLeft="@dimen/add_friend_button_margin"
                         android:layout_marginStart="@dimen/add_friend_button_margin"
-                        android:gravity="start"
-                        android:background="@drawable/friends_small" />
+                        android:gravity="start" />
 
 
                 </LinearLayout>
