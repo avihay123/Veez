@@ -295,13 +295,14 @@ public class ExplorerActivity extends ActionBarActivity implements View.OnClickL
     }
 
     private static final String[] TAGS = new String[]{
-            "BBQ", "Road Trip", "Camping", "Shopping", "Beach", "Sleep Over",
+            //to have at least one tag of each letter
+            "A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U",
+            "V","W","X","Y","Z",
+
+            "BBQ", "Road Trip", "Camping", "Shopping", "Beach",
             "Books", "Songs", "TV Series", "Movies", "Holidays", "Action Movies",
+            "Familiy Dinner", "Tutorials", "Lectures", "App Ideas", "Important Dates",
 
-
-            //stupid tags to have a tag for every letter
-            "Dogs", "Entertainment", "Fonts", "Groupon Deals",
-            "IMDB Top 10 Weekly", //checks a long tag too
 
             //TODO for debug
             "BBQ2",
