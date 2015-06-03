@@ -42,4 +42,8 @@ public class VeezListExplorer implements Serializable{
         }
         return true;
     }
+
+    public List<VeezItem> getItems() {
+        return items;
+    }
 }

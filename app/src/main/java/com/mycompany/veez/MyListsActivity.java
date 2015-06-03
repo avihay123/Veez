@@ -165,7 +165,7 @@ public class MyListsActivity extends ActionBarActivity implements View.OnClickLi
             }
 
             @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
+            public View getView(final int position, View convertView, ViewGroup parent) {
 
                 View view;
                 ViewHolder viewHolder;
@@ -201,6 +201,18 @@ public class MyListsActivity extends ActionBarActivity implements View.OnClickLi
                     viewHolder.iv_lock.setVisibility(View.GONE);
                 else
                     viewHolder.iv_lock.setVisibility(View.VISIBLE);
+
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        VeezList list = myList.get(position);
+                        Intent intent = new Intent(getApplicationContext(), ListActivity.class);
+                        intent.putExtra("list", list);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+
                 return view;
             }
 

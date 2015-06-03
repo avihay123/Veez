@@ -2,13 +2,14 @@ package com.mycompany.veez;
 
 import android.graphics.Bitmap;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by T on 5/27/2015.
  */
-public class VeezUser {
+public class VeezUser implements Serializable{
     private String name;
     private String profilePictureJson;
     private String facebookID;
