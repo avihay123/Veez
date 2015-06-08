@@ -129,7 +129,7 @@ public class ListActivity extends ActionBarActivity implements View.OnClickListe
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count){
-                ((MyAdapter) lv_list_items.getAdapter()).updateItems(s.toString());
+                //((MyAdapter) lv_list_items.getAdapter()).updateItems(s.toString());
             }
         });
         //-------------------------------- buttons code ----------------------------------
@@ -302,6 +302,7 @@ public class ListActivity extends ActionBarActivity implements View.OnClickListe
                 public void onClick(View v) {
                     Intent intent = new Intent(ListActivity.this, ListInfoActivity.class);
                     intent.putExtra("listToShow", veezList);
+                    intent.putExtra("userPhoto", userPhoto);
                     startActivity(intent);
                     //finish();
                 }

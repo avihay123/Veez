@@ -53,6 +53,14 @@ public class VeezList implements Serializable {
     private String photo;
     private String deadline;
 
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
+    }
+
     public String getDeadline() {
         return deadline;
     }
