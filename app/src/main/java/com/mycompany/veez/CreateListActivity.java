@@ -301,9 +301,9 @@ public class CreateListActivity extends ActionBarActivity implements View.OnClic
             //VeezList newList= new VeezList(et_list_name.getText(),cb_public.isChecked(),new ArrayList<VeezUser>().add(veezUser), veezUser, tags);
             VeezList newList = null;
             if(bmp_listPhoto!=null)
-                  newList= new VeezList(et_list_name.getText().toString(),cb_public.isChecked(),null, null, tags, BitMapToString(bmp_listPhoto));
+                  newList= new VeezList(et_deadline.getText().toString(),et_list_name.getText().toString(),cb_public.isChecked(),null, null, tags, BitMapToString(bmp_listPhoto));
             else
-                 newList= new VeezList(et_list_name.getText().toString(),cb_public.isChecked(),null, null, tags, null);
+                 newList= new VeezList(et_deadline.getText().toString(),et_list_name.getText().toString(),cb_public.isChecked(),null, null, tags, null);
             //TODO add to userVeez and to the server!!!!!
             //TODO jump to the list
             Intent intent = new Intent(this, ListActivity.class);

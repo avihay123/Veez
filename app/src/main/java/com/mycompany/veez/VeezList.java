@@ -13,6 +13,16 @@ public class VeezList implements Serializable {
     private String name;
     private boolean isPublic;
     private List<VeezItem> items;
+    private String address;
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAddress() {
+
+        return address;
+    }
 
     public List<String> getTags() {
         return tags;
@@ -51,10 +61,24 @@ public class VeezList implements Serializable {
         this.deadline = deadline;
     }
 
-    public VeezList(String name, boolean isPublic, List<VeezUser> users, VeezUser admin, List<String> tags, String photo) {
+    public VeezList(String address,String name, boolean isPublic, List<VeezUser> users, VeezUser admin, List<String> tags, String photo) {
         this.name = name;
+        this.address = address;
         this.isPublic = isPublic;
         this.users = users;
+        Admin = admin;
+        this.tags = tags;
+        this.photo = photo;
+        this.items = new ArrayList<VeezItem>();
+        likesCount = 0;
+        numOfItemsMarkedWithVee = 0;
+    }
+
+
+    public VeezList(String name, boolean isPublic, List<VeezUser> users, VeezUser admin, List<String> tags, String photo) {
+        this.name = name;
+        this.address = address;
+        this.isPublic = isPublic;
         Admin = admin;
         this.tags = tags;
         this.photo = photo;
